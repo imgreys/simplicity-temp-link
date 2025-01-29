@@ -5,28 +5,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Hub</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background-color: #0a0a0a;
+            background-color: #060606; /* Darker black background */
             color: white;
             font-family: Arial, sans-serif;
             display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            padding: 10px; /* Reduced padding for smaller black border */
+        }
+
+        .left-box {
+            width: 15%; /* Smaller left box */
+            background-color: #121212; /* Darker grey for left section */
+            border: 2px solid black;
+            border-radius: 10px;
+            height: 100%;
+            margin-right: 10px; /* Reduced margin between the left and right boxes */
+            position: relative; /* To allow mouse effect */
+        }
+
+        .right-box {
+            width: 85%; /* Larger right box */
+            background-color: #121212; /* Darker grey for right section */
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Darker shadow */
+            position: relative; /* To allow mouse effect */
         }
-        .search-bar {
-            width: 50%;
+
+        .search-container {
+            position: relative;
+            top: 10px; /* Moved closer to the top of the right box */
+            width: 100%;
+            display: flex;
+            justify-content: center;
             padding: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: none;
         }
+
+        .search-bar {
+            width: 400px; /* Increased width */
+            height: 35px; /* Reduced height */
+            padding: 10px 20px; /* Adjusted padding */
+            font-size: 18px; /* Larger font size */
+            background-color: transparent; /* Transparent background */
+            color: white;
+            border: none; /* Removed white border */
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px) brightness(1.2); /* Apply blur and brightness to the background */
+            padding-left: 40px; /* Added padding to make space for the icon */
+            position: relative; /* Allow positioning of the icon inside */
+        }
+
+        .search-bar::placeholder {
+            color: #bbb;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.3); /* Slightly brighter on focus */
+        }
+
+        .search-bar:hover {
+            width: 420px;
+            background-color: rgba(255, 255, 255, 0.3); /* Brighter hover effect */
+        }
+
+        /* Add the magnifying glass icon as a background */
+        .search-bar::before {
+            content: "";
+            position: absolute;
+            left: 15px; /* Position it right next to the left padding */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-image: url('https://github.com/Greys2121/Singularity/raw/main/download.png?raw=true');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
         .grid {
+            margin-top: 50px; /* Move the game buttons down */
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
-            width: 80%;
+            width: 100%;
         }
+
         .card {
             position: relative;
             width: 100%;
@@ -36,10 +116,12 @@
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
+
         .card:hover {
             transform: scale(1.05);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
+
         .card .background {
             position: absolute;
             top: 0;
@@ -48,41 +130,91 @@
             height: 100%;
             background-size: cover;
             background-position: center;
-            transition: opacity 0.3s;
+            transition: opacity 0.3s, filter 0.3s;
         }
+
+        .card:hover .background {
+            filter: blur(8px);
+        }
+
         .card .info {
             position: absolute;
-            top: 0;
+            top: 10px;
             left: 0;
             width: 100%;
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-end;
             align-items: center;
-            background: rgba(0, 0, 0, 0.8);
             opacity: 0;
             transition: opacity 0.3s;
             text-align: center;
+            padding-bottom: 10px;
         }
+
         .card:hover .info {
             opacity: 1;
         }
-        .info h3, .info a {
+
+        .info h3 {
             color: white;
             margin: 5px 0;
+            position: absolute;
+            top: 10px;
+        }
+
+        .info a {
+            color: white;
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
             text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+            position: absolute;
+            bottom: 25px;
+        }
+
+        .info a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Content box under the search bar */
+        .content-box {
+            width: 100%;
+            height: 50%; /* Takes up half of the right box */
+            background-color: #181818; /* Even darker grey */
+            border-radius: 10px;
+            margin-top: 20px; /* Space between search bar and content box */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     </style>
 </head>
 <body>
-    <input type="text" class="search-bar" placeholder="Search games...">
-    <div class="grid">
-        <div class="card" onclick="window.location.href='https://example.com'">
-            <div class="background" style="background-image: url('background.jpg');"></div>
-            <div class="info">
-                <h3>Game Name</h3>
-                <a href="https://example.com">Play Now</a>
+    <div class="left-box" id="leftBox">
+        <!-- Empty left box for now -->
+    </div>
+    <div class="right-box" id="rightBox">
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Search...">
+        </div>
+        <div class="content-box">
+            <!-- You can put content here inside the grey box -->
+            <p style="color: white;">This is your content box.</p>
+        </div>
+        <div class="grid">
+            <div class="card" onclick="window.location.href='https://bitlife.pro'">
+                <div class="background" style="background-image: url('background.jpg');"></div>
+                <div class="info">
+                    <h3>BitLife</h3>
+                    <a href="https://bitlife.pro">Play Now</a>
+                </div>
             </div>
         </div>
     </div>
