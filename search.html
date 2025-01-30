@@ -205,52 +205,49 @@
         }
 
         .icon {
-            display: flex;
-            align-items: center;
-            margin: 15px 0;
-            cursor: pointer;
-        }
+                    display: flex;
+                    align-items: center;
+                    margin: 15px 0;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
 
-        .icon-text {
-            margin-left: 10px;
-            font-size: 18px;
-        }
+                .icon-text {
+                    margin-left: 10px;
+                    font-size: 18px;
+                }
 
-        .icon svg {
-            width: 25px;
-            height: 25px;
-            fill: white;
-            transition: fill 0.3s ease;
-        }
+                .icon svg {
+                    width: 25px;
+                    height: 25px;
+                    fill: #444; /* Dark gray color by default */
+                    transition: fill 0.3s ease;
+                }
 
-        .icon.home svg {
-            fill: none;
-            stroke: white;
-        }
+                .icon.active svg {
+                    fill: white; /* White icon for active page */
+                }
 
-        .icon.search svg {
-            fill: white;
-        }
+                /* Icon Hover Effect */
+                .icon:hover svg {
+                    fill: white; /* Turn white on hover */
+                }
+            </style>
+        </head>
+        <body>
+            <div class="left-box" id="leftBox">
+                
+                <div class="icon search" onclick="window.location.href = '/'">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    <span class="icon-text">Home</span>
+                </div>
 
-        .icon svg:hover {
-            fill: rgba(255, 255, 255, 0.7);
-        }
-
-    </style>
-</head>
-<body>
-    <div class="left-box" id="leftBox">
-        <!-- Home Icon Section - unfilled -->
-        <div class="icon home" onclick="window.location.href='/'">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            <span class="icon-text">Home</span>
-        </div>
-
-        <!-- Search Icon Section - filled -->
-        <div class="icon search" onclick="window.location.href='/search.html'">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27c1.09-1.38 1.73-3.14 1.73-5.03C16.16 5.32 13.84 3 11 3S5.84 5.32 5.84 8.7C5.84 12.08 7.82 14.88 10.93 16.3c.22.13.46.26.71.38L9 17c-.07-.05-.14-.11-.21-.16-.88-.56-1.54-1.41-1.89-2.4-.35-.99-.46-2.09-.28-3.14.43-1.91 1.63-3.53 3.2-4.09 1.57-.55 3.23-.37 4.43.54 1.2.91 1.72 2.44 1.46 3.87-.26 1.43-1.18 2.56-2.51 3.18-.16-.17-.35-.32-.55-.46zM11 5c2.48 0 4.5 2.02 4.5 4.5S13.48 14 11 14 6.5 11.98 6.5 9.5 8.52 5 11 5z"/></svg>
-            <span class="icon-text">Search</span>
-        </div>
+                <!-- Home Icon Section - Active page will have white color -->
+                <div class="icon home active" onclick="window.location.href = '/search.html'">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
+                    <span class="icon-text">Search</span>
+                </div>
+            </div>
     </div>
 
     <div class="right-box" id="rightBox">
