@@ -166,13 +166,6 @@
             top: 10px;
         }
 
-        .info .genres {
-            color: white;
-            margin-top: 5px;
-            font-size: 14px;
-            text-align: center;
-        }
-
         .info a {
             color: white;
             margin-top: 10px;
@@ -211,6 +204,16 @@
             margin-top: 10px;
         }
 
+        /* Genres section - moved up a bit */
+        .info .genres {
+            font-size: 10px; /* Tiny font size */
+            position: absolute;
+            bottom: 13px; /* Moved up from the bottom */
+            width: 100%;
+            text-align: center;
+            color: white;
+        }
+
         .icon {
             display: flex;
             align-items: center;
@@ -241,7 +244,7 @@
 
         <!-- Search Icon Section - redirects to /search -->
         <div class="icon" onclick="window.location.href='search.html'">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0="1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
             <span class="icon-text">Search</span>
         </div>
     </div>
@@ -261,8 +264,8 @@
                 <div class="background" style="background-image: url('https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675');"></div>
                 <div class="info">
                     <h3>BitLife</h3>
-                    <div class="genres">Simulation, Adventure</div>
                     <a href="https://bitlife.pro">Use</a>
+                    <div class="genres">Simulation, Life</div> <!-- Genres Section -->
                 </div>
             </div>
 
@@ -271,8 +274,11 @@
                 <div class="background" style="background-image: url('https://art.pixilart.com/3253d436c2cf5e0.gif');"></div>
                 <div class="info">
                     <h3>Plasma Unblocker</h3>
-                    <div class="genres">Puzzle, Arcade</div>
                     <a href="https://plasma-ubg.vercel.app/">Use</a>
+                    <div class="genres">Unblocker, Puzzle</div> <!-- Genres Section -->
                 </div>
             </div>
         </div>
+    </div>
+</body>
+</html>
