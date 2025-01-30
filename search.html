@@ -43,7 +43,8 @@
             align-items: center;
             height: 100%;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Darker shadow */
-            position: relative; /* To allow mouse effect */
+            position: relative;
+            justify-content: center; /* Center content vertically */
         }
 
         .search-container {
@@ -182,18 +183,6 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* Content box under the search bar */
-        .content-box {
-            width: 100%;
-            height: 50%; /* Takes up half of the right box */
-            background-color: #181818; /* Even darker grey */
-            border-radius: 10px;
-            margin-top: 20px; /* Space between search bar and content box */
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
     </style>
 </head>
 <body>
@@ -204,45 +193,39 @@
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search..." id="searchInput" readonly>
         </div>
-        <div class="content-box">
-            <!-- Dynamically update this content box -->
-            <p style="color: white;" id="searchResultsMessage">Searching for: <span id="searchQueryDisplay">...</span></p>
-        </div>
         <div class="grid" id="gameGrid">
-            <!-- Search results will be displayed here -->
+            <!-- Dynamic search results will go here -->
         </div>
     </div>
 
     <script>
         // Get the search query from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('query');
+        const query = urlParams.get('query').toLowerCase();
         
         // Set the search bar value and display the query
         document.getElementById('searchInput').value = query;
-        document.getElementById('searchQueryDisplay').textContent = query;
 
         // Example game data (this should be replaced with dynamic results or API data)
         const allGames = [
-            { name: "BitLife", description: "A life simulator game.", link: "https://bitlife.pro" },
-            { name: "Minecraft", description: "A sandbox game where you can build and explore.", link: "https://minecraft.net" },
-            { name: "Among Us", description: "A multiplayer game of teamwork and betrayal.", link: "https://innersloth.com" },
-            { name: "Fortnite", description: "A battle royale game.", link: "https://www.epicgames.com/fortnite" },
-            { name: "Super Mario", description: "A classic platformer with Mario and his friends.", link: "https://www.nintendo.com/super-mario" },
+            { name: "BitLife", description: "A life simulator game.", link: "https://bitlife.pro", background: 'bitlife-bg.jpg' },
+            { name: "Minecraft", description: "A sandbox game where you can build and explore.", link: "https://minecraft.net", background: 'minecraft-bg.jpg' },
+            { name: "Among Us", description: "A multiplayer game of teamwork and betrayal.", link: "https://innersloth.com", background: 'amongus-bg.jpg' },
+            { name: "Fortnite", description: "A battle royale game.", link: "https://www.epicgames.com/fortnite", background: 'fortnite-bg.jpg' },
+            { name: "Super Mario", description: "A classic platformer with Mario and his friends.", link: "https://www.nintendo.com/super-mario", background: 'supermario-bg.jpg' },
         ];
 
         // Filter games based on the search query
-        const filteredResults = allGames.filter(game => game.name.toLowerCase().includes(query.toLowerCase()));
+        const filteredResults = allGames.filter(game => game.name.toLowerCase().includes(query));
 
         // Display results in the grid
         const gameGrid = document.getElementById('gameGrid');
-        const searchResultsMessage = document.getElementById('searchResultsMessage');
         if (filteredResults.length > 0) {
             filteredResults.forEach(game => {
                 const card = document.createElement('div');
                 card.classList.add('card');
                 card.innerHTML = `
-                    <div class="background" style="background-image: url('background.jpg');"></div>
+                    <div class="background" style="background-image: url('${game.background}');"></div>
                     <div class="info">
                         <h3>${game.name}</h3>
                         <a href="${game.link}" target="_blank">Play Now</a>
@@ -251,7 +234,7 @@
                 gameGrid.appendChild(card);
             });
         } else {
-            searchResultsMessage.innerHTML = "No results found for your search.";
+            gameGrid.innerHTML = "<p style='color: white;'>No results found for your search.</p>";
         }
     </script>
 </body>
