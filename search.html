@@ -269,21 +269,22 @@
         const gameGrid = document.getElementById('gameGrid');
 
         // Function to render the search results
-        function renderGames(games) {
-            gameGrid.innerHTML = ''; // Clear the grid before appending new results
-            games.forEach(game => {
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.innerHTML = 
-                    <div class="background" style="background-image: url('${game.background}')"></div>
-                    <div class="info">
-                        <h3>${game.name}</h3>
-                        <a href="${game.link}" target="_blank">Play Now</a>
-                    </div>
-                ;
-                gameGrid.appendChild(card);
-            });
-        }
+      function renderGames(games) {
+    gameGrid.innerHTML = ''; // Clear the grid before appending new results
+    games.forEach(game => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.innerHTML = `
+            <div class="background" style="background-image: url('${game.background}')"></div>
+            <div class="info">
+                <h3>${game.name}</h3>
+                <a href="${game.link}" target="_blank">Play Now</a>
+            </div>
+        `;
+        gameGrid.appendChild(card);
+    });
+}
+
 
         // Get the search query from the URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -303,10 +304,10 @@
 
         // Search form submit action
         document.getElementById('searchForm').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const searchQuery = document.querySelector('.search-bar').value;
-            window.location.search = ?query=${searchQuery};
-        });
+    event.preventDefault();
+    const searchQuery = document.querySelector('.search-bar').value;
+    window.location.search = `?query=${searchQuery}`;  // Fixed the string interpolation
+});
     </script>
 </body>
 </html>
