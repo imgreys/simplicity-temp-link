@@ -12,29 +12,33 @@
         }
 
         body {
-            background-color: #060606; /* Darker black background */
+            background-color: #060606;
             color: white;
             font-family: Arial, sans-serif;
             display: flex;
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            padding: 10px; /* Reduced padding for smaller black border */
+            padding: 10px;
         }
 
         .left-box {
-            width: 15%; /* Smaller left box */
-            background-color: #121212; /* Darker grey for left section */
+            width: 15%;
+            background-color: #121212;
             border: 2px solid black;
             border-radius: 10px;
             height: 100%;
-            margin-right: 10px; /* Reduced margin between the left and right boxes */
-            position: relative; /* To allow mouse effect */
+            margin-right: 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
         }
 
         .right-box {
-            width: 85%; /* Larger right box */
-            background-color: #121212; /* Darker grey for right section */
+            width: 85%;
+            background-color: #121212;
             border: 2px solid black;
             border-radius: 10px;
             padding: 20px;
@@ -42,13 +46,12 @@
             flex-direction: column;
             align-items: center;
             height: 100%;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Darker shadow */
-            position: relative; /* To allow mouse effect */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
         }
 
         .search-container {
             position: relative;
-            top: 10px; /* Moved closer to the top of the right box */
+            top: 10px;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -56,19 +59,18 @@
         }
 
         .search-bar {
-            width: 400px; /* Increased width */
-            height: 35px; /* Reduced height */
-            padding: 10px 20px; /* Adjusted padding */
-            font-size: 18px; /* Larger font size */
-            background-color: transparent; /* Transparent background */
+            width: 400px;
+            height: 35px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: transparent;
             color: white;
-            border: none; /* Removed white border */
+            border: none;
             border-radius: 25px;
             outline: none;
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px) brightness(1.2); /* Apply blur and brightness to the background */
-            padding-left: 40px; /* Added padding to make space for the icon */
-            position: relative; /* Allow positioning of the icon inside */
+            backdrop-filter: blur(10px) brightness(1.2);
+            padding-left: 40px;
         }
 
         .search-bar::placeholder {
@@ -77,30 +79,29 @@
 
         .search-bar:focus {
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-            background-color: rgba(255, 255, 255, 0.3); /* Slightly brighter on focus */
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
         .search-bar:hover {
             width: 420px;
-            background-color: rgba(255, 255, 255, 0.3); /* Brighter hover effect */
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Add the magnifying glass icon as a background */
         .search-bar::before {
             content: "";
             position: absolute;
-            left: 15px; /* Position it right next to the left padding */
+            left: 15px;
             top: 50%;
             transform: translateY(-50%);
             width: 20px;
             height: 20px;
-            background-image: url('https://github.com/Greys2121/Singularity/raw/main/download.png?raw=true');
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/67/Font_Awesome_5_regular_search.svg');
             background-size: contain;
             background-repeat: no-repeat;
         }
 
         .grid {
-            margin-top: 50px; /* Move the game buttons down */
+            margin-top: 50px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
@@ -182,24 +183,53 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
-        /* Content box under the search bar */
         .content-box {
             width: 100%;
-            height: 50%; /* Takes up half of the right box */
-            background-color: #181818; /* Even darker grey */
+            height: 50%;
+            background-color: #181818;
             border-radius: 10px;
-            margin-top: 20px; /* Space between search bar and content box */
+            margin-top: 20px;
             padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .icon-text {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .icon svg {
+            width: 25px;
+            height: 25px;
+            fill: white;
+            transition: fill 0.3s ease;
+        }
     </style>
 </head>
 <body>
     <div class="left-box" id="leftBox">
-        <!-- Empty left box for now -->
+        <!-- Home Icon Section -->
+        <div class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="icon-text">Home</span>
+        </div>
+
+        <!-- Search Icon Section - redirects to /search -->
+        <div class="icon" onclick="window.location.href='/search'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27c1.09-1.38 1.73-3.14 1.73-5.03C16.16 5.32 13.84 3 11 3S5.84 5.32 5.84 8.7C5.84 12.08 7.82 14.88 10.93 16.3c.22.13.46.26.71.38L9 17c-.07-.05-.14-.11-.21-.16-.88-.56-1.54-1.41-1.89-2.4-.35-.99-.46-2.09-.28-3.14.43-1.91 1.63-3.53 3.2-4.09 1.57-.55 3.23-.37 4.43.54 1.2.91 1.72 2.44 1.46 3.87-.26 1.43-1.18 2.56-2.51 3.18-.16-.17-.35-.32-.55-.46zM11 5c2.48 0 4.5 2.02 4.5 4.5S13.48 14 11 14 6.5 11.98 6.5 9.5 8.52 5 11 5z"/></svg>
+            <span class="icon-text">Search</span>
+        </div>
     </div>
+
     <div class="right-box" id="rightBox">
         <div class="search-container">
             <form action="search.html" method="get">
@@ -208,7 +238,6 @@
             </form>
         </div>
         <div class="content-box">
-            <!-- You can put content here inside the grey box -->
             <p style="color: white;">This is your content box.</p>
         </div>
         <div class="grid">
