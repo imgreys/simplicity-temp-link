@@ -183,6 +183,15 @@
             background: rgba(255, 255, 255, 0.3);
         }
 
+        .info .genres {
+            font-size: 10px; /* Tiny font size */
+            position: absolute;
+            bottom: 13px; /* Moved up from the bottom */
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5); /* Transparent white color */
+        }
+
         .content-box {
             width: 100%;
             height: 50%;
@@ -233,9 +242,9 @@
     <div class="left-box" id="leftBox">
         <!-- Home Icon Section - unfilled -->
         <div class="icon home" onclick="window.location.href='index.html'">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-    <span class="icon-text">Home</span>
-</div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="icon-text">Home</span>
+        </div>
 
         <!-- Search Icon Section - filled -->
         <div class="icon search" onclick="window.location.href='search.html'">
@@ -259,32 +268,32 @@
     <script>
         // Game data for the search functionality
         const allGames = [
-            { name: "BitLife", description: "A life simulator game.", link: "https://bitlife.pro", background: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675' },
-            { name: "Plasma Unblocker", description: "A sandbox game where you can build and explore.", link: "https://plasma-ubg.vercel.app/", background: 'https://art.pixilart.com/3253d436c2cf5e0.gif' },
-            { name: "Among Us", description: "A multiplayer game of teamwork and betrayal.", link: "https://innersloth.com", background: 'amongus-bg.jpg' },
-            { name: "Fortnite", description: "A battle royale game.", link: "https://www.epicgames.com/fortnite", background: 'fortnite-bg.jpg' },
-            { name: "Super Mario", description: "A classic platformer with Mario and his friends.", link: "https://www.nintendo.com/super-mario", background: 'supermario-bg.jpg' }
+            { name: "BitLife", description: "A life simulator game.", link: "https://bitlife.pro", background: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675', genres: "Simulation, Life" },
+            { name: "Plasma Unblocker", description: "A sandbox game where you can build and explore.", link: "https://plasma-ubg.vercel.app/", background: 'https://art.pixilart.com/3253d436c2cf5e0.gif', genres: "Sandbox, Puzzle" },
+            { name: "Among Us", description: "A multiplayer game of teamwork and betrayal.", link: "https://innersloth.com", background: 'amongus-bg.jpg', genres: "Multiplayer, Party" },
+            { name: "Fortnite", description: "A battle royale game.", link: "https://www.epicgames.com/fortnite", background: 'fortnite-bg.jpg', genres: "Battle Royale, Shooter" },
+            { name: "Super Mario", description: "A classic platformer with Mario and his friends.", link: "https://www.nintendo.com/super-mario", background: 'supermario-bg.jpg', genres: "Platformer, Adventure" }
         ];
 
         const gameGrid = document.getElementById('gameGrid');
 
         // Function to render the search results
-      function renderGames(games) {
-    gameGrid.innerHTML = ''; // Clear the grid before appending new results
-    games.forEach(game => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.innerHTML = `
-            <div class="background" style="background-image: url('${game.background}')"></div>
-            <div class="info">
-                <h3>${game.name}</h3>
-                <a href="${game.link}" target="_blank">Use</a>
-            </div>
-        `;
-        gameGrid.appendChild(card);
-    });
-}
-
+        function renderGames(games) {
+            gameGrid.innerHTML = ''; // Clear the grid before appending new results
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <div class="background" style="background-image: url('${game.background}')"></div>
+                    <div class="info">
+                        <h3>${game.name}</h3>
+                        <a href="${game.link}" target="_blank">Use</a>
+                        <div class="genres">${game.genres}</div>
+                    </div>
+                `;
+                gameGrid.appendChild(card);
+            });
+        }
 
         // Get the search query from the URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -304,10 +313,10 @@
 
         // Search form submit action
         document.getElementById('searchForm').addEventListener('submit', (event) => {
-    event.preventDefault();
-    const searchQuery = document.querySelector('.search-bar').value;
-    window.location.search = `?query=${searchQuery}`;  // Fixed the string interpolation
-});
+            event.preventDefault();
+            const searchQuery = document.querySelector('.search-bar').value;
+            window.location.search = `?query=${searchQuery}`;  // Fixed the string interpolation
+        });
     </script>
 </body>
 </html>
