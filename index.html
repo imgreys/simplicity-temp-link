@@ -219,6 +219,7 @@
             align-items: center;
             margin: 15px 0;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .icon-text {
@@ -229,21 +230,30 @@
         .icon svg {
             width: 25px;
             height: 25px;
-            fill: white;
+            fill: #444; /* Dark gray color by default */
             transition: fill 0.3s ease;
+        }
+
+        .icon.active svg {
+            fill: white; /* White icon for active page */
+        }
+
+        /* Icon Hover Effect */
+        .icon:hover svg {
+            fill: white; /* Turn white on hover */
         }
     </style>
 </head>
 <body>
     <div class="left-box" id="leftBox">
-        <!-- Home Icon Section -->
-        <div class="icon" onclick="window.location.href = '/'">
+        <!-- Home Icon Section - Active page will have white color -->
+        <div class="icon home active" onclick="window.location.href = '/'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             <span class="icon-text">Home</span>
         </div>
 
-        <!-- Search Icon Section - redirects to /search -->
-        <div class="icon" onclick="window.location.href = '/search.html'">
+        <!-- Search Icon Section - Default Dark Gray, Turns White on Hover -->
+        <div class="icon search" onclick="window.location.href = '/search.html'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
             <span class="icon-text">Search</span>
         </div>
