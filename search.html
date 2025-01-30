@@ -1,1 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            background-color: #060606; /* Darker black background */
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            padding: 10px; /* Reduced padding for smaller black border */
+        }
+
+        .left-box {
+            width: 15%; /* Smaller left box */
+            background-color: #121212; /* Darker grey for left section */
+            border: 2px solid black;
+            border-radius: 10px;
+            height: 100%;
+            margin-right: 10px; /* Reduced margin between the left and right boxes */
+            position: relative;
+        }
+
+        .right-box {
+            width: 85%; /* Larger right box */
+            background-color: #121212; /* Darker grey for right section */
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Darker shadow */
+            position: relative; /* To allow mouse effect */
+        }
+
+        .search-container {
+            position: relative;
+            top: 10px; /* Moved closer to the top of the right box */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .search-bar {
+            width: 400px; /* Increased width */
+            height: 35px; /* Reduced height */
+            padding: 10px 20px; /* Adjusted padding */
+            font-size: 18px; /* Larger font size */
+            background-color: transparent; /* Transparent background */
+            color: white;
+            border: none; /* Removed white border */
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px) brightness(1.2); /* Apply blur and brightness to the background */
+            padding-left: 40px; /* Added padding to make space for the icon */
+            position: relative; /* Allow positioning of the icon inside */
+        }
+
+        .search-bar::placeholder {
+            color: #bbb;
+        }
+
+        .search-bar:focus {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.3); /* Slightly brighter on focus */
+        }
+
+        .search-bar:hover {
+            width: 420px;
+            background-color: rgba(255, 255, 255, 0.3); /* Brighter hover effect */
+        }
+
+        /* Add the magnifying glass icon as a background */
+        .search-bar::before {
+            content: "";
+            position: absolute;
+            left: 15px; /* Position it right next to the left padding */
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-image: url('https://github.com/Greys2121/Singularity/raw/main/download.png?raw=true');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .grid {
+            margin-top: 50px; /* Move the game buttons down */
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .card .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.3s, filter 0.3s;
+        }
+
+        .card:hover .background {
+            filter: blur(8px);
+        }
+
+        .card .info {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        .card:hover .info {
+            opacity: 1;
+        }
+
+        .info h3 {
+            color: white;
+            margin: 5px 0;
+            position: absolute;
+            top: 10px;
+        }
+
+        .info a {
+            color: white;
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+            position: absolute;
+            bottom: 25px;
+        }
+
+        .info a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Content box under the search bar */
+        .content-box {
+            width: 100%;
+            height: 50%; /* Takes up half of the right box */
+            background-color: #181818; /* Even darker grey */
+            border-radius: 10px;
+            margin-top: 20px; /* Space between search bar and content box */
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="left-box" id="leftBox">
+        <!-- Empty left box for now -->
+    </div>
+    <div class="right-box" id="rightBox">
+        <div class="search-container">
+            <input type="text" class="search-bar" placeholder="Search..." id="searchInput" readonly>
+        </div>
+        <div class="content-box">
+            <!-- Dynamically update this content box -->
+            <p style="color: white;" id="searchResultsMessage">Searching for: <span id="searchQueryDisplay">...</span></p>
+        </div>
+        <div class="grid" id="gameGrid">
+            <!-- Search results will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // Get the search query from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const query = urlParams.get('query');
+        
+        // Set the search bar value and display the query
+        document.getElementById('searchInput').value = query;
+        document.getElementById('searchQueryDisplay').textContent = query;
+
+        // Example game data (this should be replaced with dynamic results or API data)
+        const allGames = [
+            { name: "BitLife", description: "A life simulator game.", link: "https://bitlife.pro" },
+            { name: "Minecraft", description: "A sandbox game where you can build and explore.", link: "https://minecraft.net" },
+            { name: "Among Us", description: "A multiplayer game of teamwork and betrayal.", link: "https://innersloth.com" },
+            { name: "Fortnite", description: "A battle royale game.", link: "https://www.epicgames.com/fortnite" },
+            { name: "Super Mario", description: "A classic platformer with Mario and his friends.", link: "https://www.nintendo.com/super-mario" },
+        ];
+
+        // Filter games based on the search query
+        const filteredResults = allGames.filter(game => game.name.toLowerCase().includes(query.toLowerCase()));
+
+        // Display results in the grid
+        const gameGrid = document.getElementById('gameGrid');
+        const searchResultsMessage = document.getElementById('searchResultsMessage');
+        if (filteredResults.length > 0) {
+            filteredResults.forEach(game => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <div class="background" style="background-image: url('background.jpg');"></div>
+                    <div class="info">
+                        <h3>${game.name}</h3>
+                        <a href="${game.link}" target="_blank">Play Now</a>
+                    </div>
+                `;
+                gameGrid.appendChild(card);
+            });
+        } else {
+            searchResultsMessage.innerHTML = "No results found for your search.";
+        }
+    </script>
+</body>
+</html>
