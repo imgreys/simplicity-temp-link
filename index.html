@@ -35,7 +35,7 @@
             flex-direction: column;
             justify-content: flex-start;
             padding: 20px;
-            align-items: flex-start; /* Align items to the left */
+            align-items: flex-start;
         }
 
         .right-box {
@@ -198,21 +198,20 @@
         }
 
         .content-box p {
-            font-size: 20px; /* Increased font size */
+            font-size: 20px;
             line-height: 1.6;
             text-align: left;
             color: white;
             margin-top: 10px;
         }
 
-        /* Genres section - moved up a bit */
         .info .genres {
-            font-size: 10px; /* Tiny font size */
+            font-size: 10px;
             position: absolute;
-            bottom: 13px; /* Moved up from the bottom */
+            bottom: 13px;
             width: 100%;
             text-align: center;
-            color: rgba(255, 255, 255, 0.5); /* Transparent white color */
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .icon {
@@ -238,13 +237,13 @@
 <body>
     <div class="left-box" id="leftBox">
         <!-- Home Icon Section -->
-        <div class="icon">
+        <div class="icon" onclick="window.location.href = '/'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             <span class="icon-text">Home</span>
         </div>
 
         <!-- Search Icon Section - redirects to /search -->
-        <div class="icon" onclick="window.location.href='search.html'">
+        <div class="icon" onclick="window.location.href = '/search'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
             <span class="icon-text">Search</span>
         </div>
@@ -252,7 +251,7 @@
 
     <div class="right-box" id="rightBox">
         <div class="search-container">
-            <form action="search.html" method="get">
+            <form action="/search" method="get">
                 <input type="text" name="query" class="search-bar" placeholder="Search..." required>
                 <button type="submit" style="display: none;">Search</button>
             </form>
@@ -266,7 +265,7 @@
                 <div class="info">
                     <h3>BitLife</h3>
                     <a href="https://bitlife-use-simplicity.vercel.app/">Use</a>
-                    <div class="genres">Simulation, Life, Game</div> <!-- Genres Section -->
+                    <div class="genres">Simulation, Life, Game</div>
                 </div>
             </div>
 
@@ -276,7 +275,7 @@
                 <div class="info">
                     <h3>Plasma Unblocker</h3>
                     <a href="https://plasma-ubg.vercel.app/">Use</a>
-                    <div class="genres">Unblocker, Games, Apps</div> <!-- Genres Section -->
+                    <div class="genres">Unblocker, Games, Apps</div>
                 </div>
             </div>
 
@@ -285,7 +284,7 @@
                 <div class="info">
                     <h3>Interstellar</h3>
                     <a href="https://use-simplicity.vercel.app/">Use</a>
-                    <div class="genres">Unblocker, Proxy, Games, Apps</div> <!-- Genres Section -->
+                    <div class="genres">Unblocker, Proxy, Games, Apps</div>
                 </div>
             </div>
 
@@ -294,7 +293,7 @@
                 <div class="info">
                     <h3>Freek</h3>
                     <a href="https://use-singularity-freek.vercel.app">Use</a>
-                    <div class="genres">Movies, Tv, Anime, Manga</div> <!-- Genres Section -->
+                    <div class="genres">Movies, Tv, Anime, Manga</div>
                 </div>
             </div>
         </div>
