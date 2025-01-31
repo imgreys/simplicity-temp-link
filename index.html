@@ -341,7 +341,7 @@
             <iframe id="modalIframe" src="" width="100%" height="500px" frameborder="0"></iframe>
             <div class="modal-buttons">
                 <button onclick="openInNewTab()">Open in New Tab</button>
-                <button onclick="openInIframe()">Open in Iframe</button>
+                <button onclick="openInIframe()">Open in Hidden Tab</button>
             </div>
             <button class="modal-close" onclick="closeModal()">Close</button>
         </div>
@@ -405,7 +405,7 @@
 
         function openGameModal(url) {
             document.getElementById('gameModal').classList.add('show');
-            document.getElementById('modalTitle').textContent = 'Opening Game...';
+            document.getElementById('modalTitle');
             document.getElementById('modalIframe').src = url;
         }
 
@@ -418,9 +418,34 @@
         }
 
         function openInIframe() {
-            window.open('about:blank', '_blank').document.write(`
-                <iframe src="${document.getElementById('modalIframe').src}" width="100%" height="100%" frameborder="0"></iframe>
-            `);
+        const iframeSrc = document.getElementById('modalIframe').src;
+        const newWindow = window.open('about:blank', '_blank');
+
+        // Wait for the window to fully load before injecting the content
+        newWindow.document.write(`
+            <html>
+                <head>
+                    <style>
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            height: 100vh;
+                            overflow: hidden;
+                        }
+                        iframe {
+                            width: 100%;
+                            height: 100%;
+                            border: none;
+                            display: block;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
+                </body>
+            </html>
+        `);
+
         }
     </script>
 </body>
