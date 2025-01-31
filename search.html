@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simplicity - Search</title>
+    <title>Simplicity</title>
+    <link rel="icon" type="image/png" href="https://github.com/Greys2121/Singularity/blob/main/maple-leaf-sketch-hand-drawn-in-doodle-style-illustration-2R95RM9-removebg-preview.png?raw=true">
     <style>
         * {
             margin: 0;
@@ -34,6 +35,7 @@
             flex-direction: column;
             justify-content: flex-start;
             padding: 20px;
+            align-items: flex-start;
         }
 
         .right-box {
@@ -184,137 +186,271 @@
         }
 
         .info .genres {
-            font-size: 10px; /* Tiny font size */
+            font-size: 10px;
             position: absolute;
-            bottom: 13px; /* Moved up from the bottom */
+            bottom: 13px;
             width: 100%;
             text-align: center;
-            color: rgba(255, 255, 255, 0.5); /* Transparent white color */
-        }
-
-        .content-box {
-            width: 100%;
-            height: 50%;
-            background-color: #181818;
-            border-radius: 10px;
-            margin-top: 20px;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            color: rgba(255, 255, 255, 0.5);
         }
 
         .icon {
-                    display: flex;
-                    align-items: center;
-                    margin: 15px 0;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                }
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
 
-                .icon-text {
-                    margin-left: 10px;
-                    font-size: 18px;
-                }
+        .icon-text {
+            margin-left: 10px;
+            font-size: 18px;
+        }
 
-                .icon svg {
-                    width: 25px;
-                    height: 25px;
-                    fill: #444; /* Dark gray color by default */
-                    transition: fill 0.3s ease;
-                }
+        .icon svg {
+            width: 25px;
+            height: 25px;
+            fill: #444; /* Dark gray color by default */
+            transition: fill 0.3s ease;
+        }
 
-                .icon.active svg {
-                    fill: white; /* White icon for active page */
-                }
+        .icon.active svg {
+            fill: white; /* White icon for active page */
+        }
 
-                /* Icon Hover Effect */
-                .icon:hover svg {
-                    fill: white; /* Turn white on hover */
-                }
-            </style>
-        </head>
-        <body>
-            <div class="left-box" id="leftBox">
-                
-                <div class="icon search" onclick="window.location.href = '/'">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-                    <span class="icon-text">Home</span>
-                </div>
+        /* Icon Hover Effect */
+        .icon:hover svg {
+            fill: white; /* Turn white on hover */
+        }
 
-                <!-- Home Icon Section - Active page will have white color -->
-                <div class="icon home active" onclick="window.location.href = '/search.html'">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
-                    <span class="icon-text">Search</span>
-                </div>
-            </div>
+        /* Modal (Popup) Style */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: #121212;
+            border-radius: 10px;
+            padding: 20px;
+            width: 70%;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .modal-buttons button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .modal-buttons button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="left-box" id="leftBox">
+         <div class="icon search" onclick="window.location.href = '/search.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="icon-text">Home</span>
+        </div>
+         <div class="icon home active" onclick="window.location.href = '/'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
+            <span class="icon-text">Search</span>
+        </div>
     </div>
 
     <div class="right-box" id="rightBox">
         <div class="search-container">
-            <form action="/search.html" method="get" id="searchForm">
+            <form action="/search.html" method="get">
                 <input type="text" name="query" class="search-bar" placeholder="Search..." required>
                 <button type="submit" style="display: none;">Search</button>
             </form>
         </div>
-        <div class="grid" id="gameGrid">
-            <!-- Game results will be dynamically injected here -->
+        <div class="content-box">
+            <p><strong>Simplicity Beta Release:</strong><br>-formally known as plasma</p>
+        </div>
+        <div class="grid" id="gameGrid"></div>
+    </div>
+
+    <!-- Modal (Popup) Template -->
+    <div class="modal" id="gameModal">
+        <div class="modal-content">
+            <h3 id="modalTitle"></h3>
+            <iframe id="modalIframe" src="" width="100%" height="500px" frameborder="0"></iframe>
+            <div class="modal-buttons">
+                <button onclick="openInNewTab()">Open in New Tab</button>
+                <button onclick="openInIframe()">Open in Hidden Tab</button>
+            </div>
+            <button class="modal-close" onclick="closeModal()">Close</button>
         </div>
     </div>
 
     <script>
-        // Game data for the search functionality
-        const allGames = [
-            { name: "BitLife", description: "A life simulator game.", link: "https://bitlife-use-simplicity.vercel.app/", background: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675', genres: "Simulation, Life, Game" },
-            { name: "Plasma Unblocker", description: "A sandbox game where you can build and explore.", link: "https://vigglesbeens.vercel.app/", background: 'https://art.pixilart.com/3253d436c2cf5e0.gif', genres: "Unblocker, Games, Apps" },
-            { name: "Interstellar", description: "A multiplayer game of teamwork and betrayal.", link: "https://use-simplicity.vercel.app/", background: 'https://media1.giphy.com/media/SVCSsoKU5v6ZJLk07n/giphy.gif?cid=6c09b952ifosvwna6qj7z6gcu769z2ecmuwt6l2ue82gdu66&ep=v1_gifs_search&rid=giphy.gif&ct=g', genres: "Unblocker, Proxy, Games, Apps" },
-            { name: "Freek", description: "A battle royale game.", link: "https://freekydeeki.onrender.com", background: 'https://cdn.dribbble.com/users/88529/screenshots/4852160/media/6939fd77e92a6168629f6711e65d558e.png', genres: "Movies, Tv, Anime, Manga" },
-            { name: "Snow Rider 3D", description: "A battle royale game.", link: "https://snowrider-3d.vercel.app/", background: 'https://cdn.now.gg/apps-content/com.nowgg.h5.pub483.app51067/ogimage/snow-rider-3d.jpg', genres: "Game" },
-            { name: "Ask Ai", description: "12", link: "https://iask.ai", background: 'https://www.jploft.com/posts/iask%20ai.webp', genres: "Ai" },
+        const games = [
+            {
+                url: 'https://bitlife-use-simplicity.vercel.app/',
+                image: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675',
+                title: 'BitLife',
+                genres: 'Simulation, Life, Game'
+            },
+            {
+                url: 'https://vigglesbeens.vercel.app/',
+                image: 'https://art.pixilart.com/3253d436c2cf5e0.gif',
+                title: 'Plasma Unblocker',
+                genres: 'Unblocker, Games, Apps'
+            },
+            {
+                url: 'https://use-simplicity.vercel.app/',
+                image: 'https://media1.giphy.com/media/SVCSsoKU5v6ZJLk07n/giphy.gif?cid=6c09b952ifosvwna6qj7z6gcu769z2ecmuwt6l2ue82gdu66&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+                title: 'Interstellar',
+                genres: 'Unblocker, Proxy, Games, Apps'
+            },
+            {
+                url: 'https://freekydeeki.onrender.com',
+                image: 'https://cdn.dribbble.com/users/88529/screenshots/4852160/media/6939fd77e92a6168629f6711e65d558e.png',
+                title: 'Freek',
+                genres: 'Movies, Tv, Anime, Manga'
+            },
+            {
+                url: 'https://snowrider-3d.vercel.app/',
+                image: 'https://cdn.now.gg/apps-content/com.nowgg.h5.pub483.app51067/ogimage/snow-rider-3d.jpg',
+                title: 'Snow Rider 3D',
+                genres: 'Game'
+            },
+            {
+                url: 'https://iask.ai',
+                image: 'https://www.jploft.com/posts/iask%20ai.webp',
+                title: 'Ask Ai',
+                genres: 'Ai'
+            }
         ];
 
         const gameGrid = document.getElementById('gameGrid');
 
-        // Function to render the search results
-        function renderGames(games) {
-            gameGrid.innerHTML = ''; // Clear the grid before appending new results
-            games.forEach(game => {
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.innerHTML = `
-                    <div class="background" style="background-image: url('${game.background}')"></div>
-                    <div class="info">
-                        <h3>${game.name}</h3>
-                        <a href="${game.link}" target="_blank">Use</a>
-                        <div class="genres">${game.genres}</div>
-                    </div>
-                `;
-                gameGrid.appendChild(card);
-            });
-        }
-
-        // Get the search query from the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const query = urlParams.get('query') ? urlParams.get('query').toLowerCase() : '';
-
-        // Search functionality - Filter games based on the query
-        const filteredGames = allGames.filter(game =>
-            game.name.toLowerCase().includes(query)
-        );
-
-        // Render filtered games if any
-        if (filteredGames.length > 0) {
-            renderGames(filteredGames);
-        } else {
-            gameGrid.innerHTML = '<p>No results found.</p>';
-        }
-
-        // Search form submit action
-        document.getElementById('searchForm').addEventListener('submit', (event) => {
-            event.preventDefault();
-            const searchQuery = document.querySelector('.search-bar').value;
-            window.location.search = `?query=${searchQuery}`;  // Fixed the string interpolation
+        games.forEach(game => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+                <div class="background" style="background-image: url(${game.image});"></div>
+                <div class="info">
+                    <h3>${game.title}</h3>
+                    <p class="genres">${game.genres}</p>
+                    <a href="#" onclick="openGameModal('${game.url}')">Use</a>
+                </div>
+            `;
+            gameGrid.appendChild(card);
         });
+
+        function openGameModal(url) {
+            document.getElementById('gameModal').classList.add('show');
+            document.getElementById('modalTitle');
+            document.getElementById('modalIframe').src = url;
+        }
+
+        function closeModal() {
+            document.getElementById('gameModal').classList.remove('show');
+        }
+
+        function openInNewTab() {
+            window.open(document.getElementById('modalIframe').src, '_blank');
+        }
+
+        function openInIframe() {
+        const iframeSrc = document.getElementById('modalIframe').src;
+        const newWindow = window.open('about:blank', '_blank');
+
+        // Wait for the window to fully load before injecting the content
+        newWindow.document.write(`
+            <html>
+                <head>
+                    <style>
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            height: 100vh;
+                            overflow: hidden;
+                        }
+                        iframe {
+                            width: 100%;
+                            height: 100%;
+                            border: none;
+                            display: block;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
+                </body>
+            </html>
+        `);
+
+        }
     </script>
+    
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-bar");
+        const gameGrid = document.getElementById("gameGrid");
+        const cards = gameGrid.getElementsByClassName("card");
+
+        searchInput.addEventListener("input", function () {
+            const searchQuery = searchInput.value.toLowerCase();
+
+            for (let card of cards) {
+                const title = card.querySelector("h3").innerText.toLowerCase();
+                const genres = card.querySelector(".genres").innerText.toLowerCase();
+
+                if (title.includes(searchQuery) || genres.includes(searchQuery)) {
+                    card.style.display = "block"; // Show matching cards
+                } else {
+                    card.style.display = "none"; // Hide non-matching cards
+                }
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
