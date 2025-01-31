@@ -426,26 +426,41 @@
         }
     </script>
     
-    <script>
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.querySelector(".search-bar");
         const gameGrid = document.getElementById("gameGrid");
         const cards = gameGrid.getElementsByClassName("card");
 
-        searchInput.addEventListener("input", function () {
-            const searchQuery = searchInput.value.toLowerCase();
+        // Function to get URL parameters
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
 
+        // Get search query from URL
+        const searchQuery = getQueryParam("query");
+        if (searchQuery) {
+            searchInput.value = searchQuery; // Set input value
+            filterGames(searchQuery.toLowerCase());
+        }
+
+        searchInput.addEventListener("input", function () {
+            filterGames(searchInput.value.toLowerCase());
+        });
+
+        function filterGames(query) {
             for (let card of cards) {
                 const title = card.querySelector("h3").innerText.toLowerCase();
                 const genres = card.querySelector(".genres").innerText.toLowerCase();
 
-                if (title.includes(searchQuery) || genres.includes(searchQuery)) {
-                    card.style.display = "block"; // Show matching cards
+                if (title.includes(query) || genres.includes(query)) {
+                    card.style.display = "block";
                 } else {
-                    card.style.display = "none"; // Hide non-matching cards
+                    card.style.display = "none";
                 }
             }
-        });
+        }
     });
 </script>
 
