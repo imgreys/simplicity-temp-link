@@ -422,44 +422,34 @@
             window.open(document.getElementById('modalIframe').src, '_blank');
         }
 
-function openInIframe() {
-    const iframeSrc = document.getElementById('modalIframe').src;
-    const newWindow = window.open('about:blank', '_blank');
+       function openInIframe() {
+        const iframeSrc = document.getElementById('modalIframe').src;
+        const newWindow = window.open('about:blank', '_blank');
 
-    // Write an initial document (without the iframe)
-    newWindow.document.write(`
-        <html>
-            <head>
-                <title>Loading...</title>
-                <style>
-                    body {
-                        margin: 0;
-                        padding: 0;
-                        height: 100vh;
-                        overflow: hidden;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                        font-family: Arial, sans-serif;
-                        background-color: #f0f0f0;
-                    }
-                </style>
-            </head>
-            <body>
-                <div>Loading...</div>
-                <script>
-                    const iframe = document.createElement('iframe');
-                    iframe.src = '${iframeSrc}';
-                    iframe.style.width = '100%';
-                    iframe.style.height = '100%';
-                    iframe.style.border = 'none';
-                    document.body.innerHTML = '';  // Clear loading message
-                    document.body.appendChild(iframe);  // Add the iframe
-                </script>
-            </body>
-        </html>
+        // Wait for the window to fully load before injecting the content
+        newWindow.document.write(`
+            <html>
+                <head>
+                    <style>
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            height: 100vh;
+                            overflow: hidden;
+                        }
+                        iframe {
+                            width: 100%;
+                            height: 100%;
+                            border: none;
+                            display: block;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
+                </body>
+            </html>
         `);
-
         }
     </script>
 </body>
