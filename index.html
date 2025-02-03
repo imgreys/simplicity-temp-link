@@ -424,8 +424,7 @@
 
         function openInIframe() {
         const iframeSrc = document.getElementById('modalIframe').src;
-        const newWindow = window.open('about:blank', '_blank');
-
+        const newWindow = window.open(iframeSrc, '_blank');
         // Wait for the window to fully load before injecting the content
         newWindow.document.write(`
             <html>
