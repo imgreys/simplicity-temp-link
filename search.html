@@ -13,49 +13,49 @@
         }
 
         body {
-    background-color: #060606;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden; /* Prevent body from scrolling */
-    padding: 10px;
+            background-color: #060606;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden; /* Prevent body from scrolling */
+            padding: 10px;
         }
 
         .left-box {
-    width: 15%;
-    background-color: #121212;
-    border: 2px solid black;
-    border-radius: 10px;
-    height: 100%;
-    margin-right: 10px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 20px;
-    align-items: flex-start;
+            width: 15%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            height: 100%;
+            margin-right: 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            align-items: flex-start;
         }
 
         .right-box {
-    width: 85%;
-    background-color: #121212;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-    overflow-y: auto; /* Make right-box scrollable */
-    max-height: 100vh; /* Ensure right box doesn't exceed the viewport height */
+            width: 85%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            overflow-y: auto; /* Make right-box scrollable */
+            max-height: 100vh; /* Ensure right box doesn't exceed the viewport height */
         }
-        
+
         .right-box::-webkit-scrollbar {
-    display: none;
-    
+            display: none;
+
         }
 
         .search-container {
@@ -230,79 +230,90 @@
             fill: white; /* Turn white on hover */
         }
 
-        /* Modal (Popup) Style */
-        .modal {
-            display: none;
+        /* Game Modal Styles */
+        .game-modal {
+            display: none; /* Hidden by default */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
-        .modal.show {
+        .game-modal.show {
             display: flex;
-            opacity: 1;
         }
 
-        .modal-content {
+        .game-modal-content {
             background-color: #121212;
             border-radius: 10px;
             padding: 20px;
-            width: 70%;
-            max-width: 800px;
+            width: 80%;  /* Adjust as needed */
+            max-width: 900px; /* Limit the maximum width */
             text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Add a shadow */
         }
 
-        .modal-close {
+        .game-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .game-modal-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .game-modal-close {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
-            padding: 10px 20px;
-            margin-top: 10px;
+            padding: 8px 16px;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 5px;
             transition: background 0.3s;
         }
 
-        .modal-close:hover {
+        .game-modal-close:hover {
             background: rgba(255, 255, 255, 0.3);
         }
 
-        .modal-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+        #modalIframe {
+            width: 100%;
+            height: 500px; /* Adjust as needed */
+            border: none;
+            margin-bottom: 15px;
         }
 
-        .modal-buttons button {
+        .modal-button {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
             padding: 10px 20px;
+            margin: 5px;
             cursor: pointer;
             border-radius: 8px;
             transition: background 0.3s;
         }
 
-        .modal-buttons button:hover {
+        .modal-button:hover {
             background: rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
 <body>
     <div class="left-box" id="leftBox">
-         <div class="icon search" onclick="window.location.href = '/'">
+        <div class="icon search" onclick="window.location.href = '/'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
             <span class="icon-text">Home</span>
         </div>
-         <div class="icon home active" onclick="window.location.href = '/search.html'">
+        <div class="icon home active" onclick="window.location.href = '/search.html'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
             <span class="icon-text">Search</span>
         </div>
@@ -318,22 +329,24 @@
         <div class="grid" id="gameGrid"></div>
     </div>
 
-    <!-- Modal (Popup) Template -->
-    <div class="modal" id="gameModal">
-        <div class="modal-content">
-            <h3 id="modalTitle"></h3>
-            <iframe id="modalIframe" src="" width="100%" height="500px" frameborder="0"></iframe>
-            <div class="modal-buttons">
-                <button onclick="openInNewTab()">Open Fullscreen</button>
-                <button onclick="openInIframe()">Open in Hidden Tab</button>
+    <!-- Game Modal -->
+    <div class="game-modal" id="gameModal">
+        <div class="game-modal-content">
+            <div class="game-modal-header">
+                <span class="game-modal-title" id="modalTitle"></span>
+                <button class="game-modal-close" onclick="closeModal()">Close</button>
             </div>
-            <button class="modal-close" onclick="closeModal()">Close</button>
+            <iframe id="modalIframe" src="" frameborder="0" allowfullscreen></iframe>
+            <div style="margin-top: 10px;">
+                <button class="modal-button" onclick="openInNewTab()">Open in New Tab</button>
+                <button class="modal-button" onclick="openInIframe()">Open in Iframe</button>
+            </div>
         </div>
     </div>
 
     <script>
         const games = [
-            {
+{
                 url: 'https://bitlife-use-simplicity.vercel.app/',
                 image: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675',
                 title: 'BitLife',
@@ -471,15 +484,15 @@
                 <div class="info">
                     <h3>${game.title}</h3>
                     <p class="genres">${game.genres}</p>
-                    <a href="#" onclick="openGameModal('${game.url}')">Use</a>
+                    <a href="#" onclick="openGameModal('${game.url}', '${game.title}')">Use</a>
                 </div>
             `;
             gameGrid.appendChild(card);
         });
 
-        function openGameModal(url) {
+        function openGameModal(url, title) {
             document.getElementById('gameModal').classList.add('show');
-            document.getElementById('modalTitle');
+            document.getElementById('modalTitle').innerText = title; // Set the title
             document.getElementById('modalIframe').src = url;
         }
 
@@ -492,74 +505,73 @@
         }
 
         function openInIframe() {
-        const iframeSrc = document.getElementById('modalIframe').src;
-        const newWindow = window.open('about:blank', '_blank');
+            const iframeSrc = document.getElementById('modalIframe').src;
+            const newWindow = window.open('about:blank', '_blank');
 
-        // Wait for the window to fully load before injecting the content
-        newWindow.document.write(`
-            <html>
-                <head>
-                    <style>
-                        body {
-                            margin: 0;
-                            padding: 0;
-                            height: 100vh;
-                            overflow: hidden;
-                        }
-                        iframe {
-                            width: 100%;
-                            height: 100%;
-                            border: none;
-                            display: block;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
-                </body>
-            </html>
-        `);
-
+            // Wait for the window to fully load before injecting the content
+            newWindow.document.write(`
+                <html>
+                    <head>
+                        <style>
+                            body {
+                                margin: 0;
+                                padding: 0;
+                                height: 100vh;
+                                overflow: hidden;
+                            }
+                            iframe {
+                                width: 100%;
+                                height: 100%;
+                                border: none;
+                                display: block;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
+                    </body>
+                </html>
+            `);
         }
     </script>
-    
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const searchInput = document.querySelector(".search-bar");
-        const gameGrid = document.getElementById("gameGrid");
-        const cards = gameGrid.getElementsByClassName("card");
 
-        // Function to get URL parameters
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.querySelector(".search-bar");
+            const gameGrid = document.getElementById("gameGrid");
+            const cards = gameGrid.getElementsByClassName("card");
 
-        // Get search query from URL
-        const searchQuery = getQueryParam("query");
-        if (searchQuery) {
-            searchInput.value = searchQuery; // Set input value
-            filterGames(searchQuery.toLowerCase());
-        }
+            // Function to get URL parameters
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
 
-        searchInput.addEventListener("input", function () {
-            filterGames(searchInput.value.toLowerCase());
-        });
+            // Get search query from URL
+            const searchQuery = getQueryParam("query");
+            if (searchQuery) {
+                searchInput.value = searchQuery; // Set input value
+                filterGames(searchQuery.toLowerCase());
+            }
 
-        function filterGames(query) {
-            for (let card of cards) {
-                const title = card.querySelector("h3").innerText.toLowerCase();
-                const genres = card.querySelector(".genres").innerText.toLowerCase();
+            searchInput.addEventListener("input", function () {
+                filterGames(searchInput.value.toLowerCase());
+            });
 
-                if (title.includes(query) || genres.includes(query)) {
-                    card.style.display = "block";
-                } else {
-                    card.style.display = "none";
+            function filterGames(query) {
+                for (let card of cards) {
+                    const title = card.querySelector("h3").innerText.toLowerCase();
+                    const genres = card.querySelector(".genres").innerText.toLowerCase();
+
+                    if (title.includes(query) || genres.includes(query)) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
 
 </body>
 </html>
