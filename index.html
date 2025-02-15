@@ -339,10 +339,16 @@
             background-position: center;
             cursor: pointer;
             transition: transform 0.3s ease;
+            position: absolute;
+            bottom: 20px; /* Position at the bottom */
         }
 
         .cog-icon:hover {
             transform: rotate(30deg);
+        }
+        
+        .icon.home {
+            margin-bottom: 20px;
         }
 
         /* Media Query for Smaller Screens */
@@ -449,6 +455,10 @@
         .modal-button:hover {
             background: rgba(255, 255, 255, 0.3);
         }
+
+        .text-link {
+            color: white; /* Set the link color to white */
+        }
     </style>
 </head>
 <body>
@@ -549,7 +559,7 @@
         }
 
         const games = [
-        {
+            {
             url: 'https://bitlife-use-simplicity.vercel.app/',
             image: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675',
             title: 'BitLife',
