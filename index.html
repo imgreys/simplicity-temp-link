@@ -13,49 +13,49 @@
         }
 
         body {
-    background-color: #060606;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden; /* Prevent body from scrolling */
-    padding: 10px;
+            background-color: #060606;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh; /* Full viewport height */
+            margin: 0;
+            overflow: hidden; /* Prevent body from scrolling */
+            padding: 10px;
         }
 
         .left-box {
-    width: 15%;
-    background-color: #121212;
-    border: 2px solid black;
-    border-radius: 10px;
-    height: 100%;
-    margin-right: 10px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 20px;
-    align-items: flex-start;
+            width: 15%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            height: 100%;
+            margin-right: 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            align-items: flex-start;
         }
 
         .right-box {
-    width: 85%;
-    background-color: #121212;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-    overflow-y: auto; /* Make right-box scrollable */
-    max-height: 100vh; /* Ensure right box doesn't exceed the viewport height */
+            width: 85%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            overflow-y: auto; /* Make right-box scrollable */
+            max-height: 100vh; /* Ensure right box doesn't exceed the viewport height */
         }
-        
+
         .right-box::-webkit-scrollbar {
-    display: none;
-}
+            display: none;
+        }
 
         .search-container {
             position: relative;
@@ -192,8 +192,7 @@
         }
 
         .content-box {
-            width: 100%; /* Adjust as needed */
-            height: 50%;
+            width: 100%;
             background-color: #181818;
             border-radius: 10px;
             margin-top: 20px;
@@ -201,11 +200,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .text-link {
-           color: white;
-           text-decoration: none; /* Removes underline */
+            transition: background-image 0.5s ease, width 0.3s ease, height 0.3s ease; /* Added width and height transition */
+            background-size: cover;
+            background-position: center;
+            /* Remove the min-height */
+            /* Add this line to use aspect ratio */
+            aspect-ratio: 1 / 1; /* Match height to width */
         }
 
         .content-box p {
@@ -254,8 +254,8 @@
             fill: white; /* Turn white on hover */
         }
 
-        /* Modal (Popup) Style */
-        .modal {
+        /* Settings Modal */
+        .settings-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -263,59 +263,190 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
-        .modal.show {
+        .settings-modal.show {
             display: flex;
-            opacity: 1;
         }
 
-        .modal-content {
+        .settings-modal-content {
             background-color: #121212;
             border-radius: 10px;
             padding: 20px;
             width: 70%;
-            max-width: 800px;
+            max-width: 600px;
             text-align: center;
         }
 
-        .modal-close {
+        .settings-modal-close {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
             padding: 10px 20px;
-            margin-top: 10px;
+            margin-top: 20px;
             cursor: pointer;
             border-radius: 8px;
             transition: background 0.3s;
         }
 
-        .modal-close:hover {
+        .settings-modal-close:hover {
             background: rgba(255, 255, 255, 0.3);
         }
 
-        .modal-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
+        .settings-control {
+            margin-bottom: 15px;
+            text-align: left;
         }
 
-        .modal-buttons button {
+        .settings-control label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .settings-control input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            background-color: #222;
+            color: white;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        .settings-control input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .settings-control input[type="number"] {
+            width: 60px; /* Or any suitable width */
+            padding: 8px;
+            background-color: #222;
+            color: white;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        /* Cog Icon Style */
+        .cog-icon {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23fff"><path d="M19.4 13.2h-1.9l-0.6 1.2c-0.8 1.5-2.2 2.5-3.8 2.8v1.2c0 0.7-0.6 1.3-1.3 1.3s-1.3-0.6-1.3-1.3v-1.2c-1.6-0.3-3.1-1.4-3.8-2.8l-0.6-1.2h-1.9c-0.7 0-1.3-0.6-1.3-1.3v-2.3c0-0.7 0.6-1.3 1.3-1.3h1.9l0.6-1.2c0.8-1.5 2.2-2.5 3.8-2.8v-1.2c0-0.7 0.6-1.3 1.3-1.3s1.3 0.6 1.3 1.3v1.2c1.6 0.3 3.1 1.4 3.8 2.8l0.6 1.2h1.9c0.7 0 1.3 0.6 1.3 1.3v2.3c0 0.7-0.6 1.3-1.3 1.3zm-9.4-5.6c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm0 8.8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>'); /* Replace with your cog icon */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .cog-icon:hover {
+            transform: rotate(30deg);
+        }
+
+        /* Media Query for Smaller Screens */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column; /* Stack items vertically */
+            }
+
+            .left-box {
+                width: 100%;
+                height: auto;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+
+            .right-box {
+                width: 100%;
+                height: auto; /* Allow the right box to take full height */
+                margin-top: 0; /* Remove top margin */
+            }
+
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust card size */
+            }
+
+            .content-box {
+                height: auto; /* Allow content box to adjust its height */
+                margin-top: 10px; /* Add some margin at the top */
+            }
+        }
+
+        /* Game Modal Styles */
+        .game-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-modal.show {
+            display: flex;
+        }
+
+        .game-modal-content {
+            background-color: #121212;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;  /* Adjust as needed */
+            max-width: 900px; /* Limit the maximum width */
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Add a shadow */
+        }
+
+        .game-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .game-modal-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .game-modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .game-modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        #modalIframe {
+            width: 100%;
+            height: 500px; /* Adjust as needed */
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        .modal-button {
             background: rgba(255, 255, 255, 0.1);
             border: none;
             color: white;
             padding: 10px 20px;
+            margin: 5px;
             cursor: pointer;
             border-radius: 8px;
             transition: background 0.3s;
         }
 
-        .modal-buttons button:hover {
+        .modal-button:hover {
             background: rgba(255, 255, 255, 0.3);
         }
     </style>
@@ -330,6 +461,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
             <span class="icon-text">Search</span>
         </div>
+        <div class="cog-icon" onclick="openSettingsModal()"></div>
     </div>
 
     <div class="right-box" id="rightBox">
@@ -339,177 +471,293 @@
                 <button type="submit" style="display: none;">Search</button>
             </form>
         </div>
-        <div class="content-box">
-<p><strong><a href="https://docs.google.com/document/d/1KOuAgBZg_8LOCtZ86RZCHIp36b_m43oscCiFjkS9xUg/edit?tab=t.0#heading=h.76n47cn7rwbx" class="text-link">If a link gets blocked, the new one will go here, so bookmark this link (click me)</a></strong> and
-<strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSeh1ZbWu8XId_5WpryruIFzQBJ9B3hofd49yJEtalhy0R7Dzw/viewform?usp=header" class="text-link">Request new things/Complaints & Issues/</a></strong> property of Plasma Unblocker/Greyson </p>
-</div>
-
+        <div class="content-box" id="contentBox">
+            <p id="contentBoxText">
+                <strong><a href="https://docs.google.com/document/d/1KOuAgBZg_8LOCtZ86RZCHIp36b_m43oscCiFjkS9xUg/edit?tab=t.0#heading=h.76n47cn7rwbx" class="text-link">If a link gets blocked, the new one will go here, so bookmark this link (click me)</a></strong> and
+                <strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSeh1ZbWu8XId_5WpryruIFzQBJ9B3hofd49yJEtalhy0R7Dzw/viewform?usp=header" class="text-link">Request new things/Complaints & Issues/</a></strong> property of Plasma Unblocker/Greyson
+            </p>
+        </div>
 
         <div class="grid" id="gameGrid"></div>
     </div>
 
-    <!-- Modal (Popup) Template -->
-    <div class="modal" id="gameModal">
-        <div class="modal-content">
-            <h3 id="modalTitle"></h3>
-            <iframe id="modalIframe" src="" width="100%" height="500px" frameborder="0"></iframe>
-            <div class="modal-buttons">
-                <button onclick="openInNewTab()">Open Fullscreen</button>
-                <button onclick="openInIframe()">Open in Hidden Tab</button>
+    <!-- Game Modal -->
+    <div class="game-modal" id="gameModal">
+        <div class="game-modal-content">
+            <div class="game-modal-header">
+                <span class="game-modal-title" id="modalTitle"></span>
+                <button class="game-modal-close" onclick="closeModal()">Close</button>
             </div>
-            <button class="modal-close" onclick="closeModal()">Close</button>
+            <iframe id="modalIframe" src="" frameborder="0" allowfullscreen></iframe>
+            <div style="margin-top: 10px;">
+                <button class="modal-button" onclick="openInNewTab()">Open in New Tab</button>
+                <button class="modal-button" onclick="openInIframe()">Open in Iframe</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="settings-modal" id="settingsModal">
+        <div class="settings-modal-content">
+            <h2>Content Box Settings</h2>
+
+            <div class="settings-control">
+                <label for="contentBoxTextToggle">Show Text:</label>
+                <input type="checkbox" id="contentBoxTextToggle" onchange="toggleContentBoxText()">
+            </div>
+
+            <div class="settings-control">
+                <label for="backgroundImageUrl">Background Image URL:</label>
+                <input type="text" id="backgroundImageUrl" placeholder="Enter image URL" onchange="changeContentBackground()">
+            </div>
+
+            <!-- Width and Height Settings -->
+            <div class="settings-control">
+                <label for="contentBoxWidth">Width (%):</label>
+                <input type="number" id="contentBoxWidth" min="1" max="100" step="1" onchange="changeContentBoxSize()">
+            </div>
+
+            <div class="settings-control">
+                <label for="contentBoxHeight">Height (%):</label>
+                <input type="number" id="contentBoxHeight" min="1" max="100" step="1" onchange="changeContentBoxSize()">
+            </div>
+
+
+            <button class="settings-modal-close" onclick="closeSettingsModal()">Close</button>
         </div>
     </div>
 
     <script>
-        const games = [
-            {
-                url: 'https://bitlife-use-simplicity.vercel.app/',
-                image: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675',
-                title: 'BitLife',
-                genres: 'Simulation, Life, Game'
-            },
-            {
-                url: 'https://vigglesbeens.vercel.app/',
-                image: 'https://art.pixilart.com/3253d436c2cf5e0.gif',
-                title: 'Plasma Unblocker',
-                genres: 'Unblocker, Games, Apps'
-            },
-            {
-                url: 'https://sigmaticity.vercel.app/',
-                image: 'https://media1.giphy.com/media/SVCSsoKU5v6ZJLk07n/giphy.gif?cid=6c09b952ifosvwna6qj7z6gcu769z2ecmuwt6l2ue82gdu66&ep=v1_gifs_search&rid=giphy.gif&ct=g',
-                title: 'Interstellar',
-                genres: 'Unblocker, Proxy, Games, Apps'
-            },
-            {
-                url: 'https://freekydeeki.onrender.com',
-                image: 'https://cdn.dribbble.com/users/88529/screenshots/4852160/media/6939fd77e92a6168629f6711e65d558e.png',
-                title: 'Movies (freek.to)',
-                genres: 'Movies, Tv, Anime, Manga'
-            },
-            {
-                url: 'https://snowrider-3d.vercel.app/',
-                image: 'https://cdn.now.gg/apps-content/com.nowgg.h5.pub483.app51067/ogimage/snow-rider-3d.jpg',
-                title: 'Snow Rider 3D',
-                genres: 'Game'
-            },
-            {
-                url: 'https://iask.ai',
-                image: 'https://archive.org/download/1712685806715/1712685806715.png',
-                title: 'Ask Ai',
-                genres: 'Ai'
-            },
-            {
-                url: 'https://simplicty-est-super-cool.vercel.app/',
-                image: 'https://www.numuki.com/game/img/house-of-hazards-3418.jpg',
-                title: 'House of Hazards',
-                genres: 'Game'
-            },
-            {
-                url: 'https://simplicity-awesome.vercel.app/',
-                image: 'https://github.com/Greys2121/Simplicity-beta-release/blob/main/retro-bowl-college.png?raw=true',
-                title: 'Retro Bowl',
-                genres: 'Game'
-            },
-            {
-                url: 'https://simplicity-so-friggin-cool.vercel.app/',
-                image: 'https://i.ytimg.com/vi/SN7yOZARWB0/maxresdefault.jpg',
-                title: 'Territorial',
-                genres: 'Game'
-            },
-            {
-                url: 'https://simplic-space-ity.vercel.app',
-                image: 'https://insights.som.yale.edu/sites/default/files/styles/max_1300x1300/public/2022-10/space.jpeg?itok=ee8bV8ok',
-                title: 'Space-Proxy',
-                genres: 'Unblocker, Proxy, Games, Apps'
-            },
-            {
-                url: 'https://prolly-simplicitys-website.vercel.app/',
-                image: 'https://media.licdn.com/dms/image/v2/C5612AQEbp1oYRPgCHg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1618575564534?e=2147483647&v=beta&t=Cm6HxJgblnjMpNvZo8HuWkpDR3ytNcTIBHifMkeDWHE',
-                title: 'Card Games/Board Games',
-                genres: 'Games, Board Games'
-            },
-            {
-                url: 'https://simplicity-tetris.vercel.app/',
-                image: 'https://play-lh.googleusercontent.com/OWGN9-qhyQMwPdwUVciUaWwNB8-OLTdp4wtiC4imY_suZrIGV8Nb98OTZPCh7FjiaVG_sXA9gdY=w1296-h2160-rw',
-                title: 'Tetris',
-                genres: 'Game'
-            },
-            {
-                url: 'https://eggycar-simplicity.vercel.app/',
-                image: 'https://i.ytimg.com/vi/lgFhzhRM29M/maxresdefault.jpg',
-                title: 'Eggy Car',
-                genres: 'Game'
-            },
-            {
-                url: 'https://bloxd-simplicity.vercel.app/',
-                image: 'https://i.ytimg.com/vi/FoqKB4ogm4k/maxresdefault.jpg',
-                title: 'Bloxd.io',
-                genres: 'Game, Minecraft'
-            },
-            {
-                url: 'https://fnaf-simplicity.vercel.app/',
-                image: 'https://mlpnk72yciwc.i.optimole.com/cqhiHLc.IIZS~2ef73/w:auto/h:auto/q:75/https://bleedingcool.com/wp-content/uploads/2023/12/Five-Nights-At-Freddys-Generic-Art.jpg',
-                title: 'Fnaf',
-                genres: 'Game, Horror'
-            },
-            {
-                url: 'https://simplcity-skribbl.vercel.app/',
-                image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU0Bdy7yc6tV2mdGEBDvOHPHaq9QwqGL-WqA&s',
-                title: 'Skribbl.io',
-                genres: 'Game, Art'
-            },
-            {
-                url: 'https://minecraft-simplicity.vercel.app/',
-                image: 'https://staticg.sportskeeda.com/editor/2025/01/8827f-17376979472538-1920.jpg?w=640',
-                title: 'Eaglercraft',
-                genres: 'Game'
-            },
-            {
-                url: 'https://pakohighway-simplicity.vercel.app/',
-                image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWIdsXaqWOs_0GRPakOfFuhhPNrXwwobw95g&s',
-                title: 'PakoHighway',
-                genres: 'Game'
-            },
-            {
-                url: 'https://simplicity-hunters.vercel.app/',
-                image: 'https://w8.snokido.com/img/large/drift-hunters.jpg?080124',
-                title: 'Drift Hunters',
-                genres: 'Game'
-            },
-            {
-                url: 'https://burrito-simplicity.vercel.app/',
-                image: 'https://i.ytimg.com/vi/GvlrAwlpZyk/maxresdefault.jpg',
-                title: 'Burrito Bison',
-                genres: 'Game'
-            },
-            {
-                url: 'https://roomsintheback.vercel.app/',
-                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Backrooms_model.jpg/1200px-Backrooms_model.jpg',
-                title: 'Backrooms',
-                genres: 'Game'
+        // Function to get a setting from localStorage
+        function getSetting(key, defaultValue) {
+            const storedValue = localStorage.getItem(key);
+            if (storedValue === null) {
+                return defaultValue;
             }
+            try {
+                return JSON.parse(storedValue);
+            } catch (e) {
+                // Handle parsing errors (e.g., if the stored value isn't valid JSON)
+                console.error(`Error parsing setting ${key} from localStorage:`, e);
+                return defaultValue;
+            }
+        }
+
+        // Function to set a setting in localStorage
+        function setSetting(key, value) {
+            localStorage.setItem(key, JSON.stringify(value));
+        }
+
+        const games = [
+        {
+            url: 'https://bitlife-use-simplicity.vercel.app/',
+            image: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675',
+            title: 'BitLife',
+            genres: 'Simulation, Life, Game'
+        },
+        {
+            url: 'https://vigglesbeens.vercel.app/',
+            image: 'https://art.pixilart.com/3253d436c2cf5e0.gif',
+            title: 'Plasma Unblocker',
+            genres: 'Unblocker, Games, Apps'
+        },
+        {
+            url: 'https://sigmaticity.vercel.app/',
+            image: 'https://media1.giphy.com/media/SVCSsoKU5v6ZJLk07n/giphy.gif?cid=6c09b952ifosvwna6qj7z6gcu769z2ecmuwt6l2ue82gdu66&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+            title: 'Interstellar',
+            genres: 'Unblocker, Proxy, Games, Apps'
+        },
+        {
+            url: 'https://freekydeeki.onrender.com',
+            image: 'https://cdn.dribbble.com/users/88529/screenshots/4852160/media/6939fd77e92a6168629f6711e65d558e.png',
+            title: 'Movies (freek.to)',
+            genres: 'Movies, Tv, Anime, Manga'
+        },
+        {
+            url: 'https://snowrider-3d.vercel.app/',
+            image: 'https://cdn.now.gg/apps-content/com.nowgg.h5.pub483.app51067/ogimage/snow-rider-3d.jpg',
+            title: 'Snow Rider 3D',
+            genres: 'Game'
+        },
+        {
+            url: 'https://iask.ai',
+            image: 'https://archive.org/download/1712685806715/1712685806715.png',
+            title: 'Ask Ai',
+            genres: 'Ai'
+        },
+        {
+            url: 'https://simplicty-est-super-cool.vercel.app/',
+            image: 'https://www.numuki.com/game/img/house-of-hazards-3418.jpg',
+            title: 'House of Hazards',
+            genres: 'Game'
+        },
+        {
+            url: 'https://simplicity-awesome.vercel.app/',
+            image: 'https://github.com/Greys2121/Simplicity-beta-release/blob/main/retro-bowl-college.png?raw=true',
+            title: 'Retro Bowl',
+            genres: 'Game'
+        },
+        {
+            url: 'https://simplicity-so-friggin-cool.vercel.app/',
+            image: 'https://i.ytimg.com/vi/SN7yOZARWB0/maxresdefault.jpg',
+            title: 'Territorial',
+            genres: 'Game'
+        },
+        {
+            url: 'https://simplic-space-ity.vercel.app',
+            image: 'https://insights.som.yale.edu/sites/default/files/styles/max_1300x1300/public/2022-10/space.jpeg?itok=ee8bV8ok',
+            title: 'Space-Proxy',
+            genres: 'Unblocker, Proxy, Games, Apps'
+        },
+        {
+            url: 'https://prolly-simplicitys-website.vercel.app/',
+            image: 'https://media.licdn.com/dms/image/v2/C5612AQEbp1oYRPgCHg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1618575564534?e=2147483647&v=beta&t=Cm6HxJgblnjMpNvZo8HuWkpDR3ytNcTIBHifMkeDWHE',
+            title: 'Card Games/Board Games',
+            genres: 'Games, Board Games'
+        },
+        {
+            url: 'https://simplicity-tetris.vercel.app/',
+            image: 'https://play-lh.googleusercontent.com/OWGN9-qhyQMwPdwUVciUaWwNB8-OLTdp4wtiC4imY_suZrIGV8Nb98OTZPCh7FjiaVG_sXA9gdY=w1296-h2160-rw',
+            title: 'Tetris',
+            genres: 'Game'
+        },
+        {
+            url: 'https://eggycar-simplicity.vercel.app/',
+            image: 'https://i.ytimg.com/vi/lgFhzhRM29M/maxresdefault.jpg',
+            title: 'Eggy Car',
+            genres: 'Game'
+        },
+        {
+            url: 'https://bloxd-simplicity.vercel.app/',
+            image: 'https://i.ytimg.com/vi/FoqKB4ogm4k/maxresdefault.jpg',
+            title: 'Bloxd.io',
+            genres: 'Game, Minecraft'
+        },
+        {
+            url: 'https://fnaf-simplicity.vercel.app/',
+            image: 'https://mlpnk72yciwc.i.optimole.com/cqhiHLc.IIZS~2ef73/w:auto/h:auto/q:75/https://bleedingcool.com/wp-content/uploads/2023/12/Five-Nights-At-Freddys-Generic-Art.jpg',
+            title: 'Fnaf',
+            genres: 'Game, Horror'
+        },
+        {
+            url: 'https://simplcity-skribbl.vercel.app/',
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU0Bdy7yc6tV2mdGEBDvOHPHaq9QwqGL-WqA&s',
+            title: 'Skribbl.io',
+            genres: 'Game, Art'
+        },
+        {
+            url: 'https://minecraft-simplicity.vercel.app/',
+            image: 'https://staticg.sportskeeda.com/editor/2025/01/8827f-17376979472538-1920.jpg?w=640',
+            title: 'Eaglercraft',
+            genres: 'Game'
+        },
+        {
+            url: 'https://pakohighway-simplicity.vercel.app/',
+            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWIdsXaqWOs_0GRPakOfFuhhPNrXwwobw95g&s',
+            title: 'PakoHighway',
+            genres: 'Game'
+        },
+        {
+            url: 'https://simplicity-hunters.vercel.app/',
+            image: 'https://w8.snokido.com/img/large/drift-hunters.jpg?080124',
+            title: 'Drift Hunters',
+            genres: 'Game'
+        },
+        {
+            url: 'https://burrito-simplicity.vercel.app/',
+            image: 'https://i.ytimg.com/vi/GvlrAwlpZyk/maxresdefault.jpg',
+            title: 'Burrito Bison',
+            genres: 'Game'
+        },
+        {
+            url: 'https://roomsintheback.vercel.app/',
+            image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Backrooms_model.jpg/1200px-Backrooms_model.jpg',
+            title: 'Backrooms',
+            genres: 'Game'
+        }
         ];
 
         const gameGrid = document.getElementById('gameGrid');
+        const contentBox = document.getElementById('contentBox');
+        const contentBoxText = document.getElementById('contentBoxText');
+        const settingsModal = document.getElementById('settingsModal');
+        const backgroundImageUrlInput = document.getElementById('backgroundImageUrl');
+        const contentBoxWidthInput = document.getElementById('contentBoxWidth'); // Get the width input.
+        const contentBoxHeightInput = document.getElementById('contentBoxHeight'); // Get the height input.
 
-        games.forEach(game => {
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.innerHTML = `
-                <div class="background" style="background-image: url(${game.image});"></div>
-                <div class="info">
-                    <h3>${game.title}</h3>
-                    <p class="genres">${game.genres}</p>
-                    <a href="#" onclick="openGameModal('${game.url}')">Use</a>
-                </div>
-            `;
-            gameGrid.appendChild(card);
-        });
+        // Load settings from localStorage with defaults
+        window.backgroundImageUrl = getSetting('backgroundImageUrl', '');
+        window.contentBoxTextVisible = getSetting('contentBoxTextVisible', true);
+        window.contentBoxWidth = getSetting('contentBoxWidth', 100); // Load width setting (default 100%)
+        window.contentBoxHeight = getSetting('contentBoxHeight', 50); // Load height setting (default 50%)
 
-        function openGameModal(url) {
+        // Apply saved settings on page load *before* setting up event listeners
+        function applySettings() {
+            contentBox.style.backgroundImage = window.backgroundImageUrl ? `url(${window.backgroundImageUrl})` : '';
+            contentBoxText.style.display = window.contentBoxTextVisible ? 'block' : 'none';
+            contentBox.style.width = `${window.contentBoxWidth}%`;  // Apply the width setting.
+            contentBox.style.height = `${window.contentBoxHeight}%`; // Apply the height setting.
+            backgroundImageUrlInput.value = window.backgroundImageUrl;
+            contentBoxWidthInput.value = window.contentBoxWidth; // Update the input field.
+            contentBoxHeightInput.value = window.contentBoxHeight; // Update the height input field
+
+            // Update the checkbox state.
+            document.getElementById('contentBoxTextToggle').checked = window.contentBoxTextVisible;
+        }
+
+        applySettings();
+
+        // Corrected code to generate game cards
+        function generateGameCards() {
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <div class="background" style="background-image: url(${game.image});"></div>
+                    <div class="info">
+                        <h3>${game.title}</h3>
+                        <p class="genres">${game.genres}</p>
+                        <a href="#" onclick="openGameModal('${game.url}', '${game.title}')">Use</a>
+                    </div>
+                `;
+                gameGrid.appendChild(card);
+            });
+        }
+
+        // Call this function after the DOM is fully loaded.
+        document.addEventListener('DOMContentLoaded', generateGameCards);
+
+
+        function openSettingsModal() {
+            settingsModal.classList.add('show');
+        }
+
+        function closeSettingsModal() {
+            settingsModal.classList.remove('show');
+        }
+
+        function changeContentBackground() {
+            const imageUrl = document.getElementById('backgroundImageUrl').value;
+            // Update the global variable
+            window.backgroundImageUrl = imageUrl;
+            // Apply immediately
+            applySettings();
+            // Save to local storage
+            setSetting('backgroundImageUrl', imageUrl);
+        }
+
+        function toggleContentBoxText() {
+            // Update the global variable
+            window.contentBoxTextVisible = !window.contentBoxTextVisible;
+            // Apply immediately
+            applySettings();
+            // Save to local storage
+            setSetting('contentBoxTextVisible', window.contentBoxTextVisible);
+        }
+
+        function openGameModal(url, title) {
             document.getElementById('gameModal').classList.add('show');
-            document.getElementById('modalTitle');
+            document.getElementById('modalTitle').innerText = title; // Set the title
             document.getElementById('modalIframe').src = url;
         }
 
@@ -521,34 +769,61 @@
             window.open(document.getElementById('modalIframe').src, '_blank');
         }
 
-       function openInIframe() {
-        const iframeSrc = document.getElementById('modalIframe').src;
-        const newWindow = window.open('about:blank', '_blank');
+        function openInIframe() {
+            const iframeSrc = document.getElementById('modalIframe').src;
+            const newWindow = window.open('about:blank', '_blank');
 
-        // Wait for the window to fully load before injecting the content
-        newWindow.document.write(`
-            <html>
-                <head>
-                    <style>
-                        body {
-                            margin: 0;
-                            padding: 0;
-                            height: 100vh;
-                            overflow: hidden;
-                        }
-                        iframe {
-                            width: 100%;
-                            height: 100%;
-                            border: none;
-                            display: block;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
-                </body>
-            </html>
-        `);
+            // Wait for the window to fully load before injecting the content
+            newWindow.document.write(`
+                <html>
+                    <head>
+                        <style>
+                            body {
+                                margin: 0;
+                                padding: 0;
+                                height: 100vh;
+                                overflow: hidden;
+                            }
+                            iframe {
+                                width: 100%;
+                                height: 100%;
+                                border: none;
+                                display: block;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
+                    </body>
+                </html>
+            `);
+        }
+
+        // New function to change content box size
+        function changeContentBoxSize() {
+            const width = parseInt(document.getElementById('contentBoxWidth').value, 10);
+            const height = parseInt(document.getElementById('contentBoxHeight').value, 10);
+
+            // Validate the input for width
+            if (isNaN(width) || width < 1 || width > 100) {
+                alert('Please enter a valid width percentage between 1 and 100.');
+                return;
+            }
+            // Validate the input for height
+            if (isNaN(height) || height < 1 || height > 100) {
+                alert('Please enter a valid height percentage between 1 and 100.');
+                return;
+            }
+
+
+            // Update the global variables
+            window.contentBoxWidth = width;
+            window.contentBoxHeight = height;
+            // Apply the settings.
+            applySettings();
+            // Save to local storage
+            setSetting('contentBoxWidth', width);
+            setSetting('contentBoxHeight', height);
         }
     </script>
 </body>
