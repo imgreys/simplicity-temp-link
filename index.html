@@ -483,12 +483,20 @@
         </div>
         <div class="content-box" id="contentBox" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 20px;">
     <p id="contentBoxText">
-        <strong><a href="https://docs.google.com/document/d/1KOuAgBZg_8LOCtZ86RZCHIp36b_m43oscCiFjkS9xUg/edit?tab=t.0#heading=h.76n47cn7rwbx" class="text-link">If a link gets blocked, the new one will go here, so bookmark this link (click me)</a></strong> and
-        <strong><a href="https://docs.google.com/forms/d/e/1FAIpQLSeh1ZbWu8XId_5WpryruIFzQBJ9B3hofd49yJEtalhy0R7Dzw/viewform?usp=header" class="text-link">Request new things/Complaints & Issues/</a></strong>
+        <strong>
+            <a href="https://docs.google.com/document/d/1KOuAgBZg_8LOCtZ86RZCHIp36b_m43oscCiFjkS9xUg/edit?tab=t.0#heading=h.76n47cn7rwbx" class="text-link">
+                If a link gets blocked, the new one will go here, so bookmark this link (click me)
+            </a>
+        </strong> and
+        <strong>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeh1ZbWu8XId_5WpryruIFzQBJ9B3hofd49yJEtalhy0R7Dzw/viewform?usp=header" class="text-link">
+                Request new things/Complaints & Issues/
+            </a>
+        </strong>
     </p>
     
-    <!-- Updated disclaimer at the bottom -->
-    <p style="font-size: 12px; color: rgba(255, 255, 255, 0.7); margin-top: auto;">
+    <!-- Smaller font size for the disclaimer -->
+    <p id="contentBoxDisclaimer" style="font-size: x-small; color: rgba(255, 255, 255, 0.5); margin-top: auto;">
         Property of Greys2121 on GitHub | Greyson.
         Unauthorized use, distribution, or modification is strictly prohibited. All rights reserved. Formerly known as Plasma, the website is still listed and functioning below.
     </p>
@@ -764,14 +772,18 @@
             setSetting('backgroundImageUrl', imageUrl);
         }
 
-        function toggleContentBoxText() {
-            // Update the global variable
-            window.contentBoxTextVisible = !window.contentBoxTextVisible;
-            // Apply immediately
-            applySettings();
-            // Save to local storage
-            setSetting('contentBoxTextVisible', window.contentBoxTextVisible);
-        }
+function toggleContentBoxText() {
+    // Update the global variable
+    window.contentBoxTextVisible = !window.contentBoxTextVisible;
+    // Apply immediately
+    applySettings();
+    // Save to local storage
+    setSetting('contentBoxTextVisible', window.contentBoxTextVisible);
+    
+    // Hide or show the disclaimer text based on the same visibility state
+    const disclaimerText = document.getElementById('contentBoxDisclaimer');
+    disclaimerText.style.display = window.contentBoxTextVisible ? 'block' : 'none';
+}
 
         function openGameModal(url, title) {
             document.getElementById('gameModal').classList.add('show');
