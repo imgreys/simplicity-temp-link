@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #060606;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .left-box {
+            width: 15%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            height: 100%;
+            margin-right: 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            align-items: flex-start;
+        }
+
+        .right-box {
+            width: 85%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .right-box::-webkit-scrollbar {
+            display: none;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon-text {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .icon svg {
+            width: 25px;
+            height: 25px;
+            fill: #444; /* Dark gray color by default */
+            transition: fill 0.3s ease;
+        }
+
+        .icon.active svg {
+            fill: white; /* White icon for active page */
+        }
+
+        .icon:hover svg {
+            fill: white; /* Turn white on hover */
+        }
+
+        .account-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .account-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .account-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+        }
+
+        .account-container button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .account-container button:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="left-box" id="leftBox">
+        <div class="icon search" onclick="window.location.href = '/'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="icon-text">Home</span>
+        </div>
+        <div class="icon home" onclick="window.location.href = '/search.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
+            <span class="icon-text">Search</span>
+        </div>
+        <div class="icon community-games" onclick="window.location.href = '/community-games.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                <circle cx="9" cy="9" r="1.5" />
+                <circle cx="15" cy="9" r="1.5" />
+                <path d="M12 16c-1.1 0-2-.9-2-2h4c0 1.1-.9 2-2 2z"/>
+            </svg>
+            <span class="icon-text">Community Games</span>
+        </div>
+        <div class="icon account active" onclick="window.location.href = '/account.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            <span class="icon-text">Account</span>
+        </div>
+        <div class="icon public-profile" onclick="window.location.href = '/public-profile.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            <span class="icon-text">Public Profile</span>
+        </div>
+    </div>
+
+    <div class="right-box" id="rightBox">
+        <div class="account-container">
+            <h2>Account Settings</h2>
+            <form id="accountForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="url" id="profilePicture" placeholder="Profile Picture URL" required>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if (!currentUser) {
+            window.location.href = 'signin.html';
+        }
+
+        const accountForm = document.getElementById('accountForm');
+        const usernameInput = document.getElementById('username');
+        const emailInput = document.getElementById('email');
+        const profilePictureInput = document.getElementById('profilePicture');
+
+        // Load current user data
+        usernameInput.value = currentUser.username;
+        emailInput.value = currentUser.email;
+        profilePictureInput.value = currentUser.profilePicture;
+
+        // Handle form submission
+        accountForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = usernameInput.value;
+            const email = emailInput.value;
+            const profilePicture = profilePictureInput.value;
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+
+            if (userIndex !== -1) {
+                users[userIndex].username = username;
+                users[userIndex].email = email;
+                users[userIndex].profilePicture = profilePicture;
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+                alert('Account updated successfully!');
+            }
+        });
+    </script>
+</body>
+</html>
