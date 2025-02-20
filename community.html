@@ -348,24 +348,16 @@
     </div>
 
     <script>
-        // Check if the user is logged in
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-        if (!currentUser) {
-            // Redirect to sign-in page if not logged in
-            window.location.href = 'signin.html';
-        }
 
         const uploadContainer = document.getElementById('uploadContainer');
         const gameGrid = document.getElementById('gameGrid');
 
-        // Load games for the current user
+        // Load games for all users
         function loadGames() {
             const users = JSON.parse(localStorage.getItem('users')) || [];
-            const user = users.find(u => u.email === currentUser.email);
-            if (user && user.games) {
-                user.games.forEach(game => addGameToGrid(game));
-            }
+            const allGames = users.flatMap(u => u.games || []);
+            allGames.forEach(game => addGameToGrid(game));
         }
 
         // Add a game to the grid
@@ -386,6 +378,14 @@
         // Handle form submission
         document.getElementById('uploadForm').addEventListener('submit', function (e) {
             e.preventDefault();
+
+            if (!currentUser) {
+                const confirmSignIn = confirm('You need to sign in to upload a game. Do you want to sign in?');
+                if (confirmSignIn) {
+                    window.location.href = 'signin.html';
+                }
+                return;
+            }
 
             const title = document.getElementById('gameTitle').value;
             const genres = document.getElementById('gameGenres').value;
