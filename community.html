@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Games</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #060606;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .left-box {
+            width: 15%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            height: 100%;
+            margin-right: 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            align-items: flex-start;
+        }
+
+        .right-box {
+            width: 85%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .right-box::-webkit-scrollbar {
+            display: none;
+        }
+
+        .icon {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .icon-text {
+            margin-left: 10px;
+            font-size: 18px;
+        }
+
+        .icon svg {
+            width: 25px;
+            height: 25px;
+            fill: #444; /* Dark gray color by default */
+            transition: fill 0.3s ease;
+        }
+
+        .icon.active svg {
+            fill: white; /* White icon for active page */
+        }
+
+        .icon:hover svg {
+            fill: white; /* Turn white on hover */
+        }
+
+        .grid {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .card .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.3s, filter 0.3s;
+        }
+
+        .card:hover .background {
+            filter: blur(8px);
+        }
+
+        .card .info {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        .card:hover .info {
+            opacity: 1;
+        }
+
+        .info h3 {
+            color: white;
+            margin: 5px 0;
+            position: absolute;
+            top: 10px;
+        }
+
+        .info a {
+            color: white;
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+            position: absolute;
+            bottom: 25px;
+        }
+
+        .info a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .info .genres {
+            font-size: 10px;
+            position: absolute;
+            bottom: 13px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .upload-container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #1e1e1e;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .upload-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .upload-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+        }
+
+        .upload-container button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .upload-container button:hover {
+            background-color: #555;
+        }
+
+        .game-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-modal.show {
+            display: flex;
+        }
+
+        .game-modal-content {
+            background-color: #121212;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
+
+        .game-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .game-modal-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .game-modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .game-modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        #modalIframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            margin-bottom: 15px;
+        }
+
+        .modal-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .modal-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="left-box" id="leftBox">
+        <div class="icon search" onclick="window.location.href = '/'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="icon-text">Home</span>
+        </div>
+        <div class="icon home" onclick="window.location.href = '/search.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
+            <span class="icon-text">Search</span>
+        </div>
+        <div class="icon community-games active" onclick="window.location.href = '/community-games.html'">
+            <!-- Community Emoji Icon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                <circle cx="9" cy="9" r="1.5" />
+                <circle cx="15" cy="9" r="1.5" />
+                <path d="M12 16c-1.1 0-2-.9-2-2h4c0 1.1-.9 2-2 2z"/>
+            </svg>
+            <span class="icon-text">Community Games</span>
+        </div>
+    </div>
+
+    <div class="right-box" id="rightBox">
+        <div class="upload-container">
+            <h2>Upload a Game</h2>
+            <form id="uploadForm">
+                <input type="text" id="gameTitle" placeholder="Game Title" required>
+                <input type="text" id="gameGenres" placeholder="Genres (comma separated)" required>
+                <input type="url" id="gameUrl" placeholder="Game URL" required>
+                <input type="url" id="imageUrl" placeholder="Image URL" required>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+        <div class="grid" id="gameGrid"></div>
+    </div>
+
+    <!-- Game Modal -->
+    <div class="game-modal" id="gameModal">
+        <div class="game-modal-content">
+            <div class="game-modal-header">
+                <span class="game-modal-title" id="modalTitle"></span>
+                <button class="game-modal-close" onclick="closeModal()">Close</button>
+            </div>
+            <iframe id="modalIframe" src="" frameborder="0" allowfullscreen></iframe>
+            <div style="margin-top: 10px;">
+                <button class="modal-button" onclick="openInNewTab()">Open in New Tab</button>
+                <button class="modal-button" onclick="openInIframe()">Open in Iframe</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let games = [];
+
+        // Load games from localStorage
+        function loadGames() {
+            const savedGames = localStorage.getItem('games');
+            if (savedGames) {
+                games = JSON.parse(savedGames);
+                games.forEach(game => addGameToGrid(game));
+            }
+        }
+
+        // Save games to localStorage
+        function saveGames() {
+            localStorage.setItem('games', JSON.stringify(games));
+        }
+
+        // Add a game to the grid
+        function addGameToGrid(game) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+                <div class="background" style="background-image: url(${game.image});"></div>
+                <div class="info">
+                    <h3>${game.title}</h3>
+                    <p class="genres">${game.genres}</p>
+                    <a href="#" onclick="openGameModal('${game.url}', '${game.title}')">Use</a>
+                </div>
+            `;
+            document.getElementById('gameGrid').appendChild(card);
+        }
+
+        // Handle form submission
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const title = document.getElementById('gameTitle').value;
+            const genres = document.getElementById('gameGenres').value;
+            const url = document.getElementById('gameUrl').value;
+            const image = document.getElementById('imageUrl').value;
+
+            const game = {
+                url: url,
+                image: image,
+                title: title,
+                genres: genres
+            };
+            games.push(game);
+            addGameToGrid(game);
+            saveGames();
+
+            document.getElementById('uploadForm').reset();
+        });
+
+        // Open game modal
+        function openGameModal(url, title) {
+            document.getElementById('gameModal').classList.add('show');
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalIframe').src = url;
+        }
+
+        // Close game modal
+        function closeModal() {
+            document.getElementById('gameModal').classList.remove('show');
+        }
+
+        // Open game in new tab
+        function openInNewTab() {
+            window.open(document.getElementById('modalIframe').src, '_blank');
+        }
+
+        // Open game in iframe
+        function openInIframe() {
+            const iframeSrc = document.getElementById('modalIframe').src;
+            const newWindow = window.open('about:blank', '_blank');
+            newWindow.document.write(`
+                <html>
+                    <head>
+                        <style>
+                            body {
+                                margin: 0;
+                                padding: 0;
+                                height: 100vh;
+                                overflow: hidden;
+                            }
+                            iframe {
+                                width: 100%;
+                                height: 100%;
+                                border: none;
+                                display: block;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
+                    </body>
+                </html>
+            `);
+        }
+
+        // Load games when the page loads
+        window.onload = loadGames;
+    </script>
+</body>
+</html>
