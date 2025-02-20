@@ -717,27 +717,39 @@
         const contentBoxWidthInput = document.getElementById('contentBoxWidth'); // Get the width input.
         const contentBoxHeightInput = document.getElementById('contentBoxHeight'); // Get the height input.
 
-        // Load settings from localStorage with defaults
-        window.backgroundImageUrl = getSetting('backgroundImageUrl', '');
-        window.contentBoxTextVisible = getSetting('contentBoxTextVisible', true);
-        window.contentBoxWidth = getSetting('contentBoxWidth', 100); // Load width setting (default 100%)
-        window.contentBoxHeight = getSetting('contentBoxHeight', 50); // Load height setting (default 50%)
+// Load settings from localStorage with defaults
+window.backgroundImageUrl = getSetting('backgroundImageUrl', '');
+window.contentBoxTextVisible = getSetting('contentBoxTextVisible', true);
+window.contentBoxWidth = getSetting('contentBoxWidth', 100);
+window.contentBoxHeight = getSetting('contentBoxHeight', 50);
 
-        // Apply saved settings on page load *before* setting up event listeners
-        function applySettings() {
-            contentBox.style.backgroundImage = window.backgroundImageUrl ? `url(${window.backgroundImageUrl})` : '';
-            contentBoxText.style.display = window.contentBoxTextVisible ? 'block' : 'none';
-            contentBox.style.width = `${window.contentBoxWidth}%`;  // Apply the width setting.
-            contentBox.style.height = `${window.contentBoxHeight}%`; // Apply the height setting.
-            backgroundImageUrlInput.value = window.backgroundImageUrl;
-            contentBoxWidthInput.value = window.contentBoxWidth; // Update the input field.
-            contentBoxHeightInput.value = window.contentBoxHeight; // Update the height input field
+// Apply saved settings on page load *before* setting up event listeners
+function applySettings() {
+    contentBox.style.backgroundImage = window.backgroundImageUrl ? `url(${window.backgroundImageUrl})` : '';
+    contentBoxText.style.display = window.contentBoxTextVisible ? 'block' : 'none';
+    contentBoxDisclaimer.style.display = window.contentBoxTextVisible ? 'block' : 'none'; // Ensure disclaimer follows visibility
+    contentBox.style.width = `${window.contentBoxWidth}%`;
+    contentBox.style.height = `${window.contentBoxHeight}%`;
+    backgroundImageUrlInput.value = window.backgroundImageUrl;
+    contentBoxWidthInput.value = window.contentBoxWidth;
+    contentBoxHeightInput.value = window.contentBoxHeight;
 
-            // Update the checkbox state.
-            document.getElementById('contentBoxTextToggle').checked = window.contentBoxTextVisible;
-        }
+    // Update the checkbox state
+    document.getElementById('contentBoxTextToggle').checked = window.contentBoxTextVisible;
+}
 
-        applySettings();
+// Save updated visibility settings when toggled
+document.getElementById('contentBoxTextToggle').addEventListener('change', function () {
+    window.contentBoxTextVisible = this.checked;
+    setSetting('contentBoxTextVisible', window.contentBoxTextVisible);
+    
+    // Apply visibility changes to both content and disclaimer
+    contentBoxText.style.display = this.checked ? 'block' : 'none';
+    contentBoxDisclaimer.style.display = this.checked ? 'block' : 'none';
+});
+
+// Run applySettings() on page load
+applySettings();
 
         // Corrected code to generate game cards
         function generateGameCards() {
