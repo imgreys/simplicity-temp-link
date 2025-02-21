@@ -114,8 +114,21 @@
             text-align: left;
         }
 
-        .account-content h2 {
+        .greeting {
+            display: flex;
+            align-items: center;
             margin-bottom: 20px;
+        }
+
+        .greeting img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .greeting h2 {
+            margin: 0;
         }
 
         .account-content .section {
@@ -163,6 +176,73 @@
         .button:hover {
             background-color: #555;
         }
+
+        /* Change Username Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .modal-content {
+            background-color: #121212;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            position: relative; /* For close button positioning */
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+        }
+
+        .modal-content button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .modal-content button:hover {
+            background-color: #555;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #bbb;
+        }
     </style>
 </head>
 <body>
@@ -204,7 +284,11 @@
 
         <!-- Account Content -->
         <div class="account-content">
-            <h2>Account</h2>
+            <!-- Greeting Section -->
+            <div class="greeting">
+                <img id="profilePicture" src="https://via.placeholder.com/150" alt="Profile Picture">
+                <h2>Good Morning, <span id="username"></span>!</h2>
+            </div>
 
             <!-- History Section -->
             <div class="section">
@@ -222,10 +306,20 @@
             <div class="section">
                 <h3>Settings</h3>
                 <ul>
-                    <li><a href="#">Change Password</a></li>
+                    <li><a href="#" onclick="openChangeUsernameModal()">Change Username</a></li>
                     <li><a href="#">Log Out</a></li>
                 </ul>
             </div>
+        </div>
+    </div>
+
+    <!-- Change Username Modal -->
+    <div class="modal" id="changeUsernameModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeChangeUsernameModal()">×</button>
+            <h2>Change Username</h2>
+            <input type="text" id="newUsername" placeholder="New Username" required>
+            <button class="button" onclick="changeUsername()">Save</button>
         </div>
     </div>
 
@@ -238,8 +332,42 @@
             window.location.href = 'signin.html';
         }
 
-        // Update the profile picture in the top bar
+        // Display user info
+        document.getElementById('profilePicture').src = currentUser.profilePicture || 'https://via.placeholder.com/150';
         document.getElementById('profilePictureTop').src = currentUser.profilePicture || 'https://via.placeholder.com/150';
+        document.getElementById('username').innerText = currentUser.username;
+
+        // Open Change Username Modal
+        function openChangeUsernameModal() {
+            document.getElementById('changeUsernameModal').style.display = 'flex';
+        }
+
+        // Close Change Username Modal
+        function closeChangeUsernameModal() {
+            document.getElementById('changeUsernameModal').style.display = 'none';
+        }
+
+        // Change Username
+        function changeUsername() {
+            const newUsername = document.getElementById('newUsername').value;
+
+            if (!newUsername) {
+                alert('Please enter a new username.');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+            if (userIndex !== -1) {
+                users[userIndex].username = newUsername;
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+                document.getElementById('username').innerText = newUsername;
+                closeChangeUsernameModal();
+                alert('Username changed successfully!');
+            }
+        }
     </script>
 </body>
 </html>
