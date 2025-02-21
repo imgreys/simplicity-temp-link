@@ -75,9 +75,10 @@
     <div class="auth-container" id="authContainer">
         <h2 id="authTitle">Sign In</h2>
         <input type="text" id="username" placeholder="Username" required>
-        <input type="email" id="email" placeholder="Email" required>
         <input type="password" id="password" placeholder="Password" required>
-        <input type="url" id="profilePicture" placeholder="Profile Picture URL" required>
+        <div id="profilePictureContainer" style="display: none;">
+            <input type="url" id="profilePicture" placeholder="Profile Picture URL (optional)">
+        </div>
         <button id="authButton">Sign In</button>
         <div class="switch" id="switchAuth">Don't have an account? Sign Up</div>
     </div>
@@ -88,11 +89,14 @@
         const authButton = document.getElementById('authButton');
         const switchAuth = document.getElementById('switchAuth');
         const usernameInput = document.getElementById('username');
-        const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
+        const profilePictureContainer = document.getElementById('profilePictureContainer');
         const profilePictureInput = document.getElementById('profilePicture');
 
         let isSignIn = true;
+
+        // Default profile picture URL
+        const defaultProfilePicture = 'https://via.placeholder.com/150';
 
         // Switch between Sign In and Sign Up
         switchAuth.addEventListener('click', () => {
@@ -100,17 +104,17 @@
             authTitle.innerText = isSignIn ? 'Sign In' : 'Sign Up';
             authButton.innerText = isSignIn ? 'Sign In' : 'Sign Up';
             switchAuth.innerText = isSignIn ? "Don't have an account? Sign Up" : "Already have an account? Sign In";
+            profilePictureContainer.style.display = isSignIn ? 'none' : 'block'; // Show profile picture input only for Sign Up
         });
 
         // Handle Sign In / Sign Up
         authButton.addEventListener('click', () => {
             const username = usernameInput.value;
-            const email = emailInput.value;
             const password = passwordInput.value;
-            const profilePicture = profilePictureInput.value;
+            const profilePicture = isSignIn ? null : profilePictureInput.value || defaultProfilePicture; // Use default if empty during Sign Up
 
-            if (!username || !email || !password || !profilePicture) {
-                alert('Please fill in all fields.');
+            if (!username || !password) {
+                alert('Please fill in all required fields.');
                 return;
             }
 
@@ -118,25 +122,22 @@
 
             if (isSignIn) {
                 // Sign In
-                const user = users.find(u => u.email === email && u.password === password);
+                const user = users.find(u => u.username === username && u.password === password);
 
                 if (user) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     window.location.href = 'community-games.html';
                 } else {
-                    alert('Invalid email or password.');
+                    alert('Invalid username or password.');
                 }
             } else {
                 // Sign Up
                 const usernameExists = users.some(u => u.username === username);
-                const emailExists = users.some(u => u.email === email);
 
                 if (usernameExists) {
                     alert('Username already exists.');
-                } else if (emailExists) {
-                    alert('Email already exists.');
                 } else {
-                    const newUser = { username, email, password, profilePicture, games: [] };
+                    const newUser = { username, password, profilePicture, games: [] };
                     users.push(newUser);
                     localStorage.setItem('users', JSON.stringify(users));
                     localStorage.setItem('currentUser', JSON.stringify(newUser));
