@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use Render's provided port
 
 // Middleware
 app.use(bodyParser.json());
@@ -19,7 +19,7 @@ const db = new sqlite3.Database('./database.db', (err) => {
     }
 });
 
-// Create users table if it doesn't exist
+// Create tables if they don't exist
 db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
