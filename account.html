@@ -281,7 +281,7 @@
     <div class="right-box" id="rightBox">
         <!-- Top Bar -->
         <div class="top-bar">
-            <img class="profile-picture" id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="window.location.href = '/account.html'">
+            <img class="profile-picture" id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="openSignInModal()">
         </div>
 
         <!-- Account Content -->
@@ -290,18 +290,6 @@
             <div class="greeting">
                 <img id="profilePicture" src="https://via.placeholder.com/150" alt="Profile Picture">
                 <h2>Good Morning, <span id="username"></span>!</h2>
-            </div>
-
-            <!-- History Section -->
-            <div class="section">
-                <h3>History</h3>
-                <p>You haven't watched anything yet!</p>
-            </div>
-
-            <!-- Favorite Apps Section -->
-            <div class="section">
-                <h3>Favorite Apps</h3>
-                <p>You haven't added anything yet!</p>
             </div>
 
             <!-- Account Settings Section -->
@@ -313,6 +301,21 @@
                     <li><a href="#" onclick="logout()">Log Out</a></li>
                 </ul>
             </div>
+        </div>
+    </div>
+
+    <!-- Sign-In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSignInModal()">×</button>
+            <h2 id="authTitle">Sign In</h2>
+            <input type="text" id="usernameInput" placeholder="Username" required>
+            <input type="password" id="passwordInput" placeholder="Password" required>
+            <div id="profilePictureContainer" style="display: none;">
+                <input type="url" id="profilePictureInput" placeholder="Profile Picture URL (optional)">
+            </div>
+            <button id="authButton">Sign In</button>
+            <div class="switch" id="switchAuth">Don't have an account? Sign Up</div>
         </div>
     </div>
 
@@ -337,81 +340,123 @@
     </div>
 
     <script>
-        // Get the current user from localStorage
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let isSignIn = true;
 
-        // If no user is logged in, redirect to sign-in page
-        if (!currentUser) {
-            window.location.href = 'signin.html';
+        // Open Sign-In Modal
+        function openSignInModal() {
+            document.getElementById('signInModal').style.display = 'flex';
         }
 
-        // Display user info
-        document.getElementById('profilePicture').src = currentUser.profilePicture || 'https://via.placeholder.com/150';
-        document.getElementById('profilePictureTop').src = currentUser.profilePicture || 'https://via.placeholder.com/150';
-        document.getElementById('username').innerText = currentUser.username;
-
-        // Open Change Username Modal
-        function openChangeUsernameModal() {
-            document.getElementById('changeUsernameModal').style.display = 'flex';
+        // Close Sign-In Modal
+        function closeSignInModal() {
+            document.getElementById('signInModal').style.display = 'none';
         }
 
-        // Close Change Username Modal
-        function closeChangeUsernameModal() {
-            document.getElementById('changeUsernameModal').style.display = 'none';
-        }
+        // Switch between Sign In and Sign Up
+        document.getElementById('switchAuth').addEventListener('click', () => {
+            isSignIn = !isSignIn;
+            const authTitle = document.getElementById('authTitle');
+            const authButton = document.getElementById('authButton');
+            const switchAuth = document.getElementById('switchAuth');
+            const profilePictureContainer = document.getElementById('profilePictureContainer');
+
+            if (isSignIn) {
+                authTitle.innerText = 'Sign In';
+                authButton.innerText = 'Sign In';
+                switchAuth.innerText = "Don't have an account? Sign Up";
+                profilePictureContainer.style.display = 'none';
+            } else {
+                authTitle.innerText = 'Sign Up';
+                authButton.innerText = 'Sign Up';
+                switchAuth.innerText = "Already have an account? Sign In";
+                profilePictureContainer.style.display = 'block';
+            }
+        });
+
+        // Handle Sign In / Sign Up
+        document.getElementById('authButton').addEventListener('click', async () => {
+            const username = document.getElementById('usernameInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const profilePicture = document.getElementById('profilePictureInput').value || 'https://via.placeholder.com/150';
+
+            if (!username || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const endpoint = isSignIn ? '/login' : '/register';
+            const body = isSignIn ? { username, password } : { username, password, profilePicture };
+
+            const response = await fetch(`http://localhost:3000${endpoint}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body),
+            });
+
+            if (response.ok) {
+                const user = await response.json();
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.reload();
+            } else {
+                const error = await response.json();
+                alert(error.error);
+            }
+        });
 
         // Change Username
-        function changeUsername() {
+        async function changeUsername() {
             const newUsername = document.getElementById('newUsername').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
             if (!newUsername) {
                 alert('Please enter a new username.');
                 return;
             }
 
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            const response = await fetch('http://localhost:3000/change-username', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: currentUser.id, newUsername }),
+            });
 
-            if (userIndex !== -1) {
-                users[userIndex].username = newUsername;
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+            if (response.ok) {
+                const updatedUser = { ...currentUser, username: newUsername };
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
                 document.getElementById('username').innerText = newUsername;
                 closeChangeUsernameModal();
                 alert('Username changed successfully!');
+            } else {
+                const error = await response.json();
+                alert(error.error);
             }
         }
 
-        // Open Change Profile Picture Modal
-        function openChangeProfilePictureModal() {
-            document.getElementById('changeProfilePictureModal').style.display = 'flex';
-        }
-
-        // Close Change Profile Picture Modal
-        function closeChangeProfilePictureModal() {
-            document.getElementById('changeProfilePictureModal').style.display = 'none';
-        }
-
         // Change Profile Picture
-        function changeProfilePicture() {
+        async function changeProfilePicture() {
             const newProfilePicture = document.getElementById('newProfilePicture').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
             if (!newProfilePicture) {
                 alert('Please enter a new profile picture URL.');
                 return;
             }
 
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            const response = await fetch('http://localhost:3000/change-profile-picture', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
+            });
 
-            if (userIndex !== -1) {
-                users[userIndex].profilePicture = newProfilePicture;
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+            if (response.ok) {
+                const updatedUser = { ...currentUser, profilePicture: newProfilePicture };
+                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
                 document.getElementById('profilePicture').src = newProfilePicture;
                 document.getElementById('profilePictureTop').src = newProfilePicture;
                 closeChangeProfilePictureModal();
                 alert('Profile picture changed successfully!');
+            } else {
+                const error = await response.json();
+                alert(error.error);
             }
         }
 
@@ -420,6 +465,19 @@
             localStorage.removeItem('currentUser');
             window.location.href = 'signin.html';
         }
+
+        // Load user data on page load
+        window.onload = () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (currentUser) {
+                document.getElementById('profilePicture').src = currentUser.profilePicture;
+                document.getElementById('profilePictureTop').src = currentUser.profilePicture;
+                document.getElementById('username').innerText = currentUser.username;
+            } else {
+                openSignInModal();
+            }
+        };
     </script>
 </body>
 </html>
