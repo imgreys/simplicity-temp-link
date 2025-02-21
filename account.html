@@ -76,7 +76,7 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start; /* Align content to the left */
             height: 100%;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
             overflow-y: auto;
@@ -110,8 +110,9 @@
         /* Account Content */
         .account-content {
             width: 100%;
-            max-width: 800px;
+            max-width: 100%; /* Stretch to full width */
             text-align: left;
+            padding: 20px;
         }
 
         .greeting {
@@ -133,6 +134,7 @@
 
         .account-content .section {
             margin-bottom: 30px;
+            width: 100%; /* Stretch sections to full width */
         }
 
         .account-content .section h3 {
@@ -177,7 +179,7 @@
             background-color: #555;
         }
 
-        /* Change Username Modal */
+        /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -307,6 +309,7 @@
                 <h3>Settings</h3>
                 <ul>
                     <li><a href="#" onclick="openChangeUsernameModal()">Change Username</a></li>
+                    <li><a href="#" onclick="openChangeProfilePictureModal()">Change Profile Picture</a></li>
                     <li><a href="#">Log Out</a></li>
                 </ul>
             </div>
@@ -320,6 +323,16 @@
             <h2>Change Username</h2>
             <input type="text" id="newUsername" placeholder="New Username" required>
             <button class="button" onclick="changeUsername()">Save</button>
+        </div>
+    </div>
+
+    <!-- Change Profile Picture Modal -->
+    <div class="modal" id="changeProfilePictureModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeChangeProfilePictureModal()">×</button>
+            <h2>Change Profile Picture</h2>
+            <input type="url" id="newProfilePicture" placeholder="New Profile Picture URL" required>
+            <button class="button" onclick="changeProfilePicture()">Save</button>
         </div>
     </div>
 
@@ -366,6 +379,39 @@
                 document.getElementById('username').innerText = newUsername;
                 closeChangeUsernameModal();
                 alert('Username changed successfully!');
+            }
+        }
+
+        // Open Change Profile Picture Modal
+        function openChangeProfilePictureModal() {
+            document.getElementById('changeProfilePictureModal').style.display = 'flex';
+        }
+
+        // Close Change Profile Picture Modal
+        function closeChangeProfilePictureModal() {
+            document.getElementById('changeProfilePictureModal').style.display = 'none';
+        }
+
+        // Change Profile Picture
+        function changeProfilePicture() {
+            const newProfilePicture = document.getElementById('newProfilePicture').value;
+
+            if (!newProfilePicture) {
+                alert('Please enter a new profile picture URL.');
+                return;
+            }
+
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+
+            if (userIndex !== -1) {
+                users[userIndex].profilePicture = newProfilePicture;
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+                document.getElementById('profilePicture').src = newProfilePicture;
+                document.getElementById('profilePictureTop').src = newProfilePicture;
+                closeChangeProfilePictureModal();
+                alert('Profile picture changed successfully!');
             }
         }
     </script>
