@@ -19,7 +19,7 @@ const db = new sqlite3.Database('./database.db', (err) => {
     }
 });
 
-// Create tables if they don't exist
+// Create users table if it doesn't exist
 db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS users (
@@ -29,21 +29,7 @@ db.serialize(() => {
             profilePicture TEXT
         )
     `);
-
-    db.run(`
-        CREATE TABLE IF NOT EXISTS games (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            userId INTEGER NOT NULL,
-            title TEXT NOT NULL,
-            genres TEXT NOT NULL,
-            url TEXT NOT NULL,
-            imageUrl TEXT NOT NULL,
-            FOREIGN KEY (userId) REFERENCES users(id)
-        )
-    `);
 });
-
-// API Endpoints
 
 // Register a new user
 app.post('/register', (req, res) => {
@@ -77,34 +63,34 @@ app.post('/login', (req, res) => {
     );
 });
 
-// Get user's games
-app.get('/games/:userId', (req, res) => {
-    const userId = req.params.userId;
+// Change username
+app.post('/change-username', (req, res) => {
+    const { userId, newUsername } = req.body;
 
-    db.all(
-        'SELECT * FROM games WHERE userId = ?',
-        [userId],
-        (err, rows) => {
+    db.run(
+        'UPDATE users SET username = ? WHERE id = ?',
+        [newUsername, userId],
+        function (err) {
             if (err) {
-                return res.status(500).json({ error: 'Database error' });
+                return res.status(400).json({ error: 'Username already exists' });
             }
-            res.json(rows);
+            res.json({ success: true });
         }
     );
 });
 
-// Upload a game
-app.post('/games', (req, res) => {
-    const { userId, title, genres, url, imageUrl } = req.body;
+// Change profile picture
+app.post('/change-profile-picture', (req, res) => {
+    const { userId, newProfilePicture } = req.body;
 
     db.run(
-        'INSERT INTO games (userId, title, genres, url, imageUrl) VALUES (?, ?, ?, ?, ?)',
-        [userId, title, genres, url, imageUrl],
+        'UPDATE users SET profilePicture = ? WHERE id = ?',
+        [newProfilePicture, userId],
         function (err) {
             if (err) {
                 return res.status(500).json({ error: 'Database error' });
             }
-            res.json({ id: this.lastID });
+            res.json({ success: true });
         }
     );
 });
