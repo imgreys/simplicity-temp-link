@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account</title>
     <style>
-                * {
+        /* General Styles */
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -22,6 +23,7 @@
             padding: 10px;
         }
 
+        /* Left Box (Sidebar) */
         .left-box {
             width: 15%;
             background-color: #121212;
@@ -35,25 +37,6 @@
             justify-content: flex-start;
             padding: 20px;
             align-items: flex-start;
-        }
-
-        .right-box {
-            width: 85%;
-            background-color: #121212;
-            border: 2px solid black;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-            overflow-y: auto;
-            max-height: 100vh;
-        }
-
-        .right-box::-webkit-scrollbar {
-            display: none;
         }
 
         .icon {
@@ -84,45 +67,106 @@
             fill: white; /* Turn white on hover */
         }
 
-        .account-container {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #1e1e1e;
+        /* Right Box (Main Content) */
+        .right-box {
+            width: 85%;
+            background-color: #121212;
+            border: 2px solid black;
             border-radius: 10px;
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            max-height: 100vh;
+            position: relative; /* Added for top-bar positioning */
         }
 
-        .account-container h2 {
+        .right-box::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .top-bar .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        /* Account Content */
+        .account-content {
+            width: 100%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .account-content h2 {
             margin-bottom: 20px;
         }
 
-        .account-container input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: 1px solid #444;
-            background-color: #333;
-            color: white;
+        .account-content .section {
+            margin-bottom: 30px;
         }
 
-        .account-container button {
+        .account-content .section h3 {
+            margin-bottom: 10px;
+        }
+
+        .account-content .section p {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .account-content .section ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .account-content .section ul li {
+            margin-bottom: 10px;
+        }
+
+        .account-content .section ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .account-content .section ul li a:hover {
+            color: #bbb;
+        }
+
+        /* Buttons */
+        .button {
             padding: 10px 20px;
             background-color: #444;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin: 5px;
         }
 
-        .account-container button:hover {
+        .button:hover {
             background-color: #555;
         }
     </style>
 </head>
 <body>
+    <!-- Left Box (Sidebar) -->
     <div class="left-box" id="leftBox">
         <div class="icon search" onclick="window.location.href = '/'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -151,60 +195,51 @@
         </div>
     </div>
 
+    <!-- Right Box (Main Content) -->
     <div class="right-box" id="rightBox">
-        <div class="account-container">
-            <h2>Account Settings</h2>
-            <form id="accountForm">
-                <input type="text" id="username" placeholder="Username" required>
-                <input type="email" id="email" placeholder="Email" required>
-                <input type="url" id="profilePicture" placeholder="Profile Picture URL" required>
-                <button type="submit">Save Changes</button>
-            </form>
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <img class="profile-picture" id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="window.location.href = '/account.html'">
+        </div>
+
+        <!-- Account Content -->
+        <div class="account-content">
+            <h2>Account</h2>
+
+            <!-- History Section -->
+            <div class="section">
+                <h3>History</h3>
+                <p>You haven't watched anything yet!</p>
+            </div>
+
+            <!-- Favorite Apps Section -->
+            <div class="section">
+                <h3>Favorite Apps</h3>
+                <p>You haven't added anything yet!</p>
+            </div>
+
+            <!-- Account Settings Section -->
+            <div class="section">
+                <h3>Settings</h3>
+                <ul>
+                    <li><a href="#">Change Password</a></li>
+                    <li><a href="#">Log Out</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <script>
+        // Get the current user from localStorage
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
+        // If no user is logged in, redirect to sign-in page
         if (!currentUser) {
-            const confirmSignIn = confirm('You need to sign in to access your account. Do you want to sign in?');
-            if (confirmSignIn) {
-                window.location.href = 'signin.html';
-            } else {
-                window.location.href = 'index.html'; // Redirect to home or another page
-            }
+            window.location.href = 'signin.html';
         }
 
-        const accountForm = document.getElementById('accountForm');
-        const usernameInput = document.getElementById('username');
-        const emailInput = document.getElementById('email');
-        const profilePictureInput = document.getElementById('profilePicture');
-
-        // Load current user data
-        usernameInput.value = currentUser.username;
-        emailInput.value = currentUser.email;
-        profilePictureInput.value = currentUser.profilePicture;
-
-        // Handle form submission
-        accountForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const username = usernameInput.value;
-            const email = emailInput.value;
-            const profilePicture = profilePictureInput.value;
-
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-
-            if (userIndex !== -1) {
-                users[userIndex].username = username;
-                users[userIndex].email = email;
-                users[userIndex].profilePicture = profilePicture;
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
-                alert('Account updated successfully!');
-            }
-        });
+        // Update the profile picture in the top bar
+        document.getElementById('profilePictureTop').src = currentUser.profilePicture || 'https://via.placeholder.com/150';
     </script>
 </body>
 </html>
