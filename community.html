@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Community Games</title>
     <style>
+        /* General Styles */
         * {
             margin: 0;
             padding: 0;
@@ -22,6 +23,7 @@
             padding: 10px;
         }
 
+        /* Left Box (Sidebar) */
         .left-box {
             width: 15%;
             background-color: #121212;
@@ -35,25 +37,6 @@
             justify-content: flex-start;
             padding: 20px;
             align-items: flex-start;
-        }
-
-        .right-box {
-            width: 85%;
-            background-color: #121212;
-            border: 2px solid black;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-            overflow-y: auto;
-            max-height: 100vh;
-        }
-
-        .right-box::-webkit-scrollbar {
-            display: none;
         }
 
         .icon {
@@ -84,6 +67,125 @@
             fill: white; /* Turn white on hover */
         }
 
+        /* Right Box (Main Content) */
+        .right-box {
+            width: 85%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            max-height: 100vh;
+            position: relative; /* Added for top-bar positioning */
+        }
+
+        .right-box::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .top-bar .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            object-fit: cover;
+        }
+
+        /* Modal (Sign-In Popup) */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .modal-content {
+            background-color: #121212;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            position: relative; /* For close button positioning */
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+        }
+
+        .modal-content button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .modal-content button:hover {
+            background-color: #555;
+        }
+
+        .modal-content .switch {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #bbb;
+            cursor: pointer;
+        }
+
+        .modal-content .switch:hover {
+            color: white;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #bbb;
+        }
+
+        /* Game Grid and Cards */
         .grid {
             margin-top: 50px;
             display: grid;
@@ -176,6 +278,7 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
+        /* Upload Container */
         .upload-container {
             margin-top: 20px;
             padding: 20px;
@@ -213,6 +316,7 @@
             background-color: #555;
         }
 
+        /* Game Modal */
         .game-modal {
             display: none;
             position: fixed;
@@ -290,6 +394,7 @@
     </style>
 </head>
 <body>
+    <!-- Left Box (Sidebar) -->
     <div class="left-box" id="leftBox">
         <div class="icon search" onclick="window.location.href = '/'">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -318,7 +423,14 @@
         </div>
     </div>
 
+    <!-- Right Box (Main Content) -->
     <div class="right-box" id="rightBox">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <img class="profile-picture" id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="openSignInModal()">
+        </div>
+
+        <!-- Upload Container -->
         <div id="uploadContainer" class="upload-container">
             <h2>Upload a Game</h2>
             <form id="uploadForm">
@@ -329,7 +441,24 @@
                 <button type="submit">Upload</button>
             </form>
         </div>
+
+        <!-- Game Grid -->
         <div class="grid" id="gameGrid"></div>
+    </div>
+
+    <!-- Sign-In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSignInModal()">×</button>
+            <h2 id="authTitle">Sign In</h2>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <div id="profilePictureContainer" style="display: none;">
+                <input type="url" id="profilePicture" placeholder="Profile Picture URL (optional)">
+            </div>
+            <button id="authButton">Sign In</button>
+            <div class="switch" id="switchAuth">Don't have an account? Sign Up</div>
+        </div>
     </div>
 
     <!-- Game Modal -->
@@ -350,112 +479,78 @@
     <script>
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        const uploadContainer = document.getElementById('uploadContainer');
-        const gameGrid = document.getElementById('gameGrid');
-
-        // Load games for all users
-        function loadGames() {
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const allGames = users.flatMap(u => u.games || []);
-            allGames.forEach(game => addGameToGrid(game));
+        // Open Sign-In Modal
+        function openSignInModal() {
+            document.getElementById('signInModal').style.display = 'flex';
         }
 
-        // Add a game to the grid
-        function addGameToGrid(game) {
-            const card = document.createElement('div');
-            card.classList.add('card');
-            card.innerHTML = `
-                <div class="background" style="background-image: url(${game.image});"></div>
-                <div class="info">
-                    <h3>${game.title}</h3>
-                    <p class="genres">${game.genres}</p>
-                    <a href="#" onclick="openGameModal('${game.url}', '${game.title}')">Use</a>
-                </div>
-            `;
-            gameGrid.appendChild(card);
+        // Close Sign-In Modal
+        function closeSignInModal() {
+            document.getElementById('signInModal').style.display = 'none';
         }
 
-        // Handle form submission
-        document.getElementById('uploadForm').addEventListener('submit', function (e) {
-            e.preventDefault();
+        // Handle Sign In / Sign Up
+        document.getElementById('authButton').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const profilePicture = document.getElementById('profilePicture').value || 'https://via.placeholder.com/150';
 
-            if (!currentUser) {
-                const confirmSignIn = confirm('You need to sign in to upload a game. Do you want to sign in?');
-                if (confirmSignIn) {
-                    window.location.href = 'signin.html';
-                }
+            if (!username || !password) {
+                alert('Please fill in all fields.');
                 return;
             }
 
-            const title = document.getElementById('gameTitle').value;
-            const genres = document.getElementById('gameGenres').value;
-            const url = document.getElementById('gameUrl').value;
-            const image = document.getElementById('imageUrl').value;
-
-            const game = {
-                url: url,
-                image: image,
-                title: title,
-                genres: genres
-            };
-
-            // Add game to the current user's games
             const users = JSON.parse(localStorage.getItem('users')) || [];
-            const userIndex = users.findIndex(u => u.email === currentUser.email);
-            if (userIndex !== -1) {
-                users[userIndex].games.push(game);
-                localStorage.setItem('users', JSON.stringify(users));
-                addGameToGrid(game);
-            }
 
-            document.getElementById('uploadForm').reset();
+            if (isSignIn) {
+                // Sign In
+                const user = users.find(u => u.username === username && u.password === password);
+
+                if (user) {
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    closeSignInModal();
+                    window.location.reload(); // Refresh the page to reflect the logged-in state
+                } else {
+                    alert('Invalid username or password.');
+                }
+            } else {
+                // Sign Up
+                const usernameExists = users.some(u => u.username === username);
+
+                if (usernameExists) {
+                    alert('Username already exists.');
+                } else {
+                    const newUser = { username, password, profilePicture, games: [] };
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    localStorage.setItem('currentUser', JSON.stringify(newUser));
+                    closeSignInModal();
+                    window.location.reload(); // Refresh the page to reflect the logged-in state
+                }
+            }
         });
 
-        // Open game modal
-        function openGameModal(url, title) {
-            document.getElementById('gameModal').classList.add('show');
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalIframe').src = url;
-        }
+        // Switch between Sign In and Sign Up
+        let isSignIn = true;
+        document.getElementById('switchAuth').addEventListener('click', () => {
+            isSignIn = !isSignIn;
+            const authTitle = document.getElementById('authTitle');
+            const authButton = document.getElementById('authButton');
+            const switchAuth = document.getElementById('switchAuth');
+            const profilePictureContainer = document.getElementById('profilePictureContainer');
 
-        // Close game modal
-        function closeModal() {
-            document.getElementById('gameModal').classList.remove('show');
-        }
-
-        // Open game in new tab
-        function openInNewTab() {
-            window.open(document.getElementById('modalIframe').src, '_blank');
-        }
-
-        // Open game in iframe
-        function openInIframe() {
-            const iframeSrc = document.getElementById('modalIframe').src;
-            const newWindow = window.open('about:blank', '_blank');
-            newWindow.document.write(`
-                <html>
-                    <head>
-                        <style>
-                            body {
-                                margin: 0;
-                                padding: 0;
-                                height: 100vh;
-                                overflow: hidden;
-                            }
-                            iframe {
-                                width: 100%;
-                                height: 100%;
-                                border: none;
-                                display: block;
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <iframe src="${iframeSrc}" allowfullscreen="true"></iframe>
-                    </body>
-                </html>
-            `);
-        }
+            if (isSignIn) {
+                authTitle.innerText = 'Sign In';
+                authButton.innerText = 'Sign In';
+                switchAuth.innerText = "Don't have an account? Sign Up";
+                profilePictureContainer.style.display = 'none';
+            } else {
+                authTitle.innerText = 'Sign Up';
+                authButton.innerText = 'Sign Up';
+                switchAuth.innerText = "Already have an account? Sign In";
+                profilePictureContainer.style.display = 'block';
+            }
+        });
 
         // Load games when the page loads
         window.onload = loadGames;
