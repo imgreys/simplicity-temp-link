@@ -310,7 +310,7 @@
                 <ul>
                     <li><a href="#" onclick="openChangeUsernameModal()">Change Username</a></li>
                     <li><a href="#" onclick="openChangeProfilePictureModal()">Change Profile Picture</a></li>
-                    <li><a href="#">Log Out</a></li>
+                    <li><a href="#" onclick="logout()">Log Out</a></li>
                 </ul>
             </div>
         </div>
@@ -413,6 +413,12 @@
                 closeChangeProfilePictureModal();
                 alert('Profile picture changed successfully!');
             }
+        }
+
+        // Log Out
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'signin.html';
         }
     </script>
 </body>
