@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -181,30 +181,26 @@ body {
 
 /* Content Box */
 .content-box {
-    width: 100%;
+    width: 100%; /* Full width of its container */
     background-color: #181818;
     border-radius: 10px;
     margin-top: 20px;
     padding: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background-image 0.5s ease, width 0.3s ease, height 0.3s ease;
-    background-size: cover;
-    background-position: center;
-    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
-    height: calc(100vh - 200px); /* Adjust height based on viewport height */
-    max-height: calc(50% - 100px); /* Maximum height is half of the width */
-    min-height: 150px; /* Minimum height to prevent text overflow */
-    overflow: auto; /* Add scrollbar if content overflows */
+    flex-direction: column; /* Stack children vertically */
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Center text horizontally */
+    overflow: hidden; /* Prevent scrolling */
+    aspect-ratio: 4 / 1; /* Width is 4x height (height is 25% of width) */
+    min-height: fit-content; /* Ensure the box is never smaller than its content */
 }
 
 .content-box p {
     font-size: 20px;
     line-height: 1.6;
-    text-align: left;
     color: white;
-    margin-top: 10px;
+    margin: 0; /* Remove default margin */
 }
 
 .content-box p a {
@@ -220,9 +216,8 @@ body {
 .content-box p#contentBoxDisclaimer {
     font-size: x-small;
     color: rgba(255, 255, 255, 0.5);
-    margin-top: auto;
+    margin-top: 20px; /* Add some space between the main text and the disclaimer */
 }
-
 /* Game Grid */
 .grid {
     margin-top: 50px;
@@ -483,34 +478,29 @@ body {
 </head>
 <body>
     <!-- Left Box (Sidebar) -->
-<div class="left-box" id="leftBox">
-    <div class="icon home active" onclick="window.location.href = '/'">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-        <span class="icon-text">Home</span>
+    <div class="left-box" id="leftBox">
+        <div class="icon home active" onclick="window.location.href = '/'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="icon-text">Home</span>
+        </div>
+        <div class="icon community-games" onclick="window.location.href = '/community.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                <circle cx="9" cy="9" r="1.5" />
+                <circle cx="15" cy="9" r="1.5" />
+                <path d="M12 16c-1.1 0-2-.9-2-2h4c0 1.1-.9 2-2 2z"/>
+            </svg>
+            <span class="icon-text">Community Games</span>
+        </div>
+        <div class="icon account" onclick="window.location.href = '/account.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            <span class="icon-text">Account</span>
+        </div>
+        <div class="icon public-profile" onclick="window.location.href = '/public-profile.html'">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            <span class="icon-text">Public Profile</span>
+        </div>
     </div>
-    <div class="icon search" onclick="window.location.href = '/search.html'">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
-        <span class="icon-text">Search</span>
-    </div>
-    <div class="icon community-games" onclick="window.location.href = '/community.html'">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-            <circle cx="9" cy="9" r="1.5" />
-            <circle cx="15" cy="9" r="1.5" />
-            <path d="M12 16c-1.1 0-2-.9-2-2h4c0 1.1-.9 2-2 2z"/>
-        </svg>
-        <span class="icon-text">Community Games</span>
-    </div>
-    <div class="icon account" onclick="window.location.href = '/account.html'">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-        <span class="icon-text">Account</span>
-    </div>
-    <div class="icon public-profile" onclick="window.location.href = '/public-profile.html'">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
-        <span class="icon-text">Public Profile</span>
-    </div>
-</div>
-
 
     <!-- Right Box (Main Content) -->
     <div class="right-box" id="rightBox">
@@ -528,7 +518,7 @@ body {
         </div>
 
         <!-- Content Box -->
-        <div class="content-box" id="contentBox" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 20px;">
+        <div class="content-box" id="contentBox">
             <p id="contentBoxText">
                 <strong>
                     <a href="https://docs.google.com/document/d/1KOuAgBZg_8LOCtZ86RZCHIp36b_m43oscCiFjkS9xUg/edit?tab=t.0#heading=h.76n47cn7rwbx" class="text-link">
@@ -537,11 +527,11 @@ body {
                 </strong> and
                 <strong>
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeh1ZbWu8XId_5WpryruIFzQBJ9B3hofd49yJEtalhy0R7Dzw/viewform?usp=header" class="text-link">
-                        Request new things/Complaints & Issues/
+                        Request new things/Complaints & Issues
                     </a>
                 </strong>
             </p>
-            <p id="contentBoxDisclaimer" style="font-size: x-small; color: rgba(255, 255, 255, 0.5); margin-top: auto;">
+            <p id="contentBoxDisclaimer">
                 Property of Greys2121 on GitHub | Greyson.
                 Unauthorized use, distribution, or modification is strictly prohibited. All rights reserved. Formerly known as Plasma, the website is still listed and functioning below.
             </p>
@@ -560,8 +550,8 @@ body {
             </div>
             <iframe id="modalIframe" src="" frameborder="0" allowfullscreen></iframe>
             <div style="margin-top: 10px;">
-                <button class="modal-button" onclick="openInNewTab()">Open in a New Tab</button>
-                <button class="modal-button" onclick="openInIframe()">Open in an Unblockable Tab</button>
+                <button class="modal-button" onclick="openInNewTab()">Open in New Tab</button>
+                <button class="modal-button" onclick="openInIframe()">Open in Unblockable Tab</button>
             </div>
         </div>
     </div>
@@ -609,10 +599,8 @@ body {
         function handleProfileClick() {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser) {
-                // Redirect to account.html if signed in
                 window.location.href = '/account.html';
             } else {
-                // Open sign-in modal if not signed in
                 openSignInModal();
             }
         }
@@ -692,8 +680,8 @@ body {
                 if (response.ok) {
                     const user = await response.json();
                     localStorage.setItem('currentUser', JSON.stringify(user));
-                    updateUI(user); // Update the UI with user data
-                    closeSignInModal(); // Close the modal
+                    updateUI(user);
+                    closeSignInModal();
                 } else {
                     const error = await response.json();
                     alert(error.error || 'An error occurred. Please try again.');
@@ -771,7 +759,7 @@ body {
         // Log Out
         function logout() {
             localStorage.removeItem('currentUser');
-            window.location.reload(); // Reload the page to reset the UI
+            window.location.reload();
         }
 
         // Update UI with User Data
@@ -786,7 +774,7 @@ body {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
             if (currentUser) {
-                updateUI(currentUser); // Update UI if user is already logged in
+                updateUI(currentUser);
             }
         };
 
@@ -989,6 +977,43 @@ body {
                 </html>
             `);
         }
+
+        // Search Functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.querySelector(".search-bar");
+            const gameGrid = document.getElementById("gameGrid");
+            const cards = gameGrid.getElementsByClassName("card");
+
+            // Function to get URL parameters
+            function getQueryParam(param) {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get(param);
+            }
+
+            // Get search query from URL
+            const searchQuery = getQueryParam("query");
+            if (searchQuery) {
+                searchInput.value = searchQuery; // Set input value
+                filterGames(searchQuery.toLowerCase());
+            }
+
+            searchInput.addEventListener("input", function () {
+                filterGames(searchInput.value.toLowerCase());
+            });
+
+            function filterGames(query) {
+                for (let card of cards) {
+                    const title = card.querySelector("h3").innerText.toLowerCase();
+                    const genres = card.querySelector(".genres").innerText.toLowerCase();
+
+                    if (title.includes(query) || genres.includes(query)) {
+                        card.style.display = "block";
+                    } else {
+                        card.style.display = "none";
+                    }
+                }
+            }
+        });
 
         // Generate game cards on page load
         document.addEventListener('DOMContentLoaded', generateGameCards);
