@@ -387,7 +387,7 @@
             const endpoint = isSignIn ? '/login' : '/register';
             const body = isSignIn ? { username, password } : { username, password, profilePicture };
 
-            const response = await fetch(`https://your-render-backend-url.onrender.com${endpoint}`, {
+            const response = await fetch(`https://backend-vhfp.onrender.com${endpoint}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(body),
@@ -413,7 +413,7 @@
                 return;
             }
 
-            const response = await fetch('https://your-render-backend-url.onrender.com/change-username', {
+            const response = await fetch('https://backend-vhfp.onrender.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId: currentUser.id, newUsername }),
@@ -441,7 +441,7 @@
                 return;
             }
 
-            const response = await fetch('https://your-render-backend-url.onrender.com/change-profile-picture', {
+            const response = await fetch('https://backend-vhfp.onrender.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
