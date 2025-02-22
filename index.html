@@ -7,472 +7,473 @@
     <link rel="icon" type="image/png" href="https://github.com/Greys2121/Singularity/blob/main/maple-leaf-sketch-hand-drawn-in-doodle-style-illustration-2R95RM9-removebg-preview.png?raw=true">
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    background-color: #060606;
-    color: white;
-    font-family: Arial, sans-serif;
-    display: flex;
-    height: 100vh;
-    margin: 0;
-    overflow: hidden;
-    padding: 10px;
-}
+        body {
+            background-color: #060606;
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            padding: 10px;
+        }
 
-/* Left Box (Sidebar) */
-.left-box {
-    width: 15%;
-    background-color: #121212;
-    border: 2px solid black;
-    border-radius: 10px;
-    height: 100%;
-    margin-right: 10px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 20px;
-    align-items: flex-start;
-    flex-shrink: 0; /* Prevent the sidebar itself from shrinking */
-}
+        /* Left Box (Sidebar) */
+        .left-box {
+            width: 15%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            height: 100%;
+            margin-right: 10px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 20px;
+            align-items: flex-start;
+            flex-shrink: 0; /* Prevent the sidebar itself from shrinking */
+        }
 
-.icon {
-    display: flex;
-    align-items: center;
-    margin: 15px 0;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0; /* Prevent the icons from shrinking */
-    min-width: max-content; /* Ensure the text and icons don't wrap or shrink */
-}
+        .icon {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0; /* Prevent the icons from shrinking */
+            min-width: max-content; /* Ensure the text and icons don't wrap or shrink */
+        }
 
-.icon-text {
-    margin-left: 10px;
-    font-size: 18px;
-    font-weight: 600; /* Bold text */
-    color: #888; /* Lighter grey for text */
-    transition: color 0.3s ease;
-}
+        .icon-text {
+            margin-left: 10px;
+            font-size: 18px;
+            font-weight: 600; /* Bold text */
+            color: #888; /* Lighter grey for text */
+            transition: color 0.3s ease;
+        }
 
-.icon svg {
-    width: 25px;
-    height: 25px;
-    fill: #888; /* Lighter grey for icons */
-    transition: fill 0.3s ease;
-}
+        .icon svg {
+            width: 25px;
+            height: 25px;
+            fill: #888; /* Lighter grey for icons */
+            transition: fill 0.3s ease;
+        }
 
-.icon.active svg {
-    fill: white; /* White icon for active page */
-}
+        .icon.active svg {
+            fill: white; /* White icon for active page */
+        }
 
-.icon.active .icon-text {
-    color: white; /* White text for active page */
-}
+        .icon.active .icon-text {
+            color: white; /* White text for active page */
+        }
 
-.icon:hover svg {
-    fill: white; /* Turn white on hover */
-}
+        .icon:hover svg {
+            fill: white; /* Turn white on hover */
+        }
 
-.icon:hover .icon-text {
-    color: white; /* Turn white on hover */
-}
+        .icon:hover .icon-text {
+            color: white; /* Turn white on hover */
+        }
 
-/* Right Box (Main Content) */
-.right-box {
-    width: 85%;
-    background-color: #121212;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-    overflow-y: auto;
-    max-height: 100vh;
-    position: relative; /* Added for top-bar positioning */
-}
+        /* Right Box (Main Content) */
+        .right-box {
+            width: 85%;
+            background-color: #121212;
+            border: 2px solid black;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            max-height: 100vh;
+            position: relative; /* Added for top-bar positioning */
+        }
 
-.right-box::-webkit-scrollbar {
-    display: none;
-}
+        .right-box::-webkit-scrollbar {
+            display: none;
+        }
 
-/* Profile Button */
-.profile-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    z-index: 1000;
-}
+        /* Top Bar */
+        .top-bar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+        }
 
-.profile-button img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    cursor: pointer;
-    object-fit: cover;
-    transition: opacity 0.3s ease;
-}
+        .top-bar .profile-picture {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
 
-.profile-button img:hover {
-    opacity: 0.8;
-}
+        .top-bar .profile-picture:hover {
+            opacity: 0.8; /* Slight fade on hover */
+        }
 
-/* Search Container */
-.search-container {
-    position: relative;
-    top: 10px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding: 10px;
-}
+        /* Search Container */
+        .search-container {
+            position: relative;
+            top: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+        }
 
-.search-bar {
-    width: 400px;
-    height: 35px;
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: transparent;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    outline: none;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px) brightness(1.2);
-    padding-left: 40px;
-}
+        .search-bar {
+            width: 400px;
+            height: 35px;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: transparent;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px) brightness(1.2);
+            padding-left: 40px;
+        }
 
-.search-bar::placeholder {
-    color: #bbb;
-}
+        .search-bar::placeholder {
+            color: #bbb;
+        }
 
-.search-bar:focus {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-    background-color: rgba(255, 255, 255, 0.3);
-}
+        .search-bar:focus {
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            background-color: rgba(255, 255, 255, 0.3);
+        }
 
-.search-bar:hover {
-    width: 420px;
-    background-color: rgba(255, 255, 255, 0.3);
-}
+        .search-bar:hover {
+            width: 420px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
 
-.search-bar::before {
-    content: "";
-    position: absolute;
-    left: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/67/Font_Awesome_5_regular_search.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-}
+        .search-bar::before {
+            content: "";
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/67/Font_Awesome_5_regular_search.svg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
 
-/* Content Box */
-.content-box {
-    width: 100%; /* Full width of its container */
-    background-color: #181818;
-    border-radius: 10px;
-    margin-top: 20px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    justify-content: center; /* Center content vertically */
-    align-items: center; /* Center content horizontally */
-    text-align: center; /* Center text horizontally */
-    overflow: hidden; /* Prevent scrolling */
-    aspect-ratio: 4 / 1; /* Width is 4x height (height is 25% of width) */
-    min-height: fit-content; /* Ensure the box is never smaller than its content */
-}
+        /* Content Box */
+        .content-box {
+            width: 100%; /* Full width of its container */
+            background-color: #181818;
+            border-radius: 10px;
+            margin-top: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
+            justify-content: center; /* Center content vertically */
+            align-items: center; /* Center content horizontally */
+            text-align: center; /* Center text horizontally */
+            overflow: hidden; /* Prevent scrolling */
+            aspect-ratio: 4 / 1; /* Width is 4x height (height is 25% of width) */
+            min-height: fit-content; /* Ensure the box is never smaller than its content */
+        }
 
-.content-box p {
-    font-size: 20px;
-    line-height: 1.6;
-    color: white;
-    margin: 0; /* Remove default margin */
-}
+        .content-box p {
+            font-size: 20px;
+            line-height: 1.6;
+            color: white;
+            margin: 0; /* Remove default margin */
+        }
 
-.content-box p a {
-    color: white;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
+        .content-box p a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-.content-box p a:hover {
-    color: #bbb;
-}
+        .content-box p a:hover {
+            color: #bbb;
+        }
 
-.content-box p#contentBoxDisclaimer {
-    font-size: x-small;
-    color: rgba(255, 255, 255, 0.5);
-    margin-top: 20px; /* Add some space between the main text and the disclaimer */
-}
-/* Game Grid */
-.grid {
-    margin-top: 50px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    width: 100%;
-}
+        .content-box p#contentBoxDisclaimer {
+            font-size: x-small;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 20px; /* Add some space between the main text and the disclaimer */
+        }
 
-.card {
-    position: relative;
-    width: 100%;
-    height: 150px;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-}
+        /* Game Grid */
+        .grid {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
 
-.card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-}
+        .card {
+            position: relative;
+            width: 100%;
+            height: 150px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
 
-.card .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: opacity 0.3s, filter 0.3s;
-}
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
 
-.card:hover .background {
-    filter: blur(8px);
-}
+        .card .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.3s, filter 0.3s;
+        }
 
-.card .info {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s;
-    text-align: center;
-    padding-bottom: 10px;
-}
+        .card:hover .background {
+            filter: blur(8px);
+        }
 
-.card:hover .info {
-    opacity: 1;
-}
+        .card .info {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            text-align: center;
+            padding-bottom: 10px;
+        }
 
-.info h3 {
-    color: white;
-    margin: 5px 0;
-    position: absolute;
-    top: 10px;
-}
+        .card:hover .info {
+            opacity: 1;
+        }
 
-.info a {
-    color: white;
-    margin-top: 10px;
-    padding: 8px 16px;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    text-decoration: none;
-    background: rgba(255, 255, 255, 0.1);
-    transition: background 0.3s;
-    position: absolute;
-    bottom: 25px;
-}
+        .info h3 {
+            color: white;
+            margin: 5px 0;
+            position: absolute;
+            top: 10px;
+        }
 
-.info a:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
+        .info a {
+            color: white;
+            margin-top: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+            position: absolute;
+            bottom: 25px;
+        }
 
-.info .genres {
-    font-size: 10px;
-    position: absolute;
-    bottom: 13px;
-    width: 100%;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-}
+        .info a:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
 
-/* Game Modal */
-.game-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-}
+        .info .genres {
+            font-size: 10px;
+            position: absolute;
+            bottom: 13px;
+            width: 100%;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+        }
 
-.game-modal.show {
-    display: flex;
-}
+        /* Game Modal */
+        .game-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
 
-.game-modal-content {
-    background-color: #121212;
-    border-radius: 10px;
-    padding: 20px;
-    width: 80%;
-    max-width: 900px;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-}
+        .game-modal.show {
+            display: flex;
+        }
 
-.game-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
+        .game-modal-content {
+            background-color: #121212;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 900px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        }
 
-.game-modal-title {
-    font-size: 1.5em;
-    font-weight: bold;
-}
+        .game-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
 
-.game-modal-close {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    padding: 8px 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
+        .game-modal-title {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
 
-.game-modal-close:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
+        .game-modal-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
 
-#modalIframe {
-    width: 100%;
-    height: 500px;
-    border: none;
-    margin-bottom: 15px;
-}
+        .game-modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
 
-.modal-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.3s;
-}
+        #modalIframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+            margin-bottom: 15px;
+        }
 
-.modal-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
+        .modal-button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
 
-.text-link {
-    color: white;
-}
+        .modal-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
 
-/* Modals */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    justify-content: center;
-    align-items: center;
-    z-index: 1001;
-}
+        .text-link {
+            color: white;
+        }
 
-.modal-content {
-    background-color: #121212;
-    border-radius: 10px;
-    padding: 20px;
-    width: 300px;
-    text-align: center;
-    position: relative;
-}
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
 
-.modal-content h2 {
-    margin-bottom: 20px;
-    font-weight: 600;
-    color: #888;
-}
+        .modal-content {
+            background-color: #121212;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+        }
 
-.modal-content input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #444;
-    background-color: #333;
-    color: white;
-}
+        .modal-content h2 {
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: #888;
+        }
 
-.modal-content button {
-    padding: 10px 20px;
-    background-color: #444;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 5px;
-    font-weight: 600;
-}
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #333;
+            color: white;
+        }
 
-.modal-content button:hover {
-    background-color: #555;
-}
+        .modal-content button {
+            padding: 10px 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: 600;
+        }
 
-.modal-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    color: #888;
-    font-size: 20px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+        .modal-content button:hover {
+            background-color: #555;
+        }
 
-.modal-close:hover {
-    color: white;
-}
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
 
-.switch {
-    color: #888;
-    cursor: pointer;
-    font-weight: 600;
-    margin-top: 10px;
-    transition: color 0.3s ease;
-}
+        .modal-close:hover {
+            color: white;
+        }
 
-.switch:hover {
-    color: white;
-    text-decoration: underline;
-}
+        .switch {
+            color: #888;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .switch:hover {
+            color: white;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -503,9 +504,9 @@ body {
 
     <!-- Right Box (Main Content) -->
     <div class="right-box" id="rightBox">
-        <!-- Profile Button -->
-        <div class="profile-button">
-            <img id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="handleProfileClick()">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <img class="profile-picture" id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="handleProfileClick()">
         </div>
 
         <!-- Search Container -->
@@ -560,10 +561,10 @@ body {
         <div class="modal-content">
             <button class="modal-close" onclick="closeSignInModal()">×</button>
             <h2 id="authTitle">Sign In</h2>
-            <input type="text" id="usernameInput" placeholder="Username" required>
-            <input type="password" id="passwordInput" placeholder="Password" required>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
             <div id="profilePictureContainer" style="display: none;">
-                <input type="url" id="profilePictureInput" placeholder="Profile Picture URL (optional)">
+                <input type="url" id="profilePicture" placeholder="Profile Picture URL (optional)">
             </div>
             <button id="authButton">Sign In</button>
             <div class="switch" id="switchAuth">Don't have an account? Sign Up</div>
@@ -591,12 +592,15 @@ body {
     </div>
 
     <script>
-        const backendUrl = 'https://simplicity-backend.onrender.com'; // Backend URL
-        let isSignIn = true;
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        // Handle Profile Picture Click
+        // Update the profile picture in the top bar
+        if (currentUser) {
+            document.getElementById('profilePictureTop').src = currentUser.profilePicture || 'https://via.placeholder.com/150';
+        }
+
+        // Handle profile picture click
         function handleProfileClick() {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser) {
                 window.location.href = '/account.html';
             } else {
@@ -614,27 +618,49 @@ body {
             document.getElementById('signInModal').style.display = 'none';
         }
 
-        // Open Change Username Modal
-        function openChangeUsernameModal() {
-            document.getElementById('changeUsernameModal').style.display = 'flex';
-        }
+        // Handle Sign In / Sign Up
+        document.getElementById('authButton').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const profilePicture = document.getElementById('profilePicture').value || 'https://via.placeholder.com/150';
 
-        // Close Change Username Modal
-        function closeChangeUsernameModal() {
-            document.getElementById('changeUsernameModal').style.display = 'none';
-        }
+            if (!username || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
 
-        // Open Change Profile Picture Modal
-        function openChangeProfilePictureModal() {
-            document.getElementById('changeProfilePictureModal').style.display = 'flex';
-        }
+            const users = JSON.parse(localStorage.getItem('users')) || [];
 
-        // Close Change Profile Picture Modal
-        function closeChangeProfilePictureModal() {
-            document.getElementById('changeProfilePictureModal').style.display = 'none';
-        }
+            if (isSignIn) {
+                // Sign In
+                const user = users.find(u => u.username === username && u.password === password);
+
+                if (user) {
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    closeSignInModal();
+                    window.location.reload(); // Refresh the page to reflect the logged-in state
+                } else {
+                    alert('Invalid username or password.');
+                }
+            } else {
+                // Sign Up
+                const usernameExists = users.some(u => u.username === username);
+
+                if (usernameExists) {
+                    alert('Username already exists.');
+                } else {
+                    const newUser = { username, password, profilePicture, games: [] };
+                    users.push(newUser);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    localStorage.setItem('currentUser', JSON.stringify(newUser));
+                    closeSignInModal();
+                    window.location.reload(); // Refresh the page to reflect the logged-in state
+                }
+            }
+        });
 
         // Switch between Sign In and Sign Up
+        let isSignIn = true;
         document.getElementById('switchAuth').addEventListener('click', () => {
             isSignIn = !isSignIn;
             const authTitle = document.getElementById('authTitle');
@@ -654,128 +680,6 @@ body {
                 profilePictureContainer.style.display = 'block';
             }
         });
-
-        // Handle Sign In / Sign Up
-        document.getElementById('authButton').addEventListener('click', async () => {
-            const username = document.getElementById('usernameInput').value;
-            const password = document.getElementById('passwordInput').value;
-            const profilePicture = document.getElementById('profilePictureInput').value || 'https://via.placeholder.com/150';
-
-            if (!username || !password) {
-                alert('Please fill in all fields.');
-                return;
-            }
-
-            const endpoint = isSignIn ? '/login' : '/register';
-            const body = isSignIn ? { username, password } : { username, password, profilePicture };
-
-            try {
-                const response = await fetch(`${backendUrl}${endpoint}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(body),
-                });
-
-                if (response.ok) {
-                    const user = await response.json();
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    updateUI(user);
-                    closeSignInModal();
-                } else {
-                    const error = await response.json();
-                    alert(error.error || 'An error occurred. Please try again.');
-                }
-            } catch (error) {
-                alert('Network error. Please check your connection.');
-            }
-        });
-
-        // Change Username
-        async function changeUsername() {
-            const newUsername = document.getElementById('newUsername').value;
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-            if (!newUsername) {
-                alert('Please enter a new username.');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${backendUrl}/change-username`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userId: currentUser.id, newUsername }),
-                });
-
-                if (response.ok) {
-                    const updatedUser = { ...currentUser, username: newUsername };
-                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-                    document.getElementById('username').innerText = newUsername;
-                    closeChangeUsernameModal();
-                    alert('Username changed successfully!');
-                } else {
-                    const error = await response.json();
-                    alert(error.error || 'Failed to update username.');
-                }
-            } catch (error) {
-                alert('Network error. Please check your connection.');
-            }
-        }
-
-        // Change Profile Picture
-        async function changeProfilePicture() {
-            const newProfilePicture = document.getElementById('newProfilePicture').value;
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-            if (!newProfilePicture) {
-                alert('Please enter a new profile picture URL.');
-                return;
-            }
-
-            try {
-                const response = await fetch(`${backendUrl}/change-profile-picture`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
-                });
-
-                if (response.ok) {
-                    const updatedUser = { ...currentUser, profilePicture: newProfilePicture };
-                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-                    document.getElementById('profilePicture').src = newProfilePicture;
-                    document.getElementById('profilePictureTop').src = newProfilePicture;
-                    closeChangeProfilePictureModal();
-                    alert('Profile picture changed successfully!');
-                } else {
-                    const error = await response.json();
-                    alert(error.error || 'Failed to update profile picture.');
-                }
-            } catch (error) {
-                alert('Network error. Please check your connection.');
-            }
-        }
-
-        // Log Out
-        function logout() {
-            localStorage.removeItem('currentUser');
-            window.location.reload();
-        }
-
-        // Update UI with User Data
-        function updateUI(user) {
-            document.getElementById('username').innerText = user.username;
-            document.getElementById('profilePicture').src = user.profilePicture;
-            document.getElementById('profilePictureTop').src = user.profilePicture;
-        }
-
-        // Load user data on page load
-        window.onload = () => {
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-            if (currentUser) {
-                updateUI(currentUser);
-            }
-        };
 
         // Games Data
         const games = [
