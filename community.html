@@ -15,13 +15,16 @@
         body {
             background-color: #060606;
             color: white;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif; /* Use Poppins font */
             display: flex;
             height: 100vh;
             margin: 0;
             overflow: hidden;
             padding: 10px;
         }
+
+        /* Import Poppins font from Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
         /* Left Box (Sidebar) */
         .left-box {
@@ -37,6 +40,7 @@
             justify-content: flex-start;
             padding: 20px;
             align-items: flex-start;
+            flex-shrink: 0; /* Prevent the sidebar itself from shrinking */
         }
 
         .icon {
@@ -45,17 +49,22 @@
             margin: 15px 0;
             cursor: pointer;
             transition: all 0.3s ease;
+            flex-shrink: 0; /* Prevent the icons from shrinking */
+            min-width: max-content; /* Ensure the text and icons don't wrap or shrink */
         }
 
         .icon-text {
             margin-left: 10px;
             font-size: 18px;
+            font-weight: 600; /* Bold text */
+            color: #888; /* Lighter grey for text */
+            transition: color 0.3s ease;
         }
 
         .icon svg {
             width: 25px;
             height: 25px;
-            fill: #444; /* Dark gray color by default */
+            fill: #888; /* Lighter grey for icons */
             transition: fill 0.3s ease;
         }
 
@@ -63,8 +72,16 @@
             fill: white; /* White icon for active page */
         }
 
+        .icon.active .icon-text {
+            color: white; /* White text for active page */
+        }
+
         .icon:hover svg {
             fill: white; /* Turn white on hover */
+        }
+
+        .icon:hover .icon-text {
+            color: white; /* Turn white on hover */
         }
 
         /* Right Box (Main Content) */
@@ -105,6 +122,11 @@
             border-radius: 50%;
             cursor: pointer;
             object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .top-bar .profile-picture:hover {
+            opacity: 0.8; /* Slight fade on hover */
         }
 
         /* Upload Container */
