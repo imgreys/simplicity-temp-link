@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account</title>
+    <title>Account Page</title>
     <style>
         /* General Styles */
         * {
@@ -387,19 +387,23 @@
             const endpoint = isSignIn ? '/login' : '/register';
             const body = isSignIn ? { username, password } : { username, password, profilePicture };
 
-            const response = await fetch(`https://backend-vhfp.onrender.com${endpoint}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(body),
-            });
+            try {
+                const response = await fetch(`https://backend-vhfp.onrender.com${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
 
-            if (response.ok) {
-                const user = await response.json();
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                window.location.reload();
-            } else {
-                const error = await response.json();
-                alert(error.error);
+                if (response.ok) {
+                    const user = await response.json();
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    window.location.reload();
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'An error occurred. Please try again.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
             }
         });
 
@@ -413,21 +417,25 @@
                 return;
             }
 
-            const response = await fetch('https://backend-vhfp.onrender.com', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: currentUser.id, newUsername }),
-            });
+            try {
+                const response = await fetch('https://backend-vhfp.onrender.com/change-username', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.id, newUsername }),
+                });
 
-            if (response.ok) {
-                const updatedUser = { ...currentUser, username: newUsername };
-                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-                document.getElementById('username').innerText = newUsername;
-                closeChangeUsernameModal();
-                alert('Username changed successfully!');
-            } else {
-                const error = await response.json();
-                alert(error.error);
+                if (response.ok) {
+                    const updatedUser = { ...currentUser, username: newUsername };
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    document.getElementById('username').innerText = newUsername;
+                    closeChangeUsernameModal();
+                    alert('Username changed successfully!');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to update username.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
             }
         }
 
@@ -441,29 +449,33 @@
                 return;
             }
 
-            const response = await fetch('https://backend-vhfp.onrender.com', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
-            });
+            try {
+                const response = await fetch('https://backend-vhfp.onrender.com/change-profile-picture', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
+                });
 
-            if (response.ok) {
-                const updatedUser = { ...currentUser, profilePicture: newProfilePicture };
-                localStorage.setItem('currentUser', JSON.stringify(updatedUser));
-                document.getElementById('profilePicture').src = newProfilePicture;
-                document.getElementById('profilePictureTop').src = newProfilePicture;
-                closeChangeProfilePictureModal();
-                alert('Profile picture changed successfully!');
-            } else {
-                const error = await response.json();
-                alert(error.error);
+                if (response.ok) {
+                    const updatedUser = { ...currentUser, profilePicture: newProfilePicture };
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    document.getElementById('profilePicture').src = newProfilePicture;
+                    document.getElementById('profilePictureTop').src = newProfilePicture;
+                    closeChangeProfilePictureModal();
+                    alert('Profile picture changed successfully!');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to update profile picture.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
             }
         }
 
         // Log Out
         function logout() {
             localStorage.removeItem('currentUser');
-            window.location.href = 'signin.html';
+            window.location.href = '/signin.html';
         }
 
         // Load user data on page load
@@ -478,6 +490,15 @@
                 openSignInModal();
             }
         };
+
+        // Modal close functions
+        function closeChangeUsernameModal() {
+            document.getElementById('changeUsernameModal').style.display = 'none';
+        }
+
+        function closeChangeProfilePictureModal() {
+            document.getElementById('changeProfilePictureModal').style.display = 'none';
+        }
     </script>
 </body>
 </html>
