@@ -25,27 +25,30 @@
 
         /* Left Box (Sidebar) */
         .left-box {
-            width: 15%;
-            background-color: #121212;
-            border: 2px solid black;
-            border-radius: 10px;
-            height: 100%;
-            margin-right: 10px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 20px;
-            align-items: flex-start;
-        }
+    width: 15%;
+    background-color: #121212;
+    border: 2px solid black;
+    border-radius: 10px;
+    height: 100%;
+    margin-right: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    align-items: flex-start;
+    flex-shrink: 0; /* Prevent the sidebar itself from shrinking */
+}
 
         .icon {
-            display: flex;
-            align-items: center;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0; /* Prevent the icons from shrinking */
+    min-width: max-content; /* Ensure the text and icons don't wrap or shrink */
+}
 
         .icon-text {
             margin-left: 10px;
@@ -478,7 +481,7 @@
         // Log Out
         function logout() {
             localStorage.removeItem('currentUser');
-            window.location.href = '/signin.html';
+            window.location.reload(); // Reload the page to reset the UI
         }
 
         // Update UI with User Data
@@ -494,6 +497,8 @@
 
             if (currentUser) {
                 updateUI(currentUser); // Update UI if user is already logged in
+            } else {
+                openSignInModal(); // Open the sign-in modal if no user is logged in
             }
         };
 
