@@ -288,6 +288,19 @@
         .modal-close:hover {
             color: white; /* Turn white on hover */
         }
+        
+        .switch {
+    color: #888; /* Lighter grey for text */
+    cursor: pointer; /* Change cursor to pointer */
+    font-weight: 600; /* Bold text */
+    margin-top: 10px; /* Add some spacing */
+    transition: color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.switch:hover {
+    color: white; /* Turn white on hover */
+    text-decoration: underline; /* Optional: Add underline on hover */
+}
     </style>
 </head>
 <body>
@@ -324,7 +337,7 @@
     <div class="right-box" id="rightBox">
         <!-- Top Bar -->
         <div class="top-bar">
-            <img class="profile-picture" id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="openSignInModal()">
+            <img class="profile-picture" id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="handleProfileClick()">
         </div>
 
         <!-- Account Content -->
@@ -385,6 +398,18 @@
     <script>
         const backendUrl = 'https://simplicity-backend.onrender.com'; // Your backend URL
         let isSignIn = true;
+
+        // Handle Profile Picture Click
+        function handleProfileClick() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                // Redirect to account.html if signed in
+                window.location.href = '/account.html';
+            } else {
+                // Open sign-in modal if not signed in
+                openSignInModal();
+            }
+        }
 
         // Open Sign-In Modal
         function openSignInModal() {
@@ -451,9 +476,6 @@
             const endpoint = isSignIn ? '/login' : '/register';
             const body = isSignIn ? { username, password } : { username, password, profilePicture };
 
-            console.log('Sending request to:', `${backendUrl}${endpoint}`);
-            console.log('Request body:', body);
-
             try {
                 const response = await fetch(`${backendUrl}${endpoint}`, {
                     method: 'POST',
@@ -461,21 +483,16 @@
                     body: JSON.stringify(body),
                 });
 
-                console.log('Response status:', response.status);
-
                 if (response.ok) {
                     const user = await response.json();
-                    console.log('User data received:', user);
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     updateUI(user); // Update the UI with user data
                     closeSignInModal(); // Close the modal
                 } else {
                     const error = await response.json();
-                    console.error('Backend error:', error);
                     alert(error.error || 'An error occurred. Please try again.');
                 }
             } catch (error) {
-                console.error('Network error:', error);
                 alert('Network error. Please check your connection.');
             }
         });
