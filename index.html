@@ -6,504 +6,548 @@
     <title>Simplicity</title>
     <link rel="icon" type="image/png" href="https://github.com/Greys2121/Singularity/blob/main/maple-leaf-sketch-hand-drawn-in-doodle-style-illustration-2R95RM9-removebg-preview.png?raw=true">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        body {
-            background-color: #060606;
-            color: white;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh; /* Full viewport height */
-            margin: 0;
-            overflow: hidden; /* Prevent body from scrolling */
-            padding: 10px;
-        }
+body {
+    background-color: #060606;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+    padding: 10px;
+}
 
-        .left-box {
-            width: 15%;
-            background-color: #121212;
-            border: 2px solid black;
-            border-radius: 10px;
-            height: 100%;
-            margin-right: 10px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 20px;
-            align-items: flex-start;
-        }
+/* Left Box (Sidebar) */
+.left-box {
+    width: 15%;
+    background-color: #121212;
+    border: 2px solid black;
+    border-radius: 10px;
+    height: 100%;
+    margin-right: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 20px;
+    align-items: flex-start;
+    flex-shrink: 0; /* Prevent the sidebar itself from shrinking */
+}
 
-        .right-box {
-            width: 85%;
-            background-color: #121212;
-            border: 2px solid black;
-            border-radius: 10px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
-            overflow-y: auto; /* Make right-box scrollable */
-            max-height: 100vh; /* Ensure right box doesn't exceed the viewport height */
-        }
+.icon {
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0; /* Prevent the icons from shrinking */
+    min-width: max-content; /* Ensure the text and icons don't wrap or shrink */
+}
 
-        .right-box::-webkit-scrollbar {
-            display: none;
-        }
+.icon-text {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 600; /* Bold text */
+    color: #888; /* Lighter grey for text */
+    transition: color 0.3s ease;
+}
 
-        .search-container {
-            position: relative;
-            top: 10px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-        }
+.icon svg {
+    width: 25px;
+    height: 25px;
+    fill: #888; /* Lighter grey for icons */
+    transition: fill 0.3s ease;
+}
 
-        .search-bar {
-            width: 400px;
-            height: 35px;
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: transparent;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            outline: none;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px) brightness(1.2);
-            padding-left: 40px;
-        }
+.icon.active svg {
+    fill: white; /* White icon for active page */
+}
 
-        .search-bar::placeholder {
-            color: #bbb;
-        }
+.icon.active .icon-text {
+    color: white; /* White text for active page */
+}
 
-        .search-bar:focus {
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-            background-color: rgba(255, 255, 255, 0.3);
-        }
+.icon:hover svg {
+    fill: white; /* Turn white on hover */
+}
 
-        .search-bar:hover {
-            width: 420px;
-            background-color: rgba(255, 255, 255, 0.3);
-        }
+.icon:hover .icon-text {
+    color: white; /* Turn white on hover */
+}
 
-        .search-bar::before {
-            content: "";
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/67/Font_Awesome_5_regular_search.svg');
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
+/* Right Box (Main Content) */
+.right-box {
+    width: 85%;
+    background-color: #121212;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    overflow-y: auto;
+    max-height: 100vh;
+    position: relative; /* Added for top-bar positioning */
+}
 
-        .grid {
-            margin-top: 50px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            width: 100%;
-        }
+.right-box::-webkit-scrollbar {
+    display: none;
+}
 
-        .card {
-            position: relative;
-            width: 100%;
-            height: 150px;
-            border-radius: 10px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+/* Profile Button */
+.profile-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1000;
+}
 
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
+.profile-button img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+}
 
-        .card .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: opacity 0.3s, filter 0.3s;
-        }
+.profile-button img:hover {
+    opacity: 0.8;
+}
 
-        .card:hover .background {
-            filter: blur(8px);
-        }
+/* Search Container */
+.search-container {
+    position: relative;
+    top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
 
-        .card .info {
-            position: absolute;
-            top: 10px;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            text-align: center;
-            padding-bottom: 10px;
-        }
+.search-bar {
+    width: 400px;
+    height: 35px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px) brightness(1.2);
+    padding-left: 40px;
+}
 
-        .card:hover .info {
-            opacity: 1;
-        }
+.search-bar::placeholder {
+    color: #bbb;
+}
 
-        .info h3 {
-            color: white;
-            margin: 5px 0;
-            position: absolute;
-            top: 10px;
-        }
+.search-bar:focus {
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.3);
+}
 
-        .info a {
-            color: white;
-            margin-top: 10px;
-            padding: 8px 16px;
-            font-size: 14px;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            background: rgba(255, 255, 255, 0.1);
-            transition: background 0.3s;
-            position: absolute;
-            bottom: 25px;
-        }
+.search-bar:hover {
+    width: 420px;
+    background-color: rgba(255, 255, 255, 0.3);
+}
 
-        .info a:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+.search-bar::before {
+    content: "";
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/6/67/Font_Awesome_5_regular_search.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 
-        .content-box {
-            width: 100%;
-            background-color: #181818;
-            border-radius: 10px;
-            margin-top: 20px;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-image 0.5s ease, width 0.3s ease, height 0.3s ease; /* Added width and height transition */
-            background-size: cover;
-            background-position: center;
-            /* Remove the min-height */
-            /* Add this line to use aspect ratio */
-            aspect-ratio: 1 / 1; /* Match height to width */
-        }
+/* Content Box */
+.content-box {
+    width: 100%;
+    background-color: #181818;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-image 0.5s ease, width 0.3s ease, height 0.3s ease;
+    background-size: cover;
+    background-position: center;
+    aspect-ratio: 1 / 1; /* Maintain a square aspect ratio */
+    height: calc(100vh - 200px); /* Adjust height based on viewport height */
+    max-height: calc(50% - 100px); /* Maximum height is half of the width */
+    min-height: 150px; /* Minimum height to prevent text overflow */
+    overflow: auto; /* Add scrollbar if content overflows */
+}
 
-        .content-box p {
-            font-size: 20px;
-            line-height: 1.6;
-            text-align: left;
-            color: white;
-            margin-top: 10px;
-        }
+.content-box p {
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: left;
+    color: white;
+    margin-top: 10px;
+}
 
-        .info .genres {
-            font-size: 10px;
-            position: absolute;
-            bottom: 13px;
-            width: 100%;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-        }
+.content-box p a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
 
-        .icon {
-            display: flex;
-            align-items: center;
-            margin: 15px 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+.content-box p a:hover {
+    color: #bbb;
+}
 
-        .icon-text {
-            margin-left: 10px;
-            font-size: 18px;
-        }
+.content-box p#contentBoxDisclaimer {
+    font-size: x-small;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: auto;
+}
 
-        .icon svg {
-            width: 25px;
-            height: 25px;
-            fill: #444; /* Dark gray color by default */
-            transition: fill 0.3s ease;
-        }
+/* Game Grid */
+.grid {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
 
-        .icon.active svg {
-            fill: white; /* White icon for active page */
-        }
+.card {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
 
-        /* Icon Hover Effect */
-        .icon:hover svg {
-            fill: white; /* Turn white on hover */
-        }
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
 
-        /* Settings Modal */
-        .settings-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
+.card .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 0.3s, filter 0.3s;
+}
 
-        .settings-modal.show {
-            display: flex;
-        }
+.card:hover .background {
+    filter: blur(8px);
+}
 
-        .settings-modal-content {
-            background-color: #121212;
-            border-radius: 10px;
-            padding: 20px;
-            width: 70%;
-            max-width: 600px;
-            text-align: center;
-        }
+.card .info {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    text-align: center;
+    padding-bottom: 10px;
+}
 
-        .settings-modal-close {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            margin-top: 20px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
+.card:hover .info {
+    opacity: 1;
+}
 
-        .settings-modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+.info h3 {
+    color: white;
+    margin: 5px 0;
+    position: absolute;
+    top: 10px;
+}
 
-        .settings-control {
-            margin-bottom: 15px;
-            text-align: left;
-        }
+.info a {
+    color: white;
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.3s;
+    position: absolute;
+    bottom: 25px;
+}
 
-        .settings-control label {
-            display: block;
-            margin-bottom: 5px;
-        }
+.info a:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
 
-        .settings-control input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            background-color: #222;
-            color: white;
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
+.info .genres {
+    font-size: 10px;
+    position: absolute;
+    bottom: 13px;
+    width: 100%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+}
 
-        .settings-control input[type="checkbox"] {
-            margin-right: 5px;
-        }
+/* Game Modal */
+.game-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
 
-        .settings-control input[type="number"] {
-            width: 60px; /* Or any suitable width */
-            padding: 8px;
-            background-color: #222;
-            color: white;
-            border: 1px solid #333;
-            border-radius: 5px;
-        }
+.game-modal.show {
+    display: flex;
+}
 
-        /* Cog Icon Style */
-        .cog-icon {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23fff"><path d="M19.4 13.2h-1.9l-0.6 1.2c-0.8 1.5-2.2 2.5-3.8 2.8v1.2c0 0.7-0.6 1.3-1.3 1.3s-1.3-0.6-1.3-1.3v-1.2c-1.6-0.3-3.1-1.4-3.8-2.8l-0.6-1.2h-1.9c-0.7 0-1.3-0.6-1.3-1.3v-2.3c0-0.7 0.6-1.3 1.3-1.3h1.9l0.6-1.2c0.8-1.5 2.2-2.5 3.8-2.8v-1.2c0-0.7 0.6-1.3 1.3-1.3s1.3 0.6 1.3 1.3v1.2c1.6 0.3 3.1 1.4 3.8 2.8l0.6 1.2h1.9c0.7 0 1.3 0.6 1.3 1.3v2.3c0 0.7-0.6 1.3-1.3 1.3zm-9.4-5.6c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3zm0 8.8c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z"/></svg>'); /* Replace with your cog icon */
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            position: absolute;
-            bottom: 20px; /* Position at the bottom */
-        }
+.game-modal-content {
+    background-color: #121212;
+    border-radius: 10px;
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
 
-        .cog-icon:hover {
-            transform: rotate(30deg);
-        }
-        
-        .icon.home {
-            margin-bottom: 20px;
-        }
+.game-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
-        /* Media Query for Smaller Screens */
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column; /* Stack items vertically */
-            }
+.game-modal-title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
 
-            .left-box {
-                width: 100%;
-                height: auto;
-                margin-right: 0;
-                margin-bottom: 10px;
-            }
+.game-modal-close {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
 
-            .right-box {
-                width: 100%;
-                height: auto; /* Allow the right box to take full height */
-                margin-top: 0; /* Remove top margin */
-            }
+.game-modal-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
 
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust card size */
-            }
+#modalIframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    margin-bottom: 15px;
+}
 
-            .content-box {
-                height: auto; /* Allow content box to adjust its height */
-                margin-top: 10px; /* Add some margin at the top */
-            }
-        }
+.modal-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s;
+}
 
-        /* Game Modal Styles */
-        .game-modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
+.modal-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
 
-        .game-modal.show {
-            display: flex;
-        }
+.text-link {
+    color: white;
+}
 
-        .game-modal-content {
-            background-color: #121212;
-            border-radius: 10px;
-            padding: 20px;
-            width: 80%;  /* Adjust as needed */
-            max-width: 900px; /* Limit the maximum width */
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Add a shadow */
-        }
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
 
-        .game-modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+.modal-content {
+    background-color: #121212;
+    border-radius: 10px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+}
 
-        .game-modal-title {
-            font-size: 1.5em;
-            font-weight: bold;
-        }
+.modal-content h2 {
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #888;
+}
 
-        .game-modal-close {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background 0.3s;
-        }
+.modal-content input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: white;
+}
 
-        .game-modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+.modal-content button {
+    padding: 10px 20px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    font-weight: 600;
+}
 
-        #modalIframe {
-            width: 100%;
-            height: 500px; /* Adjust as needed */
-            border: none;
-            margin-bottom: 15px;
-        }
+.modal-content button:hover {
+    background-color: #555;
+}
 
-        .modal-button {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition: background 0.3s;
-        }
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
 
-        .modal-button:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
+.modal-close:hover {
+    color: white;
+}
 
-        .text-link {
-            color: white; /* Set the link color to white */
-        }
+.switch {
+    color: #888;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+    transition: color 0.3s ease;
+}
+
+.switch:hover {
+    color: white;
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
-    <div class="left-box" id="leftBox">
-        <div class="icon home active" onclick="window.location.href = '/'">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            <span class="icon-text">Home</span>
-        </div>
-        <div class="icon search" onclick="window.location.href = '/search.html'">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
-            <span class="icon-text">Search</span>
-        </div>
-        <div class="cog-icon" onclick="openSettingsModal()"></div>
+    <!-- Left Box (Sidebar) -->
+<div class="left-box" id="leftBox">
+    <div class="icon home active" onclick="window.location.href = '/'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span class="icon-text">Home</span>
     </div>
+    <div class="icon search" onclick="window.location.href = '/search.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 19l-4.35-4.35a8.5 8.5 0 1 0-1.41 1.41L19 19l-1.41 1.41L14.18 16a6.5 6.5 0 1 1 1.41-1.41L21 19z"/></svg>
+        <span class="icon-text">Search</span>
+    </div>
+    <div class="icon community-games" onclick="window.location.href = '/community.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+            <circle cx="9" cy="9" r="1.5" />
+            <circle cx="15" cy="9" r="1.5" />
+            <path d="M12 16c-1.1 0-2-.9-2-2h4c0 1.1-.9 2-2 2z"/>
+        </svg>
+        <span class="icon-text">Community Games</span>
+    </div>
+    <div class="icon account" onclick="window.location.href = '/account.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+        <span class="icon-text">Account</span>
+    </div>
+    <div class="icon public-profile" onclick="window.location.href = '/public-profile.html'">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+        <span class="icon-text">Public Profile</span>
+    </div>
+</div>
 
+
+    <!-- Right Box (Main Content) -->
     <div class="right-box" id="rightBox">
+        <!-- Profile Button -->
+        <div class="profile-button">
+            <img id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="handleProfileClick()">
+        </div>
+
+        <!-- Search Container -->
         <div class="search-container">
             <form action="/search.html" method="get">
                 <input type="text" name="query" class="search-bar" placeholder="Search..." required>
                 <button type="submit" style="display: none;">Search</button>
             </form>
         </div>
+
+        <!-- Content Box -->
         <div class="content-box" id="contentBox" style="display: flex; flex-direction: column; justify-content: space-between; height: 100%; padding: 20px;">
-    <p id="contentBoxText">
-        <strong>
-            <a href="https://docs.google.com/document/d/1KOuAgBZg_8LOCtZ86RZCHIp36b_m43oscCiFjkS9xUg/edit?tab=t.0#heading=h.76n47cn7rwbx" class="text-link">
-                If a link gets blocked, the new one will go here, so bookmark this link (click me)
-            </a>
-        </strong> and
-        <strong>
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeh1ZbWu8XId_5WpryruIFzQBJ9B3hofd49yJEtalhy0R7Dzw/viewform?usp=header" class="text-link">
-                Request new things/Complaints & Issues/
-            </a>
-        </strong>
-    </p>
-    
-    <!-- Smaller font size for the disclaimer -->
-    <p id="contentBoxDisclaimer" style="font-size: x-small; color: rgba(255, 255, 255, 0.5); margin-top: auto;">
-        Property of Greys2121 on GitHub | Greyson.
-        Unauthorized use, distribution, or modification is strictly prohibited. All rights reserved. Formerly known as Plasma, the website is still listed and functioning below.
-    </p>
-</div>
+            <p id="contentBoxText">
+                <strong>
+                    <a href="https://docs.google.com/document/d/1KOuAgBZg_8LOCtZ86RZCHIp36b_m43oscCiFjkS9xUg/edit?tab=t.0#heading=h.76n47cn7rwbx" class="text-link">
+                        If a link gets blocked, the new one will go here, so bookmark this link (click me)
+                    </a>
+                </strong> and
+                <strong>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeh1ZbWu8XId_5WpryruIFzQBJ9B3hofd49yJEtalhy0R7Dzw/viewform?usp=header" class="text-link">
+                        Request new things/Complaints & Issues/
+                    </a>
+                </strong>
+            </p>
+            <p id="contentBoxDisclaimer" style="font-size: x-small; color: rgba(255, 255, 255, 0.5); margin-top: auto;">
+                Property of Greys2121 on GitHub | Greyson.
+                Unauthorized use, distribution, or modification is strictly prohibited. All rights reserved. Formerly known as Plasma, the website is still listed and functioning below.
+            </p>
+        </div>
 
-
-
+        <!-- Game Grid -->
         <div class="grid" id="gameGrid"></div>
     </div>
 
@@ -517,242 +561,374 @@
             <iframe id="modalIframe" src="" frameborder="0" allowfullscreen></iframe>
             <div style="margin-top: 10px;">
                 <button class="modal-button" onclick="openInNewTab()">Open in a New Tab</button>
-                <button class="modal-button" onclick="openInIframe()">Open in an Unblockable  Tab</button>
+                <button class="modal-button" onclick="openInIframe()">Open in an Unblockable Tab</button>
             </div>
         </div>
     </div>
 
-    <!-- Settings Modal -->
-    <div class="settings-modal" id="settingsModal">
-        <div class="settings-modal-content">
-            <h2>Content Box Settings</h2>
-
-            <div class="settings-control">
-                <label for="contentBoxTextToggle">Show Text:</label>
-                <input type="checkbox" id="contentBoxTextToggle" onchange="toggleContentBoxText()">
+    <!-- Sign-In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeSignInModal()">×</button>
+            <h2 id="authTitle">Sign In</h2>
+            <input type="text" id="usernameInput" placeholder="Username" required>
+            <input type="password" id="passwordInput" placeholder="Password" required>
+            <div id="profilePictureContainer" style="display: none;">
+                <input type="url" id="profilePictureInput" placeholder="Profile Picture URL (optional)">
             </div>
+            <button id="authButton">Sign In</button>
+            <div class="switch" id="switchAuth">Don't have an account? Sign Up</div>
+        </div>
+    </div>
 
-            <div class="settings-control">
-                <label for="backgroundImageUrl">Background Image URL:</label>
-                <input type="text" id="backgroundImageUrl" placeholder="Enter image URL" onchange="changeContentBackground()">
-            </div>
+    <!-- Change Username Modal -->
+    <div class="modal" id="changeUsernameModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeChangeUsernameModal()">×</button>
+            <h2>Change Username</h2>
+            <input type="text" id="newUsername" placeholder="New Username" required>
+            <button class="button" onclick="changeUsername()">Confirm</button>
+        </div>
+    </div>
 
-            <!-- Width and Height Settings -->
-            <div class="settings-control">
-                <label for="contentBoxWidth">Width (%):</label>
-                <input type="number" id="contentBoxWidth" min="1" max="100" step="1" onchange="changeContentBoxSize()">
-            </div>
-
-            <div class="settings-control">
-                <label for="contentBoxHeight">Height (%):</label>
-                <input type="number" id="contentBoxHeight" min="1" max="100" step="1" onchange="changeContentBoxSize()">
-            </div>
-
-
-            <button class="settings-modal-close" onclick="closeSettingsModal()">Close</button>
+    <!-- Change Profile Picture Modal -->
+    <div class="modal" id="changeProfilePictureModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeChangeProfilePictureModal()">×</button>
+            <h2>Change Profile Picture</h2>
+            <input type="url" id="newProfilePicture" placeholder="New Profile Picture URL" required>
+            <button class="button" onclick="changeProfilePicture()">Confirm</button>
         </div>
     </div>
 
     <script>
-        // Function to get a setting from localStorage
-        function getSetting(key, defaultValue) {
-            const storedValue = localStorage.getItem(key);
-            if (storedValue === null) {
-                return defaultValue;
+        const backendUrl = 'https://simplicity-backend.onrender.com'; // Your backend URL
+        let isSignIn = true;
+
+        // Handle Profile Picture Click
+        function handleProfileClick() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (currentUser) {
+                // Redirect to account.html if signed in
+                window.location.href = '/account.html';
+            } else {
+                // Open sign-in modal if not signed in
+                openSignInModal();
             }
+        }
+
+        // Open Sign-In Modal
+        function openSignInModal() {
+            document.getElementById('signInModal').style.display = 'flex';
+        }
+
+        // Close Sign-In Modal
+        function closeSignInModal() {
+            document.getElementById('signInModal').style.display = 'none';
+        }
+
+        // Open Change Username Modal
+        function openChangeUsernameModal() {
+            document.getElementById('changeUsernameModal').style.display = 'flex';
+        }
+
+        // Close Change Username Modal
+        function closeChangeUsernameModal() {
+            document.getElementById('changeUsernameModal').style.display = 'none';
+        }
+
+        // Open Change Profile Picture Modal
+        function openChangeProfilePictureModal() {
+            document.getElementById('changeProfilePictureModal').style.display = 'flex';
+        }
+
+        // Close Change Profile Picture Modal
+        function closeChangeProfilePictureModal() {
+            document.getElementById('changeProfilePictureModal').style.display = 'none';
+        }
+
+        // Switch between Sign In and Sign Up
+        document.getElementById('switchAuth').addEventListener('click', () => {
+            isSignIn = !isSignIn;
+            const authTitle = document.getElementById('authTitle');
+            const authButton = document.getElementById('authButton');
+            const switchAuth = document.getElementById('switchAuth');
+            const profilePictureContainer = document.getElementById('profilePictureContainer');
+
+            if (isSignIn) {
+                authTitle.innerText = 'Sign In';
+                authButton.innerText = 'Sign In';
+                switchAuth.innerText = "Don't have an account? Sign Up";
+                profilePictureContainer.style.display = 'none';
+            } else {
+                authTitle.innerText = 'Sign Up';
+                authButton.innerText = 'Sign Up';
+                switchAuth.innerText = "Already have an account? Sign In";
+                profilePictureContainer.style.display = 'block';
+            }
+        });
+
+        // Handle Sign In / Sign Up
+        document.getElementById('authButton').addEventListener('click', async () => {
+            const username = document.getElementById('usernameInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const profilePicture = document.getElementById('profilePictureInput').value || 'https://via.placeholder.com/150';
+
+            if (!username || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const endpoint = isSignIn ? '/login' : '/register';
+            const body = isSignIn ? { username, password } : { username, password, profilePicture };
+
             try {
-                return JSON.parse(storedValue);
-            } catch (e) {
-                // Handle parsing errors (e.g., if the stored value isn't valid JSON)
-                console.error(`Error parsing setting ${key} from localStorage:`, e);
-                return defaultValue;
+                const response = await fetch(`${backendUrl}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+
+                if (response.ok) {
+                    const user = await response.json();
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    updateUI(user); // Update the UI with user data
+                    closeSignInModal(); // Close the modal
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'An error occurred. Please try again.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
+            }
+        });
+
+        // Change Username
+        async function changeUsername() {
+            const newUsername = document.getElementById('newUsername').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (!newUsername) {
+                alert('Please enter a new username.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${backendUrl}/change-username`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.id, newUsername }),
+                });
+
+                if (response.ok) {
+                    const updatedUser = { ...currentUser, username: newUsername };
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    document.getElementById('username').innerText = newUsername;
+                    closeChangeUsernameModal();
+                    alert('Username changed successfully!');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to update username.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
             }
         }
 
-        // Function to set a setting in localStorage
-        function setSetting(key, value) {
-            localStorage.setItem(key, JSON.stringify(value));
+        // Change Profile Picture
+        async function changeProfilePicture() {
+            const newProfilePicture = document.getElementById('newProfilePicture').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (!newProfilePicture) {
+                alert('Please enter a new profile picture URL.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${backendUrl}/change-profile-picture`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
+                });
+
+                if (response.ok) {
+                    const updatedUser = { ...currentUser, profilePicture: newProfilePicture };
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    document.getElementById('profilePicture').src = newProfilePicture;
+                    document.getElementById('profilePictureTop').src = newProfilePicture;
+                    closeChangeProfilePictureModal();
+                    alert('Profile picture changed successfully!');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to update profile picture.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
+            }
         }
 
+        // Log Out
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.reload(); // Reload the page to reset the UI
+        }
+
+        // Update UI with User Data
+        function updateUI(user) {
+            document.getElementById('username').innerText = user.username;
+            document.getElementById('profilePicture').src = user.profilePicture;
+            document.getElementById('profilePictureTop').src = user.profilePicture;
+        }
+
+        // Load user data on page load
+        window.onload = () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+            if (currentUser) {
+                updateUI(currentUser); // Update UI if user is already logged in
+            }
+        };
+
+        // Games Data
         const games = [
             {
-            url: 'https://bitlife-use-simplicity.vercel.app/',
-            image: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675',
-            title: 'BitLife',
-            genres: 'Simulation, Life, Game'
-        },
-        {
-            url: 'https://vigglesbeens.vercel.app/',
-            image: 'https://art.pixilart.com/3253d436c2cf5e0.gif',
-            title: 'Plasma Unblocker',
-            genres: 'Unblocker, Games, Apps'
-        },
-        {
-            url: 'https://sigmaticity.vercel.app/',
-            image: 'https://media1.giphy.com/media/SVCSsoKU5v6ZJLk07n/giphy.gif?cid=6c09b952ifosvwna6qj7z6gcu769z2ecmuwt6l2ue82gdu66&ep=v1_gifs_search&rid=giphy.gif&ct=g',
-            title: 'Interstellar',
-            genres: 'Unblocker, Proxy, Games, Apps'
-        },
-        {
-            url: 'https://freekydeeki.onrender.com',
-            image: 'https://cdn.dribbble.com/users/88529/screenshots/4852160/media/6939fd77e92a6168629f6711e65d558e.png',
-            title: 'Movies (freek.to)',
-            genres: 'Movies, Tv, Anime, Manga'
-        },
-        {
-            url: 'https://snowrider-3d.vercel.app/',
-            image: 'https://cdn.now.gg/apps-content/com.nowgg.h5.pub483.app51067/ogimage/snow-rider-3d.jpg',
-            title: 'Snow Rider 3D',
-            genres: 'Game'
-        },
-        {
-            url: 'https://iask.ai',
-            image: 'https://archive.org/download/1712685806715/1712685806715.png',
-            title: 'Ask Ai',
-            genres: 'Ai'
-        },
-        {
-            url: 'https://simplicty-est-super-cool.vercel.app/',
-            image: 'https://www.numuki.com/game/img/house-of-hazards-3418.jpg',
-            title: 'House of Hazards',
-            genres: 'Game'
-        },
-        {
-            url: 'https://simplicity-awesome.vercel.app/',
-            image: 'https://1games.io/data/image/game/retro-bowl-college/retro-bowl-college.jpg',
-            title: 'Retro Bowl College',
-            genres: 'Game'
-        },
-        {
-            url: 'https://simplicity-so-friggin-cool.vercel.app/',
-            image: 'https://i.ytimg.com/vi/SN7yOZARWB0/maxresdefault.jpg',
-            title: 'Territorial',
-            genres: 'Game'
-        },
-        {
-            url: 'https://simplic-space-ity.vercel.app',
-            image: 'https://insights.som.yale.edu/sites/default/files/styles/max_1300x1300/public/2022-10/space.jpeg?itok=ee8bV8ok',
-            title: 'Space-Proxy',
-            genres: 'Unblocker, Proxy, Games, Apps'
-        },
-        {
-            url: 'https://prolly-simplicitys-website.vercel.app/',
-            image: 'https://media.licdn.com/dms/image/v2/C5612AQEbp1oYRPgCHg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1618575564534?e=2147483647&v=beta&t=Cm6HxJgblnjMpNvZo8HuWkpDR3ytNcTIBHifMkeDWHE',
-            title: 'Card Games/Board Games',
-            genres: 'Games, Board Games'
-        },
-        {
-            url: 'https://simplicity-tetris.vercel.app/',
-            image: 'https://play-lh.googleusercontent.com/OWGN9-qhyQMwPdwUVciUaWwNB8-OLTdp4wtiC4imY_suZrIGV8Nb98OTZPCh7FjiaVG_sXA9gdY=w1296-h2160-rw',
-            title: 'Tetris',
-            genres: 'Game'
-        },
-        {
-            url: 'https://eggycar-simplicity.vercel.app/',
-            image: 'https://i.ytimg.com/vi/lgFhzhRM29M/maxresdefault.jpg',
-            title: 'Eggy Car',
-            genres: 'Game'
-        },
-        {
-            url: 'https://bloxd-simplicity.vercel.app/',
-            image: 'https://i.ytimg.com/vi/FoqKB4ogm4k/maxresdefault.jpg',
-            title: 'Bloxd.io',
-            genres: 'Game, Minecraft'
-        },
-        {
-            url: 'https://fnaf-simplicity.vercel.app/',
-            image: 'https://mlpnk72yciwc.i.optimole.com/cqhiHLc.IIZS~2ef73/w:auto/h:auto/q:75/https://bleedingcool.com/wp-content/uploads/2023/12/Five-Nights-At-Freddys-Generic-Art.jpg',
-            title: 'Fnaf',
-            genres: 'Game, Horror'
-        },
-        {
-            url: 'https://simplcity-skribbl.vercel.app/',
-            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU0Bdy7yc6tV2mdGEBDvOHPHaq9QwqGL-WqA&s',
-            title: 'Skribbl.io',
-            genres: 'Game, Art'
-        },
-        {
-            url: 'https://minecraft-simplicity.vercel.app/',
-            image: 'https://staticg.sportskeeda.com/editor/2025/01/8827f-17376979472538-1920.jpg?w=640',
-            title: 'Eaglercraft',
-            genres: 'Game'
-        },
-        {
-            url: 'https://pakohighway-simplicity.vercel.app/',
-            image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWIdsXaqWOs_0GRPakOfFuhhPNrXwwobw95g&s',
-            title: 'PakoHighway',
-            genres: 'Game'
-        },
-        {
-            url: 'https://simplicity-hunters.vercel.app/',
-            image: 'https://w8.snokido.com/img/large/drift-hunters.jpg?080124',
-            title: 'Drift Hunters',
-            genres: 'Game'
-        },
-        {
-            url: 'https://burrito-simplicity.vercel.app/',
-            image: 'https://i.ytimg.com/vi/GvlrAwlpZyk/maxresdefault.jpg',
-            title: 'Burrito Bison',
-            genres: 'Game'
-        },
-        {
-            url: 'https://roomsintheback.vercel.app/',
-            image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Backrooms_model.jpg/1200px-Backrooms_model.jpg',
-            title: 'Backrooms',
-            genres: 'Game'
-        },
-        {
-            url: 'https://some-simplcity-ahh-karts.vercel.app/',
-            image: 'https://imgs.crazygames.com/smash-karts_16x9/20250127122802/smash-karts_16x9-cover?metadata=none&quality=40&width=1200&height=630&fit=crop',
-            title: 'Smash Karts',
-            genres: 'Game'
-        },
+                url: 'https://bitlife-use-simplicity.vercel.app/',
+                image: 'https://www.escapistmagazine.com/wp-content/uploads/2024/04/BitLife-Logo.jpg?fit=1200%2C675',
+                title: 'BitLife',
+                genres: 'Simulation, Life, Game'
+            },
+            {
+                url: 'https://vigglesbeens.vercel.app/',
+                image: 'https://art.pixilart.com/3253d436c2cf5e0.gif',
+                title: 'Plasma Unblocker',
+                genres: 'Unblocker, Games, Apps'
+            },
+            {
+                url: 'https://sigmaticity.vercel.app/',
+                image: 'https://media1.giphy.com/media/SVCSsoKU5v6ZJLk07n/giphy.gif?cid=6c09b952ifosvwna6qj7z6gcu769z2ecmuwt6l2ue82gdu66&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+                title: 'Interstellar',
+                genres: 'Unblocker, Proxy, Games, Apps'
+            },
+            {
+                url: 'https://freekydeeki.onrender.com',
+                image: 'https://cdn.dribbble.com/users/88529/screenshots/4852160/media/6939fd77e92a6168629f6711e65d558e.png',
+                title: 'Movies (freek.to)',
+                genres: 'Movies, Tv, Anime, Manga'
+            },
+            {
+                url: 'https://snowrider-3d.vercel.app/',
+                image: 'https://cdn.now.gg/apps-content/com.nowgg.h5.pub483.app51067/ogimage/snow-rider-3d.jpg',
+                title: 'Snow Rider 3D',
+                genres: 'Game'
+            },
+            {
+                url: 'https://iask.ai',
+                image: 'https://archive.org/download/1712685806715/1712685806715.png',
+                title: 'Ask Ai',
+                genres: 'Ai'
+            },
+            {
+                url: 'https://simplicty-est-super-cool.vercel.app/',
+                image: 'https://www.numuki.com/game/img/house-of-hazards-3418.jpg',
+                title: 'House of Hazards',
+                genres: 'Game'
+            },
+            {
+                url: 'https://simplicity-awesome.vercel.app/',
+                image: 'https://1games.io/data/image/game/retro-bowl-college/retro-bowl-college.jpg',
+                title: 'Retro Bowl College',
+                genres: 'Game'
+            },
+            {
+                url: 'https://simplicity-so-friggin-cool.vercel.app/',
+                image: 'https://i.ytimg.com/vi/SN7yOZARWB0/maxresdefault.jpg',
+                title: 'Territorial',
+                genres: 'Game'
+            },
+            {
+                url: 'https://simplic-space-ity.vercel.app',
+                image: 'https://insights.som.yale.edu/sites/default/files/styles/max_1300x1300/public/2022-10/space.jpeg?itok=ee8bV8ok',
+                title: 'Space-Proxy',
+                genres: 'Unblocker, Proxy, Games, Apps'
+            },
+            {
+                url: 'https://prolly-simplicitys-website.vercel.app/',
+                image: 'https://media.licdn.com/dms/image/v2/C5612AQEbp1oYRPgCHg/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1618575564534?e=2147483647&v=beta&t=Cm6HxJgblnjMpNvZo8HuWkpDR3ytNcTIBHifMkeDWHE',
+                title: 'Card Games/Board Games',
+                genres: 'Games, Board Games'
+            },
+            {
+                url: 'https://simplicity-tetris.vercel.app/',
+                image: 'https://play-lh.googleusercontent.com/OWGN9-qhyQMwPdwUVciUaWwNB8-OLTdp4wtiC4imY_suZrIGV8Nb98OTZPCh7FjiaVG_sXA9gdY=w1296-h2160-rw',
+                title: 'Tetris',
+                genres: 'Game'
+            },
+            {
+                url: 'https://eggycar-simplicity.vercel.app/',
+                image: 'https://i.ytimg.com/vi/lgFhzhRM29M/maxresdefault.jpg',
+                title: 'Eggy Car',
+                genres: 'Game'
+            },
+            {
+                url: 'https://bloxd-simplicity.vercel.app/',
+                image: 'https://i.ytimg.com/vi/FoqKB4ogm4k/maxresdefault.jpg',
+                title: 'Bloxd.io',
+                genres: 'Game, Minecraft'
+            },
+            {
+                url: 'https://fnaf-simplicity.vercel.app/',
+                image: 'https://mlpnk72yciwc.i.optimole.com/cqhiHLc.IIZS~2ef73/w:auto/h:auto/q:75/https://bleedingcool.com/wp-content/uploads/2023/12/Five-Nights-At-Freddys-Generic-Art.jpg',
+                title: 'Fnaf',
+                genres: 'Game, Horror'
+            },
+            {
+                url: 'https://simplcity-skribbl.vercel.app/',
+                image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSU0Bdy7yc6tV2mdGEBDvOHPHaq9QwqGL-WqA&s',
+                title: 'Skribbl.io',
+                genres: 'Game, Art'
+            },
+            {
+                url: 'https://minecraft-simplicity.vercel.app/',
+                image: 'https://staticg.sportskeeda.com/editor/2025/01/8827f-17376979472538-1920.jpg?w=640',
+                title: 'Eaglercraft',
+                genres: 'Game'
+            },
+            {
+                url: 'https://pakohighway-simplicity.vercel.app/',
+                image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWIdsXaqWOs_0GRPakOfFuhhPNrXwwobw95g&s',
+                title: 'PakoHighway',
+                genres: 'Game'
+            },
+            {
+                url: 'https://simplicity-hunters.vercel.app/',
+                image: 'https://w8.snokido.com/img/large/drift-hunters.jpg?080124',
+                title: 'Drift Hunters',
+                genres: 'Game'
+            },
+            {
+                url: 'https://burrito-simplicity.vercel.app/',
+                image: 'https://i.ytimg.com/vi/GvlrAwlpZyk/maxresdefault.jpg',
+                title: 'Burrito Bison',
+                genres: 'Game'
+            },
+            {
+                url: 'https://roomsintheback.vercel.app/',
+                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Backrooms_model.jpg/1200px-Backrooms_model.jpg',
+                title: 'Backrooms',
+                genres: 'Game'
+            },
+            {
+                url: 'https://some-simplcity-ahh-karts.vercel.app/',
+                image: 'https://imgs.crazygames.com/smash-karts_16x9/20250127122802/smash-karts_16x9-cover?metadata=none&quality=40&width=1200&height=630&fit=crop',
+                title: 'Smash Karts',
+                genres: 'Game'
+            },
         ];
 
-        const gameGrid = document.getElementById('gameGrid');
-        const contentBox = document.getElementById('contentBox');
-        const contentBoxText = document.getElementById('contentBoxText');
-        const settingsModal = document.getElementById('settingsModal');
-        const backgroundImageUrlInput = document.getElementById('backgroundImageUrl');
-        const contentBoxWidthInput = document.getElementById('contentBoxWidth'); // Get the width input.
-        const contentBoxHeightInput = document.getElementById('contentBoxHeight'); // Get the height input.
-
-// Load settings from localStorage with defaults
-window.backgroundImageUrl = getSetting('backgroundImageUrl', '');
-window.contentBoxTextVisible = getSetting('contentBoxTextVisible', true);
-window.contentBoxWidth = getSetting('contentBoxWidth', 100);
-window.contentBoxHeight = getSetting('contentBoxHeight', 50);
-
-// Apply saved settings on page load *before* setting up event listeners
-function applySettings() {
-    contentBox.style.backgroundImage = window.backgroundImageUrl ? `url(${window.backgroundImageUrl})` : '';
-    contentBoxText.style.display = window.contentBoxTextVisible ? 'block' : 'none';
-    contentBoxDisclaimer.style.display = window.contentBoxTextVisible ? 'block' : 'none'; // Ensure disclaimer follows visibility
-    contentBox.style.width = `${window.contentBoxWidth}%`;
-    contentBox.style.height = `${window.contentBoxHeight}%`;
-    backgroundImageUrlInput.value = window.backgroundImageUrl;
-    contentBoxWidthInput.value = window.contentBoxWidth;
-    contentBoxHeightInput.value = window.contentBoxHeight;
-
-    // Update the checkbox state
-    document.getElementById('contentBoxTextToggle').checked = window.contentBoxTextVisible;
-}
-
-// Save updated visibility settings when toggled
-document.getElementById('contentBoxTextToggle').addEventListener('change', function () {
-    window.contentBoxTextVisible = this.checked;
-    setSetting('contentBoxTextVisible', window.contentBoxTextVisible);
-    
-    // Apply visibility changes to both content and disclaimer
-    contentBoxText.style.display = this.checked ? 'block' : 'none';
-    contentBoxDisclaimer.style.display = this.checked ? 'block' : 'none';
-});
-
-// Run applySettings() on page load
-applySettings();
-
-        // Corrected code to generate game cards
+        // Generate Game Cards
         function generateGameCards() {
+            const gameGrid = document.getElementById('gameGrid');
             games.forEach(game => {
                 const card = document.createElement('div');
                 card.classList.add('card');
@@ -768,60 +944,27 @@ applySettings();
             });
         }
 
-        // Call this function after the DOM is fully loaded.
-        document.addEventListener('DOMContentLoaded', generateGameCards);
-
-
-        function openSettingsModal() {
-            settingsModal.classList.add('show');
-        }
-
-        function closeSettingsModal() {
-            settingsModal.classList.remove('show');
-        }
-
-        function changeContentBackground() {
-            const imageUrl = document.getElementById('backgroundImageUrl').value;
-            // Update the global variable
-            window.backgroundImageUrl = imageUrl;
-            // Apply immediately
-            applySettings();
-            // Save to local storage
-            setSetting('backgroundImageUrl', imageUrl);
-        }
-
-function toggleContentBoxText() {
-    // Update the global variable
-    window.contentBoxTextVisible = !window.contentBoxTextVisible;
-    // Apply immediately
-    applySettings();
-    // Save to local storage
-    setSetting('contentBoxTextVisible', window.contentBoxTextVisible);
-    
-    // Hide or show the disclaimer text based on the same visibility state
-    const disclaimerText = document.getElementById('contentBoxDisclaimer');
-    disclaimerText.style.display = window.contentBoxTextVisible ? 'block' : 'none';
-}
-
+        // Open Game Modal
         function openGameModal(url, title) {
             document.getElementById('gameModal').classList.add('show');
-            document.getElementById('modalTitle').innerText = title; // Set the title
+            document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalIframe').src = url;
         }
 
+        // Close Game Modal
         function closeModal() {
             document.getElementById('gameModal').classList.remove('show');
         }
 
+        // Open in New Tab
         function openInNewTab() {
             window.open(document.getElementById('modalIframe').src, '_blank');
         }
 
+        // Open in Unblockable Tab
         function openInIframe() {
             const iframeSrc = document.getElementById('modalIframe').src;
             const newWindow = window.open('about:blank', '_blank');
-
-            // Wait for the window to fully load before injecting the content
             newWindow.document.write(`
                 <html>
                     <head>
@@ -847,32 +990,8 @@ function toggleContentBoxText() {
             `);
         }
 
-        // New function to change content box size
-        function changeContentBoxSize() {
-            const width = parseInt(document.getElementById('contentBoxWidth').value, 10);
-            const height = parseInt(document.getElementById('contentBoxHeight').value, 10);
-
-            // Validate the input for width
-            if (isNaN(width) || width < 1 || width > 100) {
-                alert('Please enter a valid width percentage between 1 and 100.');
-                return;
-            }
-            // Validate the input for height
-            if (isNaN(height) || height < 1 || height > 100) {
-                alert('Please enter a valid height percentage between 1 and 100.');
-                return;
-            }
-
-
-            // Update the global variables
-            window.contentBoxWidth = width;
-            window.contentBoxHeight = height;
-            // Apply the settings.
-            applySettings();
-            // Save to local storage
-            setSetting('contentBoxWidth', width);
-            setSetting('contentBoxHeight', height);
-        }
+        // Generate game cards on page load
+        document.addEventListener('DOMContentLoaded', generateGameCards);
     </script>
 </body>
 </html>
