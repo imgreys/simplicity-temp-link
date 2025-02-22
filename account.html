@@ -340,7 +340,7 @@
     </div>
 
     <script>
-        const backendUrl = 'https://simplicity-backend.onrender.com'; // Updated backend URL
+        const backendUrl = 'https://simplicity-backend.onrender.com'; // Your backend URL
         let isSignIn = true;
 
         // Open Sign-In Modal
@@ -398,12 +398,14 @@
                 if (response.ok) {
                     const user = await response.json();
                     localStorage.setItem('currentUser', JSON.stringify(user));
-                    window.location.reload();
+                    updateUI(user); // Update the UI with user data
+                    closeSignInModal(); // Close the modal
                 } else {
                     const error = await response.json();
                     alert(error.error || 'An error occurred. Please try again.');
                 }
             } catch (error) {
+                console.error('Network error:', error);
                 alert('Network error. Please check your connection.');
             }
         });
@@ -479,16 +481,19 @@
             window.location.href = '/signin.html';
         }
 
+        // Update UI with User Data
+        function updateUI(user) {
+            document.getElementById('username').innerText = user.username;
+            document.getElementById('profilePicture').src = user.profilePicture;
+            document.getElementById('profilePictureTop').src = user.profilePicture;
+        }
+
         // Load user data on page load
         window.onload = () => {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
             if (currentUser) {
-                document.getElementById('profilePicture').src = currentUser.profilePicture;
-                document.getElementById('profilePictureTop').src = currentUser.profilePicture;
-                document.getElementById('username').innerText = currentUser.username;
-            } else {
-                openSignInModal();
+                updateUI(currentUser); // Update UI if user is already logged in
             }
         };
 
