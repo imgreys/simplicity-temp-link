@@ -15,7 +15,7 @@
         body {
             background-color: #060606;
             color: white;
-            font-family: 'Poppins', sans-serif; /* Use Poppins font */
+            font-family: 'Poppins', sans-serif;
             display: flex;
             height: 100vh;
             margin: 0;
@@ -23,7 +23,6 @@
             padding: 10px;
         }
 
-        /* Import Poppins font from Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
         /* Left Box (Sidebar) */
@@ -40,7 +39,7 @@
             justify-content: flex-start;
             padding: 20px;
             align-items: flex-start;
-            flex-shrink: 0; /* Prevent the sidebar itself from shrinking */
+            flex-shrink: 0;
         }
 
         .icon {
@@ -49,39 +48,39 @@
             margin: 15px 0;
             cursor: pointer;
             transition: all 0.3s ease;
-            flex-shrink: 0; /* Prevent the icons from shrinking */
-            min-width: max-content; /* Ensure the text and icons don't wrap or shrink */
+            flex-shrink: 0;
+            min-width: max-content;
         }
 
         .icon-text {
             margin-left: 10px;
             font-size: 18px;
-            font-weight: 600; /* Bold text */
-            color: #888; /* Lighter grey for text */
+            font-weight: 600;
+            color: #888;
             transition: color 0.3s ease;
         }
 
         .icon svg {
             width: 25px;
             height: 25px;
-            fill: #888; /* Lighter grey for icons */
+            fill: #888;
             transition: fill 0.3s ease;
         }
 
         .icon.active svg {
-            fill: white; /* White icon for active page */
+            fill: white;
         }
 
         .icon.active .icon-text {
-            color: white; /* White text for active page */
+            color: white;
         }
 
         .icon:hover svg {
-            fill: white; /* Turn white on hover */
+            fill: white;
         }
 
         .icon:hover .icon-text {
-            color: white; /* Turn white on hover */
+            color: white;
         }
 
         /* Right Box (Main Content) */
@@ -93,12 +92,12 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            align-items: flex-start; /* Align content to the left */
+            align-items: flex-start;
             height: 100%;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
             overflow-y: auto;
             max-height: 100vh;
-            position: relative; /* Added for top-bar positioning */
+            position: relative;
         }
 
         .right-box::-webkit-scrollbar {
@@ -126,13 +125,13 @@
         }
 
         .top-bar .profile-picture:hover {
-            opacity: 0.8; /* Slight fade on hover */
+            opacity: 0.8;
         }
 
         /* Account Content */
         .account-content {
             width: 100%;
-            max-width: 100%; /* Stretch to full width */
+            max-width: 100%;
             text-align: left;
             padding: 20px;
         }
@@ -151,34 +150,34 @@
             margin-right: 10px;
             transition: opacity 0.3s ease;
         }
-        
+
         .greeting h2 {
             margin: 0;
-            font-weight: 600; /* Bold text */
-            color: #D3D3D3; /* Lighter grey for text */
+            font-weight: 600;
+            color: #D3D3D3;
             transition: color 0.3s ease;
         }
 
         /* Sections */
         .account-content .section {
             margin-bottom: 30px;
-            width: 100%; /* Stretch sections to full width */
+            width: 100%;
         }
 
         .account-content .section h3 {
             margin-bottom: 10px;
-            font-weight: 600; /* Bold text */
-            color: #D3D3D3; /* Lighter grey for text */
+            font-weight: 600;
+            color: #D3D3D3;
             transition: color 0.3s ease;
         }
 
         .account-content .section p {
-            color: #888; /* Lighter grey for text */
+            color: #888;
             transition: color 0.3s ease;
         }
 
         .account-content .section p:hover {
-            color: white; /* Turn white on hover */
+            color: white;
         }
 
         .account-content .section ul {
@@ -191,14 +190,14 @@
         }
 
         .account-content .section ul li a {
-            color: #888; /* Lighter grey for text */
+            color: #888;
             text-decoration: none;
-            font-weight: 600; /* Bold text */
+            font-weight: 600;
             transition: color 0.3s ease;
         }
 
         .account-content .section ul li a:hover {
-            color: white; /* Turn white on hover */
+            color: white;
         }
 
         /* Buttons */
@@ -210,45 +209,39 @@
             border-radius: 5px;
             cursor: pointer;
             margin: 5px;
-            font-weight: 600; /* Bold text */
+            font-weight: 600;
             transition: background-color 0.3s ease;
         }
 
         .button:hover {
-            background-color: #555; /* Slightly lighter on hover */
+            background-color: #555;
         }
 
         /* Modals */
         .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-        }
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
 
-        .modal-content {
+ .modal-content {
             background-color: #121212;
             border-radius: 10px;
-            padding: 20px;
+            padding: 40px 20px 20px; /* Added padding for close button */
             width: 300px;
             text-align: center;
-            position: relative; /* For close button positioning */
+            position: relative;
         }
-
-        .modal-content h2 {
-            margin-bottom: 20px;
-            font-weight: 600; /* Bold text */
-            color: #888; /* Lighter grey for text */
-        }
-
-        .modal-content input {
+        
+                .modal-content input {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -258,49 +251,40 @@
             color: white;
         }
 
-        .modal-content button {
-            padding: 10px 20px;
-            background-color: #444;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            font-weight: 600; /* Bold text */
-        }
 
-        .modal-content button:hover {
-            background-color: #555; /* Slightly lighter on hover */
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: #888; /* Lighter grey for text */
-            font-size: 20px;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-
-        .modal-close:hover {
-            color: white; /* Turn white on hover */
-        }
-        
-        .switch {
-    color: #888; /* Lighter grey for text */
-    cursor: pointer; /* Change cursor to pointer */
-    font-weight: 600; /* Bold text */
-    margin-top: 10px; /* Add some spacing */
-    transition: color 0.3s ease; /* Smooth transition for hover effect */
+.modal-close {
+    position: absolute;
+    top: 15px; /* Adjusted top position */
+    right: 15px; /* Adjusted right position */
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
 }
 
-.switch:hover {
-    color: white; /* Turn white on hover */
-    text-decoration: underline; /* Optional: Add underline on hover */
+.modal-close:hover {
+    color: white;
 }
+
+
+        /* Loading Spinner */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+            display: none;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -341,7 +325,7 @@
             <!-- Greeting Section -->
             <div class="greeting">
                 <img id="profilePicture" src="https://via.placeholder.com/150" alt="Profile Picture">
-                <h2>Good Morning, <span id="username"></span>!</h2>
+                <h2>Hello, <span id="username"></span>!</h2> <!-- Changed to "Hello" -->
             </div>
 
             <!-- Account Settings Section -->
@@ -367,6 +351,7 @@
                 <input type="url" id="profilePictureInput" placeholder="Profile Picture URL (optional)">
             </div>
             <button id="authButton">Sign In</button>
+            <div class="loader" id="authLoader"></div> <!-- Loading Spinner -->
             <div class="switch" id="switchAuth">Don't have an account? Sign Up</div>
         </div>
     </div>
@@ -399,10 +384,8 @@
         function handleProfileClick() {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser) {
-                // Redirect to account.html if signed in
                 window.location.href = '/account.html';
             } else {
-                // Open sign-in modal if not signed in
                 openSignInModal();
             }
         }
@@ -472,6 +455,9 @@
             const endpoint = isSignIn ? '/login' : '/register';
             const body = isSignIn ? { username, password } : { username, password, profilePicture };
 
+            // Show loading spinner
+            document.getElementById('authLoader').style.display = 'block';
+
             try {
                 const response = await fetch(`${backendUrl}${endpoint}`, {
                     method: 'POST',
@@ -482,14 +468,17 @@
                 if (response.ok) {
                     const user = await response.json();
                     localStorage.setItem('currentUser', JSON.stringify(user));
-                    updateUI(user); // Update the UI with user data
-                    closeSignInModal(); // Close the modal
+                    updateUI(user);
+                    closeSignInModal();
                 } else {
                     const error = await response.json();
                     alert(error.error || 'An error occurred. Please try again.');
                 }
             } catch (error) {
                 alert('Network error. Please check your connection.');
+            } finally {
+                // Hide loading spinner
+                document.getElementById('authLoader').style.display = 'none';
             }
         });
 
@@ -561,7 +550,7 @@
         // Log Out
         function logout() {
             localStorage.removeItem('currentUser');
-            window.location.reload(); // Reload the page to reset the UI
+            window.location.reload();
         }
 
         // Update UI with User Data
@@ -576,9 +565,9 @@
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
             if (currentUser) {
-                updateUI(currentUser); // Update UI if user is already logged in
+                updateUI(currentUser);
             } else {
-                openSignInModal(); // Open the sign-in modal if no user is logged in
+                openSignInModal();
             }
         };
     </script>
