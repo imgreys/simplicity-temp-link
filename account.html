@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Page</title>
+    <title>Account</title>
     <style>
         /* General Styles */
         * {
@@ -20,121 +20,12 @@
             margin: 0;
             overflow: hidden;
             padding: 10px;
+            background-color: #060606; /* Permanent black background */
+            color: white; /* Permanent white text */
         }
 
         /* Import Poppins font from Google Fonts */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-
-        /* Dark Mode */
-        body.dark-mode {
-            background-color: #060606;
-            color: white;
-        }
-
-        body.dark-mode .left-box,
-        body.dark-mode .right-box {
-            background-color: #121212;
-            border: 1px solid #333;
-        }
-
-        body.dark-mode .icon-text,
-        body.dark-mode .icon svg,
-        body.dark-mode .greeting h2,
-        body.dark-mode .section h3,
-        body.dark-mode .section p,
-        body.dark-mode .section ul li a,
-        body.dark-mode .modal-content h2,
-        body.dark-mode .modal-close {
-            color: #888;
-            fill: #888;
-        }
-
-        body.dark-mode .icon.active svg,
-        body.dark-mode .icon.active .icon-text,
-        body.dark-mode .icon:hover svg,
-        body.dark-mode .icon:hover .icon-text,
-        body.dark-mode .section p:hover,
-        body.dark-mode .section ul li a:hover,
-        body.dark-mode .modal-close:hover {
-            color: white;
-            fill: white;
-        }
-
-        body.dark-mode .button {
-            background-color: #444;
-            color: #888;
-        }
-
-        body.dark-mode .button:hover {
-            background-color: #555;
-            color: white;
-        }
-
-        body.dark-mode .modal-content {
-            background-color: #121212;
-            border: 1px solid #333;
-        }
-
-        body.dark-mode .modal-content input {
-            background-color: #333;
-            border: 1px solid #444;
-            color: white;
-        }
-
-        /* Light Mode */
-        body.light-mode {
-            background-color: #f5f5f5;
-            color: #333;
-        }
-
-        body.light-mode .left-box,
-        body.light-mode .right-box {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-        }
-
-        body.light-mode .icon-text,
-        body.light-mode .icon svg,
-        body.light-mode .greeting h2,
-        body.light-mode .section h3,
-        body.light-mode .section p,
-        body.light-mode .section ul li a,
-        body.light-mode .modal-content h2,
-        body.light-mode .modal-close {
-            color: #666;
-            fill: #666;
-        }
-
-        body.light-mode .icon.active svg,
-        body.light-mode .icon.active .icon-text,
-        body.light-mode .icon:hover svg,
-        body.light-mode .icon:hover .icon-text,
-        body.light-mode .section p:hover,
-        body.light-mode .section ul li a:hover,
-        body.light-mode .modal-close:hover {
-            color: #333;
-            fill: #333;
-        }
-
-        body.light-mode .button {
-            background-color: #e0e0e0;
-            color: #333;
-        }
-
-        body.light-mode .button:hover {
-            background-color: #d0d0d0;
-        }
-
-        body.light-mode .modal-content {
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-        }
-
-        body.light-mode .modal-content input {
-            background-color: #f5f5f5;
-            border: 1px solid #e0e0e0;
-            color: #333;
-        }
 
         /* Left Box (Sidebar) */
         .left-box {
@@ -149,6 +40,8 @@
             padding: 20px;
             align-items: flex-start;
             flex-shrink: 0;
+            background-color: #121212; /* Dark background */
+            border: 1px solid #333; /* Dark border */
         }
 
         .icon {
@@ -170,11 +63,19 @@
             margin-left: 10px;
             font-size: 18px;
             font-weight: 600;
+            color: #888; /* Gray text */
         }
 
         .icon svg {
             width: 20px;
             height: 20px;
+            fill: #888; /* Gray icons */
+        }
+
+        .icon:hover svg,
+        .icon:hover .icon-text {
+            color: white; /* White on hover */
+            fill: white; /* White on hover */
         }
 
         /* Right Box (Main Content) */
@@ -190,6 +91,8 @@
             overflow-y: auto;
             max-height: 100vh;
             position: relative;
+            background-color: #121212; /* Dark background */
+            border: 1px solid #333; /* Dark border */
         }
 
         .right-box::-webkit-scrollbar {
@@ -218,48 +121,6 @@
 
         .top-bar .profile-picture:hover {
             opacity: 0.8;
-        }
-
-        /* Dark Mode Toggle */
-        .dark-mode-toggle {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-        }
-
-        .dark-mode-toggle span {
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .dark-mode-toggle .toggle-switch {
-            width: 40px;
-            height: 20px;
-            background-color: #ccc;
-            border-radius: 10px;
-            position: relative;
-            transition: background-color 0.3s ease;
-        }
-
-        .dark-mode-toggle .toggle-switch::before {
-            content: '';
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background-color: white;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.3s ease;
-        }
-
-        body.dark-mode .dark-mode-toggle .toggle-switch {
-            background-color: #444;
-        }
-
-        body.dark-mode .dark-mode-toggle .toggle-switch::before {
-            transform: translateX(20px);
         }
 
         /* Account Content */
@@ -302,11 +163,11 @@
         }
 
         .account-content .section p {
-            color: #666;
+            color: #888; /* Gray text */
         }
 
         .account-content .section p:hover {
-            color: inherit;
+            color: white; /* White on hover */
         }
 
         .account-content .section ul {
@@ -319,13 +180,13 @@
         }
 
         .account-content .section ul li a {
-            color: #666;
+            color: #888; /* Gray text */
             text-decoration: none;
             font-weight: 600;
         }
 
         .account-content .section ul li a:hover {
-            color: inherit;
+            color: white; /* White on hover */
         }
 
         /* Buttons */
@@ -336,6 +197,13 @@
             cursor: pointer;
             margin: 5px;
             font-weight: 600;
+            background-color: #444; /* Dark button */
+            color: #888; /* Gray text */
+        }
+
+        .button:hover {
+            background-color: #555; /* Slightly lighter on hover */
+            color: white; /* White text on hover */
         }
 
         /* Modals */
@@ -359,12 +227,15 @@
             width: 300px;
             text-align: center;
             position: relative;
+            background-color: #121212; /* Dark background */
+            border: 1px solid #333; /* Dark border */
         }
 
         .modal-content h2 {
             margin-top: 20px;
             margin-bottom: 20px;
             font-weight: 600;
+            color: white; /* White text */
         }
 
         .modal-content input {
@@ -372,7 +243,9 @@
             padding: 10px;
             margin: 10px 0;
             border-radius: 5px;
-            border: 1px solid #ccc;
+            border: 1px solid #444; /* Dark border */
+            background-color: #333; /* Dark input background */
+            color: white; /* White text */
         }
 
         .modal-content button {
@@ -382,6 +255,13 @@
             cursor: pointer;
             margin: 5px;
             font-weight: 600;
+            background-color: #444; /* Dark button */
+            color: #888; /* Gray text */
+        }
+
+        .modal-content button:hover {
+            background-color: #555; /* Slightly lighter on hover */
+            color: white; /* White text on hover */
         }
 
         .modal-close {
@@ -395,6 +275,11 @@
             padding: 0;
             margin: 0;
             line-height: 1;
+            color: #888; /* Gray text */
+        }
+
+        .modal-close:hover {
+            color: white; /* White on hover */
         }
 
         /* Input Container */
@@ -409,6 +294,7 @@
         .input-icon {
             width: 20px;
             height: 20px;
+            fill: #888; /* Gray icons */
             margin-right: 10px;
         }
 
@@ -426,13 +312,13 @@
         .eye-icon {
             width: 20px;
             height: 20px;
-            fill: #666;
+            fill: #888; /* Gray icons */
             transition: fill 0.3s ease;
             position: relative;
         }
 
         .eye-icon:not(.encrypted) {
-            fill: #333;
+            fill: white; /* White when password is visible */
         }
 
         .eye-icon.encrypted::before {
@@ -442,23 +328,23 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #666;
+            background-color: #888; /* Gray line */
             transform: rotate(-45deg);
             transition: background-color 0.3s ease;
             z-index: 1;
         }
 
         .toggle-password:hover .eye-icon {
-            fill: #333;
+            fill: white; /* White on hover */
         }
 
         .toggle-password:hover .eye-icon.encrypted::before {
-            background-color: #333;
+            background-color: white; /* White line on hover */
         }
 
         /* Switch Between Sign In and Sign Up */
         .switch {
-            color: #666;
+            color: #888; /* Gray text */
             cursor: pointer;
             font-weight: 600;
             margin-top: 10px;
@@ -466,38 +352,12 @@
         }
 
         .switch:hover {
-            color: #333;
+            color: white; /* White on hover */
             text-decoration: underline;
-        }
-
-        /* Dark Mode Modal Styles */
-        body.dark-mode .modal-content .input-icon,
-        body.dark-mode .modal-content .eye-icon,
-        body.dark-mode .modal-content #authButton {
-            color: #888;
-            fill: #888;
-        }
-
-        body.dark-mode .modal-content #authButton {
-            background-color: #444;
-            color: #888;
-        }
-
-        body.dark-mode .modal-content #authButton:hover {
-            background-color: #555;
-            color: white;
-        }
-
-        body.dark-mode .modal-content .eye-icon.encrypted {
-            fill: #888;
-        }
-
-        body.dark-mode .modal-content .eye-icon:not(.encrypted) {
-            fill: white;
         }
     </style>
 </head>
-<body class="dark-mode">
+<body>
     <!-- Left Box (Sidebar) -->
     <div class="left-box" id="leftBox">
         <div class="icon search" onclick="window.location.href = '/'">
@@ -527,19 +387,14 @@
     <div class="right-box" id="rightBox">
         <!-- Top Bar -->
         <div class="top-bar">
-            <!-- Dark Mode Toggle -->
-            <div class="dark-mode-toggle" onclick="toggleDarkMode()">
-                <span id="darkModeText">Dark Mode</span>
-                <div class="toggle-switch"></div>
-            </div>
-            <canvas id="profilePictureTop" width="40" height="40" style="border-radius: 50%; cursor: pointer;" onclick="handleProfileClick()"></canvas>
+            <img class="profile-picture" id="profilePictureTop" src="https://via.placeholder.com/150" alt="Profile Picture" onclick="handleProfileClick()">
         </div>
 
         <!-- Account Content -->
         <div class="account-content">
             <!-- Greeting Section -->
             <div class="greeting">
-                <canvas id="profilePicture" width="50" height="50" style="border-radius: 50%; margin-right: 10px;"></canvas>
+                <img id="profilePicture" src="https://via.placeholder.com/150" alt="Profile Picture">
                 <h2>Good Morning, <span id="username"></span>!</h2>
             </div>
 
@@ -582,14 +437,9 @@
                 </span>
             </div>
 
-            <!-- Profile Picture Field with Image Icon -->
+            <!-- Profile Picture Field (Hidden by Default) -->
             <div id="profilePictureContainer" style="display: none;">
-                <div class="input-container">
-                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-                    </svg>
-                    <input type="url" id="profilePictureInput" placeholder="Profile Picture URL (optional)">
-                </div>
+                <input type="url" id="profilePictureInput" placeholder="Profile Picture URL (optional)">
             </div>
 
             <!-- Sign In/Sign Up Button -->
@@ -621,86 +471,19 @@
     </div>
 
     <script>
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const backendUrl = 'https://simplicity-backend.onrender.com'; // Your backend URL
+        let isSignIn = true;
 
-        // Function to generate a random color (less vibrant)
-        function getRandomColor() {
-            const hue = Math.floor(Math.random() * 360);
-            const saturation = Math.floor(Math.random() * 30) + 50; // 50-80% saturation
-            const lightness = Math.floor(Math.random() * 30) + 60; // 60-90% lightness
-            return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
-        }
-
-        // Function to generate a canvas profile picture
-        function generateProfilePicture(username, canvasId) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext('2d');
-            const size = canvas.width;
-
-            // Clear canvas
-            ctx.clearRect(0, 0, size, size);
-
-            if (username) {
-                // Draw background circle
-                ctx.beginPath();
-                ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
-                ctx.fillStyle = getRandomColor(); // Random less vibrant color
-                ctx.fill();
-
-                // Draw text (first letter of username)
-                const firstLetter = username.charAt(0).toUpperCase();
-                ctx.font = `${size / 2}px Arial`;
-                ctx.fillStyle = '#333'; // Darker text
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(firstLetter, size / 2, size / 2 + 5); // Adjusted for centering
-            } else {
-                // Draw the provided icon when not signed in
-                const img = new Image();
-                img.src = 'https://cdn-icons-png.flaticon.com/512/152/152532.png'; // Provided icon
-                img.onload = () => {
-                    ctx.drawImage(img, 0, 0, size, size);
-                };
-            }
-        }
-
-        // Update the profile picture in the top bar
-        if (currentUser) {
-            generateProfilePicture(currentUser.username, 'profilePictureTop');
-            generateProfilePicture(currentUser.username, 'profilePicture');
-        } else {
-            generateProfilePicture(null, 'profilePictureTop'); // Show provided icon
-        }
-
-        // Handle profile picture click
+        // Handle Profile Picture Click
         function handleProfileClick() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
             if (currentUser) {
+                // Redirect to account.html if signed in
                 window.location.href = '/account.html';
             } else {
+                // Open sign-in modal if not signed in
                 openSignInModal();
             }
-        }
-
-        // Dark Mode Toggle
-        function toggleDarkMode() {
-            const body = document.body;
-            body.classList.toggle('dark-mode');
-            body.classList.toggle('light-mode');
-            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
-
-            // Update the dark mode toggle text
-            const darkModeText = document.getElementById('darkModeText');
-            darkModeText.innerText = body.classList.contains('dark-mode') ? 'Dark Mode' : 'Light Mode';
-        }
-
-        // Load theme preference from localStorage
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'light') {
-            document.body.classList.add('light-mode');
-            document.getElementById('darkModeText').innerText = 'Light Mode';
-        } else {
-            document.body.classList.add('dark-mode');
-            document.getElementById('darkModeText').innerText = 'Dark Mode';
         }
 
         // Open Sign-In Modal
@@ -713,6 +496,26 @@
             document.getElementById('signInModal').style.display = 'none';
         }
 
+        // Open Change Username Modal
+        function openChangeUsernameModal() {
+            document.getElementById('changeUsernameModal').style.display = 'flex';
+        }
+
+        // Close Change Username Modal
+        function closeChangeUsernameModal() {
+            document.getElementById('changeUsernameModal').style.display = 'none';
+        }
+
+        // Open Change Profile Picture Modal
+        function openChangeProfilePictureModal() {
+            document.getElementById('changeProfilePictureModal').style.display = 'flex';
+        }
+
+        // Close Change Profile Picture Modal
+        function closeChangeProfilePictureModal() {
+            document.getElementById('changeProfilePictureModal').style.display = 'none';
+        }
+
         // Toggle Password Visibility
         function togglePasswordVisibility() {
             const passwordInput = document.getElementById('passwordInput');
@@ -721,55 +524,27 @@
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text'; // Show password
                 eyeIcon.classList.remove('encrypted'); // Remove line when visible
+                eyeIcon.setAttribute('fill', 'white'); // Change icon color when visible
             } else {
                 passwordInput.type = 'password'; // Hide password
                 eyeIcon.classList.add('encrypted'); // Add line when encrypted
+                eyeIcon.setAttribute('fill', '#888'); // Reset icon color when hidden
             }
         }
 
-        // Handle Sign In / Sign Up
-        document.getElementById('authButton').addEventListener('click', () => {
-            const username = document.getElementById('usernameInput').value;
-            const password = document.getElementById('passwordInput').value;
-            const profilePicture = document.getElementById('profilePictureInput').value;
-
-            if (!username || !password) {
-                alert('Please fill in all fields.');
-                return;
+        // Validate Username Length
+        function validateUsername() {
+            const usernameInput = document.getElementById('usernameInput');
+            if (usernameInput.value.length > 18) {
+                alert('Username must be 18 characters or less.');
+                usernameInput.value = usernameInput.value.slice(0, 18); // Truncate to 18 characters
             }
+        }
 
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-
-            if (isSignIn) {
-                // Sign In
-                const user = users.find(u => u.username === username && u.password === password);
-
-                if (user) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    closeSignInModal();
-                    window.location.reload(); // Refresh the page to reflect the logged-in state
-                } else {
-                    alert('Invalid username or password.');
-                }
-            } else {
-                // Sign Up
-                const usernameExists = users.some(u => u.username === username);
-
-                if (usernameExists) {
-                    alert('Username already exists.');
-                } else {
-                    const newUser = { username, password, profilePicture, games: [] };
-                    users.push(newUser);
-                    localStorage.setItem('users', JSON.stringify(users));
-                    localStorage.setItem('currentUser', JSON.stringify(newUser));
-                    closeSignInModal();
-                    window.location.reload(); // Refresh the page to reflect the logged-in state
-                }
-            }
-        });
+        // Add Event Listener for Username Input
+        document.getElementById('usernameInput').addEventListener('input', validateUsername);
 
         // Switch between Sign In and Sign Up
-        let isSignIn = true;
         document.getElementById('switchAuth').addEventListener('click', () => {
             isSignIn = !isSignIn;
             const authTitle = document.getElementById('authTitle');
@@ -790,6 +565,41 @@
             }
         });
 
+        // Handle Sign In / Sign Up
+        document.getElementById('authButton').addEventListener('click', async () => {
+            const username = document.getElementById('usernameInput').value;
+            const password = document.getElementById('passwordInput').value;
+            const profilePicture = document.getElementById('profilePictureInput').value || 'https://via.placeholder.com/150';
+
+            if (!username || !password) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const endpoint = isSignIn ? '/login' : '/register';
+            const body = isSignIn ? { username, password } : { username, password, profilePicture };
+
+            try {
+                const response = await fetch(`${backendUrl}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+
+                if (response.ok) {
+                    const user = await response.json();
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    updateUI(user); // Update the UI with user data
+                    closeSignInModal(); // Close the modal
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'An error occurred. Please try again.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
+            }
+        });
+
         // Change Username
         async function changeUsername() {
             const newUsername = document.getElementById('newUsername').value;
@@ -800,20 +610,25 @@
                 return;
             }
 
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            try {
+                const response = await fetch(`${backendUrl}/change-username`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.id, newUsername }),
+                });
 
-            if (userIndex !== -1) {
-                users[userIndex].username = newUsername;
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
-                document.getElementById('username').innerText = newUsername;
-                generateProfilePicture(newUsername, 'profilePictureTop');
-                generateProfilePicture(newUsername, 'profilePicture');
-                closeChangeUsernameModal();
-                alert('Username changed successfully!');
-            } else {
-                alert('User not found.');
+                if (response.ok) {
+                    const updatedUser = { ...currentUser, username: newUsername };
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    document.getElementById('username').innerText = newUsername;
+                    closeChangeUsernameModal();
+                    alert('Username changed successfully!');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to update username.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
             }
         }
 
@@ -827,19 +642,26 @@
                 return;
             }
 
-            const users = JSON.parse(localStorage.getItem('users')) || [];
-            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            try {
+                const response = await fetch(`${backendUrl}/change-profile-picture`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
+                });
 
-            if (userIndex !== -1) {
-                users[userIndex].profilePicture = newProfilePicture;
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
-                document.getElementById('profilePicture').src = newProfilePicture;
-                document.getElementById('profilePictureTop').src = newProfilePicture;
-                closeChangeProfilePictureModal();
-                alert('Profile picture changed successfully!');
-            } else {
-                alert('User not found.');
+                if (response.ok) {
+                    const updatedUser = { ...currentUser, profilePicture: newProfilePicture };
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    document.getElementById('profilePicture').src = newProfilePicture;
+                    document.getElementById('profilePictureTop').src = newProfilePicture;
+                    closeChangeProfilePictureModal();
+                    alert('Profile picture changed successfully!');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to update profile picture.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
             }
         }
 
@@ -852,15 +674,8 @@
         // Update UI with User Data
         function updateUI(user) {
             document.getElementById('username').innerText = user.username;
-
-            // Set the profile picture
-            if (user.profilePicture) {
-                document.getElementById('profilePicture').src = user.profilePicture;
-                document.getElementById('profilePictureTop').src = user.profilePicture;
-            } else {
-                generateProfilePicture(user.username, 'profilePictureTop');
-                generateProfilePicture(user.username, 'profilePicture');
-            }
+            document.getElementById('profilePicture').src = user.profilePicture;
+            document.getElementById('profilePictureTop').src = user.profilePicture;
         }
 
         // Load user data on page load
@@ -870,7 +685,7 @@
             if (currentUser) {
                 updateUI(currentUser); // Update UI if user is already logged in
             } else {
-                generateProfilePicture(null, 'profilePictureTop'); // Show provided icon
+                openSignInModal(); // Open the sign-in modal if no user is logged in
             }
         };
     </script>
