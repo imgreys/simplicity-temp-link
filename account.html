@@ -601,68 +601,69 @@
         });
 
         // Change Username
-async function changeUsername() {
-    const newUsername = document.getElementById('newUsername').value;
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        async function changeUsername() {
+            const newUsername = document.getElementById('newUsername').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (!newUsername) {
-        alert('Please enter a new username.');
-        return;
-    }
+            if (!newUsername) {
+                alert('Please enter a new username.');
+                return;
+            }
 
-    try {
-        const response = await fetch(`${backendUrl}/change-username`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: currentUser.id, newUsername }),
-        });
+            try {
+                const response = await fetch(`${backendUrl}/change-username`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.id, newUsername }),
+                });
 
-        if (response.ok) {
-            const updatedUser = await response.json(); // Get the updated user data from the backend
-            localStorage.setItem('currentUser', JSON.stringify(updatedUser)); // Update local storage
-            updateUI(updatedUser); // Update the UI with the new username
-            closeChangeUsernameModal();
-            alert('Username changed successfully!');
-        } else {
-            const error = await response.json();
-            alert(error.error || 'Failed to update username.');
+                if (response.ok) {
+                    const updatedUser = { ...currentUser, username: newUsername };
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    document.getElementById('username').innerText = newUsername;
+                    closeChangeUsernameModal();
+                    alert('Username changed successfully!');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to update username.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
+            }
         }
-    } catch (error) {
-        alert('Network error. Please check your connection.');
-    }
-}
 
-// Change Profile Picture
-async function changeProfilePicture() {
-    const newProfilePicture = document.getElementById('newProfilePicture').value;
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        // Change Profile Picture
+        async function changeProfilePicture() {
+            const newProfilePicture = document.getElementById('newProfilePicture').value;
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (!newProfilePicture) {
-        alert('Please enter a new profile picture URL.');
-        return;
-    }
+            if (!newProfilePicture) {
+                alert('Please enter a new profile picture URL.');
+                return;
+            }
 
-    try {
-        const response = await fetch(`${backendUrl}/change-profile-picture`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
-        });
+            try {
+                const response = await fetch(`${backendUrl}/change-profile-picture`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId: currentUser.id, newProfilePicture }),
+                });
 
-        if (response.ok) {
-            const updatedUser = await response.json(); // Get the updated user data from the backend
-            localStorage.setItem('currentUser', JSON.stringify(updatedUser)); // Update local storage
-            updateUI(updatedUser); // Update the UI with the new profile picture
-            closeChangeProfilePictureModal();
-            alert('Profile picture changed successfully!');
-        } else {
-            const error = await response.json();
-            alert(error.error || 'Failed to update profile picture.');
+                if (response.ok) {
+                    const updatedUser = { ...currentUser, profilePicture: newProfilePicture };
+                    localStorage.setItem('currentUser', JSON.stringify(updatedUser));
+                    document.getElementById('profilePicture').src = newProfilePicture;
+                    document.getElementById('profilePictureTop').src = newProfilePicture;
+                    closeChangeProfilePictureModal();
+                    alert('Profile picture changed successfully!');
+                } else {
+                    const error = await response.json();
+                    alert(error.error || 'Failed to update profile picture.');
+                }
+            } catch (error) {
+                alert('Network error. Please check your connection.');
+            }
         }
-    } catch (error) {
-        alert('Network error. Please check your connection.');
-    }
-}
 
         // Log Out
         function logout() {
